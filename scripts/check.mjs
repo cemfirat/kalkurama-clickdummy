@@ -191,6 +191,9 @@ assert(html["estimate.html"].includes("Section nach oben") && html["estimate.htm
 assert(html["estimate.html"].includes("data-estimate-ungrouped"), "Estimate sections must remain optional by supporting ungrouped items.");
 assert(html["estimate.html"].includes("Sections sind optional"), "Estimate detail must state that sections are optional.");
 assert(html["estimate.html"].includes("historischen Snapshot"), "Estimate detail must preserve section ordering in the issued snapshot.");
+assert(html["estimate.html"].includes("data-estimate-issued-snapshot"), "Estimate detail must expose issued Section snapshot semantics.");
+assert(html["estimate.html"].includes("HTML, PDF und E-Mail"), "Estimate Section presentation must remain consistent across output channels.");
+assert(html["estimate.html"].includes("Frühere ausgestellte Revisionen bleiben unverändert"), "Estimate revisions must preserve previous issued snapshots.");
 
 for (const marker of [
   "uk-card uk-card-default",
