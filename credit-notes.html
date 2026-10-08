@@ -8,6 +8,12 @@
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
         <!-- @include partials/page-heading.html {"eyebrow":"Dokumente","title":"Gutschriften","description":"Korrekturen und Gutschriften bleiben mit der ursprünglichen Rechnung verknüpft."} -->
+
+        <div class="uk-alert uk-alert-primary" data-credit-note-snapshot>
+          Vollgutschriften referenzieren den ausgestellten Rechnungs-Snapshot.
+          Pre-discount, Rabatt Rate/Amount, Netto, Steuer und Brutto werden aus dem issued Snapshot übernommen
+          und nicht aus später veränderten Work-Daten neu berechnet.
+        </div>
         <div class="uk-card uk-card-default">
           <div class="uk-overflow-auto">
             <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">

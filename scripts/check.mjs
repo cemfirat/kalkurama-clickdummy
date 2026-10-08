@@ -182,7 +182,10 @@ assert(html["invoice.html"].includes("−130,00 EUR"), "Invoice detail must expo
 assert(html["invoice.html"].includes('data-source-work="time:1842"'), "Invoice detail must preserve source Work traceability.");
 assert(html["invoice.html"].includes("selected_for_draft_invoice"), "Invoice detail must preserve draft work-reservation semantics.");
 assert(html["invoice.html"].includes("Discount Rate/Amount"), "Invoice detail must state issued discount snapshot semantics.");
-assert(html["invoice.html"].includes("HTML, PDF, E-Invoice"), "Invoice detail must preserve presentation consistency requirements.");
+assert(html["invoice.html"].includes("HTML, PDF, E-Mail, E-Invoice"), "Invoice detail must preserve HTML/PDF/email/e-invoice presentation consistency.");
+assert(html["credit-notes.html"].includes("data-credit-note-snapshot"), "Credit Notes must expose issued Invoice snapshot semantics.");
+assert(html["credit-notes.html"].includes("Rabatt Rate/Amount"), "Credit Notes must preserve the Invoice discount snapshot.");
+assert(html["credit-notes.html"].includes("nicht aus später veränderten Work-Daten neu berechnet"), "Credit Notes must not recalculate discounts from later Work state.");
 
 assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the section prototype.");
 assert(html["estimate.html"].includes('data-estimate-section="concept"'), "Estimate detail must expose an explicit first section.");
