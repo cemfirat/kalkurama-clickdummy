@@ -56,7 +56,10 @@
                 <li><a href="#feedback" data-uk-scroll>Feedback & Modal</a></li>
                 <li class="uk-nav-divider"></li>
                 <li class="uk-nav-header">Kalkurama</li>
-                <li><a href="#kalkurama-components" data-uk-scroll>Produktmuster</a></li>
+                <li><a href="#kalkurama-project-work" data-uk-scroll>Project / Work Context</a></li>
+                <li><a href="#kalkurama-estimate-sections" data-uk-scroll>Estimate Sections</a></li>
+                <li><a href="#kalkurama-invoice-discounts" data-uk-scroll>Invoice Discounts</a></li>
+                <li><a href="#kalkurama-work-corrections" data-uk-scroll>Work Corrections</a></li>
               </ul>
             </div>
           </aside>
@@ -300,20 +303,71 @@
   </ul>
 </section>
 
-            <section id="kalkurama-components" class="styleguide-section">
+            <section id="kalkurama-project-work" class="styleguide-section">
               <div class="styleguide-section-header">
-                <div class="uk-text-meta">Kalkurama</div>
-                <h2 class="uk-heading-small uk-margin-small-top">Produktmuster</h2>
-                <p class="uk-text-lead">Nur Kompositionen, die der kommerzielle Workflow wirklich braucht, ergänzen UIkit.</p>
+                <div class="uk-text-meta">Kalkurama · Product Pattern</div>
+                <h2 class="uk-heading-small uk-margin-small-top">Project / Work Context</h2>
+                <p class="uk-text-lead">Persistenter Projektkontext, laufender Timer und unverrechnete Arbeit bilden die tägliche Arbeitsoberfläche.</p>
               </div>
 
-              <ul class="uk-tab styleguide-example-tabs" data-uk-tab="connect: #kalkurama-switcher">
+              <ul class="uk-tab styleguide-example-tabs" data-uk-tab="connect: #kalkurama-project-work-switcher">
                 <li class="uk-active"><a href="#">Preview</a></li>
                 <li><a href="#">Markup</a></li>
               </ul>
-              <ul id="kalkurama-switcher" class="uk-switcher styleguide-example-switcher">
+              <ul id="kalkurama-project-work-switcher" class="uk-switcher styleguide-example-switcher">
                 <li><div class="styleguide-preview"><!-- @include partials/styleguide/kalkurama.html --></div></li>
                 <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/kalkurama.html --></code></pre></div></li>
+              </ul>
+            </section>
+
+            <section id="kalkurama-estimate-sections" class="styleguide-section">
+              <div class="styleguide-section-header">
+                <div class="uk-text-meta">Kalkurama · Product Pattern</div>
+                <h2 class="uk-heading-small uk-margin-small-top">Estimate Sections</h2>
+                <p class="uk-text-lead">Optionale, geordnete Sections gruppieren Angebotspositionen, ohne einen freien Dokument-Designer einzuführen.</p>
+              </div>
+
+              <ul class="uk-tab styleguide-example-tabs" data-uk-tab="connect: #kalkurama-estimate-sections-switcher">
+                <li class="uk-active"><a href="#">Preview</a></li>
+                <li><a href="#">Markup</a></li>
+              </ul>
+              <ul id="kalkurama-estimate-sections-switcher" class="uk-switcher styleguide-example-switcher">
+                <li><div class="styleguide-preview"><!-- @include partials/styleguide/estimate-sections.html --></div></li>
+                <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/estimate-sections.html --></code></pre></div></li>
+              </ul>
+            </section>
+
+            <section id="kalkurama-invoice-discounts" class="styleguide-section">
+              <div class="styleguide-section-header">
+                <div class="uk-text-meta">Kalkurama · Product Pattern</div>
+                <h2 class="uk-heading-small uk-margin-small-top">Invoice Line Discounts</h2>
+                <p class="uk-text-lead">Pre-discount, Rabatt Rate/Amount und Source Work bleiben als expliziter kommerzieller Snapshot sichtbar.</p>
+              </div>
+
+              <ul class="uk-tab styleguide-example-tabs" data-uk-tab="connect: #kalkurama-invoice-discounts-switcher">
+                <li class="uk-active"><a href="#">Preview</a></li>
+                <li><a href="#">Markup</a></li>
+              </ul>
+              <ul id="kalkurama-invoice-discounts-switcher" class="uk-switcher styleguide-example-switcher">
+                <li><div class="styleguide-preview"><!-- @include partials/styleguide/invoice-discount.html --></div></li>
+                <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/invoice-discount.html --></code></pre></div></li>
+              </ul>
+            </section>
+
+            <section id="kalkurama-work-corrections" class="styleguide-section">
+              <div class="styleguide-section-header">
+                <div class="uk-text-meta">Kalkurama · Product Pattern</div>
+                <h2 class="uk-heading-small uk-margin-small-top">Audited Work Corrections</h2>
+                <p class="uk-text-lead">Korrekturen zeigen Bearbeiter, Zeitpunkt, Grund und unveränderte Originalwerte als append-only Audit-Semantik.</p>
+              </div>
+
+              <ul class="uk-tab styleguide-example-tabs" data-uk-tab="connect: #kalkurama-work-corrections-switcher">
+                <li class="uk-active"><a href="#">Preview</a></li>
+                <li><a href="#">Markup</a></li>
+              </ul>
+              <ul id="kalkurama-work-corrections-switcher" class="uk-switcher styleguide-example-switcher">
+                <li><div class="styleguide-preview"><!-- @include partials/work-correction-audit.html --></div></li>
+                <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/work-correction-audit.html --></code></pre></div></li>
               </ul>
             </section>
           </div>
