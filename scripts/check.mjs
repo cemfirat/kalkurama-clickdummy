@@ -13,6 +13,7 @@ const productPages = [
   ["overview.html", "overview"],
   ["project.html", "project"],
   ["estimates.html", "estimates"],
+  ["estimate.html", "estimates"],
   ["invoices.html", "invoices"],
   ["payments.html", "payments"],
   ["credit-notes.html", "credit-notes"],
@@ -81,6 +82,14 @@ assert(html["index.html"].includes("kalkurama-running-timer"), "Daily landing mu
 assert(html["index.html"].includes("uk-subnav uk-subnav-pill"), "Customer workspace must expose project-scoped document tabs.");
 assert(html["project.html"].includes("Unverrechnete Arbeit"), "Project view must keep work as a central surface.");
 
+assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the section prototype.");
+assert(html["estimate.html"].includes('data-estimate-section="concept"'), "Estimate detail must expose an explicit first section.");
+assert(html["estimate.html"].includes('data-estimate-section="implementation"'), "Estimate detail must expose ordered multiple sections.");
+assert(html["estimate.html"].includes("Section nach oben") && html["estimate.html"].includes("Section nach unten"), "Estimate sections must expose explicit ordering controls.");
+assert(html["estimate.html"].includes("data-estimate-ungrouped"), "Estimate sections must remain optional by supporting ungrouped items.");
+assert(html["estimate.html"].includes("Sections sind optional"), "Estimate detail must state that sections are optional.");
+assert(html["estimate.html"].includes("historischen Snapshot"), "Estimate detail must preserve section ordering in the issued snapshot.");
+
 for (const marker of [
   "uk-card uk-card-default",
   "uk-table uk-table-divider",
@@ -127,6 +136,7 @@ assert(!viteConfig.includes('const files = ["src/themes/standard.less"]'), "UIki
 assert(viteConfig.includes("await less.render"), "Theme Studio must compile LESS before accepting saves.");
 assert(viteConfig.includes("rolledBack: true"), "Theme Studio must report rollback after compile failure.");
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
+assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
 assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfig), "Standard Vite mode missing.");
 assert(/\bkalkurama:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Kalkurama Vite mode missing.");
 assert(/\bpages:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Pages must compile the Kalkurama theme.");
@@ -173,6 +183,8 @@ assert(!studioSource.includes("api.github.com"), "Theme Studio client must not t
 
 assert(productSourceGuide.includes("Billings-like daily interaction architecture"), "Product source guide must preserve UX target.");
 assert(productSourceGuide.includes("3.25.25"), "Product source guide must record productive UIkit version.");
+assert(productSourceGuide.includes("#84 — explicit Estimate sections"), "Product source guide must document Estimate Sections issue #84.");
+assert(productSourceGuide.includes("sections are optional"), "Product source guide must preserve optional Estimate section semantics.");
 assert(themesGuide.includes("UIkit Standard") && themesGuide.includes("Kalkurama"), "Theme guide must document hierarchy.");
 assert(styleguideGuide.includes("Preview") && styleguideGuide.includes("Markup"), "Styleguide guide must document Preview/Markup.");
 assert(styleguideGuide.includes("Single source for Preview + Markup"), "Styleguide guide must document synchronized example sources.");
@@ -184,6 +196,7 @@ assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide m
 assert(transferStatus.includes('"partials/theme-studio.html"'), "Theme Studio must remain prototype-only for transfer.");
 assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples must remain prototype-only for transfer.");
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
+assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
 
 assert(branchWorkflow.includes('"verify/**"'), "Branch verify workflow must target verify/**.");
 assert(branchWorkflow.includes("npm run verify"), "Branch verify workflow must run full verification.");
