@@ -14,6 +14,9 @@ const transferableExact = new Set([
   "credit-notes.html",
   "services.html",
   "work.html",
+  "work-correction-fixed.html",
+  "work-correction-quantity.html",
+  "work-correction-expense.html",
   "time.html",
   "settings.html",
   "src/app.js"

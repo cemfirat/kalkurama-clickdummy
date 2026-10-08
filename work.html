@@ -8,23 +8,102 @@
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
         <!-- @include partials/page-heading.html {"eyebrow":"Mehr","title":"Arbeit","description":"Globale Arbeitsliste; tägliche Erfassung bleibt bevorzugt im Kunden-/Projektkontext."} -->
+
+        <div class="uk-alert uk-alert-primary">
+          <p>Unverrechnete Arbeit ist die kommerzielle Quelle für spätere Rechnungen. Korrekturen verändern keine Historie stillschweigend, sondern werden mit alten/neuen Werten, Bearbeiter und Grund protokolliert.</p>
+        </div>
+
         <ul class="uk-subnav uk-subnav-pill">
           <li class="uk-active"><a href="#">Unverrechnet</a></li>
           <li><a href="#">In Entwurfsrechnung</a></li>
           <li><a href="#">Verrechnet</a></li>
           <li><a href="#">Nicht verrechenbar</a></li>
         </ul>
+
         <div class="uk-card uk-card-default">
           <div class="uk-overflow-auto">
             <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
-              <thead><tr><th>Datum</th><th>Kunde</th><th>Projekt</th><th>Typ</th><th>Beschreibung</th><th class="uk-text-right">Betrag</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Datum</th>
+                  <th>Kunde</th>
+                  <th>Projekt</th>
+                  <th>Typ</th>
+                  <th>Beschreibung</th>
+                  <th class="uk-text-right">Betrag</th>
+                  <th class="uk-table-shrink">Aktion</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr><td>08.10.2026</td><td>Atelier Morgen</td><td>Website Relaunch</td><td>Zeit</td><td>Frontend-Umsetzung</td><td class="uk-text-right">455,00 EUR</td></tr>
-                <tr><td>08.10.2026</td><td>Nordlicht GmbH</td><td>Jahreskampagne</td><td>Fix</td><td>Social Assets</td><td class="uk-text-right">680,00 EUR</td></tr>
-                <tr><td>07.10.2026</td><td>Atelier Morgen</td><td>Brand Refresh</td><td>Zeit</td><td>Logo-Ausarbeitung</td><td class="uk-text-right">390,00 EUR</td></tr>
+                <tr>
+                  <td>08.10.2026</td><td>Atelier Morgen</td><td>Website Relaunch</td><td>Zeit</td>
+                  <td>Frontend-Umsetzung</td><td class="uk-text-right">455,00 EUR</td>
+                  <td class="uk-text-nowrap"><span class="uk-text-meta">eigener Zeitkorrektur-Flow</span></td>
+                </tr>
+                <tr>
+                  <td>08.10.2026</td><td>Nordlicht GmbH</td><td>Jahreskampagne</td><td>Fix</td>
+                  <td>Social Assets</td><td class="uk-text-right">680,00 EUR</td>
+                  <td><a class="uk-button uk-button-text uk-text-small" href="./work-correction-fixed.html">Korrigieren</a></td>
+                </tr>
+                <tr>
+                  <td>07.10.2026</td><td>Atelier Morgen</td><td>Website Relaunch</td><td>Menge</td>
+                  <td>Druckauflage Folder · 200 × 1,85 EUR</td><td class="uk-text-right">370,00 EUR</td>
+                  <td><a class="uk-button uk-button-text uk-text-small" href="./work-correction-quantity.html">Korrigieren</a></td>
+                </tr>
+                <tr>
+                  <td>05.10.2026</td><td>Atelier Morgen</td><td>Website Relaunch</td><td>Auslage</td>
+                  <td>Stockmaterial</td><td class="uk-text-right">182,50 EUR</td>
+                  <td><a class="uk-button uk-button-text uk-text-small" href="./work-correction-expense.html">Korrigieren</a></td>
+                </tr>
               </tbody>
             </table>
           </div>
+        </div>
+
+        <section class="uk-card uk-card-default uk-margin-large-top" data-work-correction-history>
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+              <h2 class="uk-card-title uk-margin-remove">Letzte Arbeitskorrekturen</h2>
+              <span class="uk-text-meta">auditierbar · append-only Ereignisse</span>
+            </div>
+          </div>
+          <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+              <thead>
+                <tr><th>Zeitpunkt</th><th>Position</th><th>Vorher</th><th>Nachher</th><th>Bearbeiter</th><th>Grund</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="uk-text-nowrap">08.10.2026 · 17:42</td>
+                  <td><strong>Fix · Social Assets</strong><br><span class="uk-text-meta">Nordlicht GmbH · Jahreskampagne</span></td>
+                  <td>680,00 EUR</td>
+                  <td><strong>720,00 EUR</strong></td>
+                  <td>Cem Firat</td>
+                  <td>Leistungsumfang nach Kund:innenfreigabe korrigiert.</td>
+                </tr>
+                <tr>
+                  <td class="uk-text-nowrap">08.10.2026 · 16:18</td>
+                  <td><strong>Menge · Druckauflage Folder</strong><br><span class="uk-text-meta">Atelier Morgen · Website Relaunch</span></td>
+                  <td>200 × 1,85 EUR</td>
+                  <td><strong>250 × 1,85 EUR</strong></td>
+                  <td>Cem Firat</td>
+                  <td>Tatsächliche Auflage laut finaler Druckbestätigung übernommen.</td>
+                </tr>
+                <tr>
+                  <td class="uk-text-nowrap">08.10.2026 · 15:56</td>
+                  <td><strong>Auslage · Stockmaterial</strong><br><span class="uk-text-meta">Atelier Morgen · Website Relaunch</span></td>
+                  <td>182,50 EUR</td>
+                  <td><strong>164,50 EUR</strong></td>
+                  <td>Cem Firat</td>
+                  <td>Gutschrift des Anbieters berücksichtigt.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="uk-alert uk-alert-warning uk-margin-top">
+          <p><strong>Grenze:</strong> Sobald Arbeit für eine Entwurfsrechnung reserviert, verrechnet, nicht verrechenbar oder abgeschrieben ist, ist direkte Korrektur gesperrt. Bestehende Dokument- und Billing-Historie bleibt unverändert.</p>
         </div>
       </main>
     </div>
