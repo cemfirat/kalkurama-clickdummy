@@ -1,0 +1,55 @@
+// Preserve the independent UIkit Standard reference while the productive CSS
+// mirror carries Kalkurama's owned visual identity.
+// This file is read-only reference normalization, not a product design layer.
+
+:root {
+  --kalkurama-accent: #1e87f0;
+  --kalkurama-accent-hover: #0f7ae5;
+  --kalkurama-accent-active: #0e6dcd;
+}
+
+a:hover,
+.uk-link:hover,
+.uk-link-toggle:hover .uk-link {
+  color: #0f6ecd;
+}
+
+.kalkurama-source-customer.is-active > .kalkurama-source-customer-link {
+  background: rgba(30, 135, 240, .12);
+}
+
+.kalkurama-source-project-link.is-active {
+  background: rgba(30, 135, 240, .16);
+}
+
+.kalkurama-project-row:focus {
+  outline-color: rgba(30, 135, 240, .55);
+}
+
+.kalkurama-row-selected .kalkurama-status-chip {
+  background: rgba(30, 135, 240, .14);
+  color: #1a5f9e;
+}
+
+a.kalkurama-customer-actions-tab:hover {
+  color: #1a5f9e;
+}
+
+.kalkurama-customer-actions-tab.is-active {
+  background: rgba(30, 135, 240, .12);
+  color: #1a5f9e;
+}
+
+.kalkurama-customer-timer {
+  border-color: rgba(30, 135, 240, .28);
+  background: rgba(30, 135, 240, .08);
+}
+
+.kalkurama-row-selected > td {
+  background: rgba(30, 135, 240, .1);
+}
+
+.uk-alert-primary {
+  background: #d8eafc;
+  color: #1e87f0;
+}
