@@ -1,110 +1,129 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arbeit · Kalkurama Clickdummy</title>
-  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml"></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arbeit · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+</head>
 <body data-page="work">
   <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
     <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
-        <!-- @include partials/page-heading.html {"eyebrow":"Mehr","title":"Arbeit","description":"Globale Arbeitsliste; tägliche Erfassung bleibt bevorzugt im Kunden-/Projektkontext."} -->
-
-        <div class="uk-alert uk-alert-primary">
-          <p>Unverrechnete Arbeit ist die kommerzielle Quelle für spätere Rechnungen. Korrekturen verändern keine Historie stillschweigend, sondern werden mit alten/neuen Werten, Bearbeiter und Grund protokolliert.</p>
-        </div>
-
-        <ul class="uk-subnav uk-subnav-pill">
-          <li class="uk-active"><a href="#">Unverrechnet</a></li>
-          <li><a href="#">In Entwurfsrechnung</a></li>
-          <li><a href="#">Verrechnet</a></li>
-          <li><a href="#">Nicht verrechenbar</a></li>
-        </ul>
-
-        <div class="uk-card uk-card-default">
-          <div class="uk-overflow-auto">
-            <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
-              <thead>
-                <tr>
-                  <th>Datum</th>
-                  <th>Kunde</th>
-                  <th>Projekt</th>
-                  <th>Typ</th>
-                  <th>Beschreibung</th>
-                  <th class="uk-text-right">Betrag</th>
-                  <th class="uk-table-shrink">Aktion</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>08.10.2026</td><td>Atelier Morgen</td><td>Website Relaunch</td><td>Zeit</td>
-                  <td>Frontend-Umsetzung</td><td class="uk-text-right">455,00 EUR</td>
-                  <td class="uk-text-nowrap"><span class="uk-text-meta">eigener Zeitkorrektur-Flow</span></td>
-                </tr>
-                <tr>
-                  <td>08.10.2026</td><td>Nordlicht GmbH</td><td>Jahreskampagne</td><td>Fix</td>
-                  <td>Social Assets</td><td class="uk-text-right">680,00 EUR</td>
-                  <td><a class="uk-button uk-button-text uk-text-small" href="./work-correction-fixed.html">Korrigieren</a></td>
-                </tr>
-                <tr>
-                  <td>07.10.2026</td><td>Atelier Morgen</td><td>Website Relaunch</td><td>Menge</td>
-                  <td>Druckauflage Folder · 200 × 1,85 EUR</td><td class="uk-text-right">370,00 EUR</td>
-                  <td><a class="uk-button uk-button-text uk-text-small" href="./work-correction-quantity.html">Korrigieren</a></td>
-                </tr>
-                <tr>
-                  <td>05.10.2026</td><td>Atelier Morgen</td><td>Website Relaunch</td><td>Auslage</td>
-                  <td>Stockmaterial</td><td class="uk-text-right">182,50 EUR</td>
-                  <td><a class="uk-button uk-button-text uk-text-small" href="./work-correction-expense.html">Korrigieren</a></td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="kalkurama-page-heading">
+          <div>
+            <div class="uk-text-meta">Kommerzielle Arbeit</div>
+            <h1>Arbeitspositionen</h1>
+          </div>
+          <div class="uk-flex uk-flex-wrap uk-grid-small" uk-grid>
+            <div><a class="uk-button uk-button-default" href="./work.html">Manuelle Zeit</a></div>
+            <div><a class="uk-button uk-button-default" href="./work.html">Fix</a></div>
+            <div><a class="uk-button uk-button-default" href="./work.html">Menge</a></div>
+            <div><a class="uk-button uk-button-default" href="./work.html">Auslage</a></div>
+            <div><a class="uk-button uk-button-primary" href="./time.html">Timer starten</a></div>
           </div>
         </div>
 
-        <section class="uk-card uk-card-default uk-margin-large-top" data-work-correction-history>
-          <div class="uk-card-header">
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
-              <h2 class="uk-card-title uk-margin-remove">Letzte Arbeitskorrekturen</h2>
-              <span class="uk-text-meta">auditierbar · append-only Ereignisse</span>
+        <div class="uk-alert-primary" uk-alert>
+          <p>Dies ist die kommerzielle Quelle für zukünftige Rechnungen. Beträge sind Snapshots und ändern sich nicht durch spätere Preisänderungen.</p>
+        </div>
+
+        <form class="uk-card uk-card-default uk-card-body uk-margin-bottom">
+          <input type="hidden" name="state" value="unbilled">
+          <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-expand@s">
+              <label class="uk-form-label" for="project_filter">Projekt</label>
+              <select class="uk-select" id="project_filter" name="project">
+                <option value="">Alle Projekte</option>
+                <option selected>Atelier Morgen · Website Relaunch</option>
+                <option>Atelier Morgen · Brand Refresh</option>
+              </select>
+            </div>
+            <div class="uk-width-auto@s uk-margin-top">
+              <button class="uk-button uk-button-default" type="button">Filtern</button>
+              <a class="uk-button uk-button-text uk-margin-small-left" href="./work.html">Zurücksetzen</a>
             </div>
           </div>
+        </form>
+
+        <ul class="uk-subnav uk-subnav-pill">
+          <li class="uk-active"><a href="./work.html">Unverrechnet</a></li>
+          <li><a href="./work.html">Für Entwurfsrechnung reserviert</a></li>
+          <li><a href="./work.html">Verrechnet</a></li>
+          <li><a href="./work.html">Nicht verrechenbar</a></li>
+          <li><a href="./work.html">Abgeschrieben</a></li>
+        </ul>
+
+        <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l uk-margin-bottom" uk-grid>
+          <div><div class="uk-card uk-card-default uk-card-body"><div class="uk-text-meta">Positionen in dieser Ansicht</div><strong class="uk-text-large">8</strong></div></div>
+          <div><div class="uk-card uk-card-default uk-card-body"><div class="uk-text-meta">Gesamt EUR</div><strong class="uk-text-large">2.735,00 EUR</strong></div></div>
+        </div>
+
+        <div class="uk-card uk-card-default" data-work-list="time">
+          <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Zeit</h2></div>
           <div class="uk-overflow-auto">
-            <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
-              <thead>
-                <tr><th>Zeitpunkt</th><th>Position</th><th>Vorher</th><th>Nachher</th><th>Bearbeiter</th><th>Grund</th></tr>
-              </thead>
+            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+              <thead><tr><th>Projekt</th><th>Leistung / Notiz</th><th class="uk-text-right">Verrechenbar</th><th class="uk-text-right">Rate</th><th class="uk-text-right">Betrag</th><th class="uk-table-shrink"></th></tr></thead>
               <tbody>
-                <tr>
-                  <td class="uk-text-nowrap">08.10.2026 · 17:42</td>
-                  <td><strong>Fix · Social Assets</strong><br><span class="uk-text-meta">Nordlicht GmbH · Jahreskampagne</span></td>
-                  <td>680,00 EUR</td>
-                  <td><strong>720,00 EUR</strong></td>
-                  <td>Cem Firat</td>
-                  <td>Leistungsumfang nach Kund:innenfreigabe korrigiert.</td>
-                </tr>
-                <tr>
-                  <td class="uk-text-nowrap">08.10.2026 · 16:18</td>
-                  <td><strong>Menge · Druckauflage Folder</strong><br><span class="uk-text-meta">Atelier Morgen · Website Relaunch</span></td>
-                  <td>200 × 1,85 EUR</td>
-                  <td><strong>250 × 1,85 EUR</strong></td>
-                  <td>Cem Firat</td>
-                  <td>Tatsächliche Auflage laut finaler Druckbestätigung übernommen.</td>
-                </tr>
-                <tr>
-                  <td class="uk-text-nowrap">08.10.2026 · 15:56</td>
-                  <td><strong>Auslage · Stockmaterial</strong><br><span class="uk-text-meta">Atelier Morgen · Website Relaunch</span></td>
-                  <td>182,50 EUR</td>
-                  <td><strong>164,50 EUR</strong></td>
-                  <td>Cem Firat</td>
-                  <td>Gutschrift des Anbieters berücksichtigt.</td>
-                </tr>
+                <tr><td><strong>Atelier Morgen</strong><br><span class="uk-text-meta">Website Relaunch</span></td><td>Umsetzung<br><span class="uk-text-meta">Frontend</span></td><td class="uk-text-right">210 min</td><td class="uk-text-right">130,00 EUR/h</td><td class="uk-text-right"><strong>455,00 EUR</strong></td><td class="uk-text-nowrap"><a class="uk-button uk-button-text uk-text-small" href="./time.html">Korrigieren</a></td></tr>
               </tbody>
             </table>
           </div>
-        </section>
+        </div>
 
-        <div class="uk-alert uk-alert-warning uk-margin-top">
-          <p><strong>Grenze:</strong> Sobald Arbeit für eine Entwurfsrechnung reserviert, verrechnet, nicht verrechenbar oder abgeschrieben ist, ist direkte Korrektur gesperrt. Bestehende Dokument- und Billing-Historie bleibt unverändert.</p>
+        <div class="uk-grid-medium uk-child-width-1-1 uk-child-width-1-3@l uk-margin-top" uk-grid>
+          <div>
+            <div class="uk-card uk-card-default" data-work-list="fixed">
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Fix</h2></div>
+              <div class="uk-card-body">
+                <ul class="uk-list uk-list-divider">
+                  <li><div class="uk-flex uk-flex-between uk-flex-top uk-flex-wrap"><div><strong>Responsive Prototyp</strong><br><span class="uk-text-meta">2026-10-06 · Atelier Morgen · Website Relaunch</span></div><div class="uk-text-right"><strong>420,00 EUR</strong></div></div></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default" data-work-list="quantity">
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Menge</h2></div>
+              <div class="uk-card-body">
+                <ul class="uk-list uk-list-divider">
+                  <li><div class="uk-flex uk-flex-between uk-flex-top uk-flex-wrap"><div><strong>Bildbearbeitung</strong><br><span class="uk-text-meta">2026-10-05 · 12 × 35,00 EUR</span></div><div class="uk-text-right"><strong>420,00 EUR</strong></div></div></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default" data-work-list="expense">
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Auslagen</h2></div>
+              <div class="uk-card-body">
+                <ul class="uk-list uk-list-divider">
+                  <li><div class="uk-flex uk-flex-between uk-flex-top uk-flex-wrap"><div><strong>Stockmaterial</strong><br><span class="uk-text-meta">2026-10-05 · Atelier Morgen · Website Relaunch</span></div><div class="uk-text-right"><strong>182,50 EUR</strong></div></div></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-card uk-card-default uk-margin-large-top" data-billing-history>
+          <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Letzte Abrechnungshistorie</h2></div>
+          <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+              <thead><tr><th>Wann</th><th>Arbeit</th><th>Änderung</th><th>Von</th><th>Grund</th></tr></thead>
+              <tbody><tr><td>2026-10-08 12:15</td><td><strong>UI-Abstimmung</strong><br><span class="uk-text-meta">Zeit</span></td><td>unverrechnet → reserviert</td><td>Cem Firat</td><td>Rechnungsentwurf</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="uk-card uk-card-default uk-margin-large-top" data-correction-history>
+          <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Letzte Zeitkorrekturen</h2></div>
+          <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+              <thead><tr><th>Wann</th><th>Arbeit</th><th>Gemessene Zeit</th><th>Von</th><th>Grund</th></tr></thead>
+              <tbody><tr><td>2026-10-07 15:40</td><td><strong>Frontend</strong><br><span class="uk-text-meta">time-1842</span></td><td>195 min → 210 min</td><td>Cem Firat</td><td>Nachtrag Kundencall</td></tr></tbody>
+            </table>
+          </div>
         </div>
       </main>
     </div>
