@@ -29,7 +29,10 @@ const prototypeOnlyExact = new Set([
   "styleguide.html",
   "partials/studio.html",
   "src/studio.js",
-  "src/styles/prototype.less"
+  "src/styles/prototype.less",
+  "src/styles/product.less",
+  "src/styles/shell.less",
+  "src/styles/system.less"
 ]);
 
 const prototypeOnlyPrefixes = [
