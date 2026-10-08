@@ -43,6 +43,9 @@ Billings Pro is an interaction-architecture reference, not a visual template.
 - `credit-notes.html`
 - `services.html`
 - `work.html`
+- `work-correction-fixed.html` — audited correction prototype for unbilled fixed work
+- `work-correction-quantity.html` — audited correction prototype for unbilled quantity work
+- `work-correction-expense.html` — audited correction prototype for unbilled expenses
 - `time.html`
 - `settings.html`
 - `styleguide.html`
