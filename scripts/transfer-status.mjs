@@ -9,6 +9,7 @@ const transferableExact = new Set([
   "estimates.html",
   "estimate.html",
   "invoices.html",
+  "invoice.html",
   "payments.html",
   "credit-notes.html",
   "services.html",
