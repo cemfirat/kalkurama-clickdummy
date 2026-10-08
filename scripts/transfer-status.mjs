@@ -30,7 +30,7 @@ const transferablePrefixes = [
 
 const prototypeOnlyExact = new Set([
   "styleguide.html",
-  "partials/theme-studio.html",
+  "partials/studio.html",
   "src/studio.js",
   "src/styles/prototype.less"
 ]);
@@ -93,4 +93,4 @@ if (nonUiFiles.length > 0) {
 }
 
 console.log("");
-console.log("Mock content, styleguide, Theme Studio, metadata and documentation are never promoted blindly.");
+console.log("Mock content, styleguide, Kalkurama Studio, metadata and documentation are never promoted blindly.");
