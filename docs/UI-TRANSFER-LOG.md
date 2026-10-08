@@ -12,7 +12,9 @@ Append-only record of clickdummy baselines and intentionally promoted UI decisio
 
 | 2026-10-08 | `a4d7ae3f915b1022cda9ab86e9da8516f6853be4` | `2bd658c65020984fe2583161ae8cceeae583f618` | Estimate Sections #84: explicit ordered optional sections, ungrouped items and issued-snapshot semantics | Superseded by Invoice Line Discounts baseline |
 
-| 2026-10-08 | `fd39664fc00620f8c137455beedfcbfaf48bfab1` | `2bd658c65020984fe2583161ae8cceeae583f618` | Invoice Line Discounts #85: pre-discount, discount rate/amount, issued snapshot and Work traceability | Active baseline; no production promotion |
+| 2026-10-08 | `fd39664fc00620f8c137455beedfcbfaf48bfab1` | `2bd658c65020984fe2583161ae8cceeae583f618` | Invoice Line Discounts #85: pre-discount, discount rate/amount, issued snapshot and Work traceability | Superseded by audited non-time Work corrections baseline |
+
+| 2026-10-08 | `552f3215d4fe3b9119ddea84de74c77f55fef543` | `2bd658c65020984fe2583161ae8cceeae583f618` | Work corrections #86: audited Fixed/Quantity/Expense correction forms, immutable original values and billing-state boundaries | Active baseline; no production promotion |
 
 ## Logging rule
 
