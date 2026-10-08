@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier Morgen · Kalkurama Clickdummy</title>
+</head>
+<body data-page="workspace">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+
+      <main class="kalkurama-main" id="main-content">
+        <div class="kalkurama-page-heading">
+          <div>
+            <div class="uk-text-meta">Kunde</div>
+            <h1>Atelier Morgen</h1>
+          </div>
+          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
+            <div><button class="uk-button uk-button-default uk-button-small" type="button">Kunde bearbeiten</button></div>
+            <div><button class="uk-button uk-button-primary uk-button-small" type="button">Neues Projekt</button></div>
+          </div>
+        </div>
+
+        <div class="kalkurama-customer-workspace">
+          <section class="kalkurama-panel">
+            <div class="kalkurama-panel-header">
+              <h2>Projekte</h2>
+              <span class="uk-text-meta">3 Projekte</span>
+            </div>
+            <div class="uk-overflow-auto">
+              <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-table-hover uk-margin-remove kalkurama-project-list">
+                <thead>
+                  <tr><th>Projekt</th><th>Status</th><th class="uk-text-right">Zeit</th><th class="uk-text-right">Unverrechnet</th><th class="uk-text-right">Gesamt</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="kalkurama-project-row kalkurama-row-selected" data-project-row aria-selected="true">
+                    <td><strong>Website Relaunch</strong></td>
+                    <td><span class="kalkurama-status-chip">aktiv</span></td>
+                    <td class="uk-text-right kalkurama-time">18:40</td>
+                    <td class="uk-text-right">5</td>
+                    <td class="uk-text-right kalkurama-money"><strong>3.860,00 EUR</strong></td>
+                  </tr>
+                  <tr class="kalkurama-project-row" data-project-row aria-selected="false">
+                    <td><a href="./project.html"><strong>Brand Refresh</strong></a></td>
+                    <td><span class="kalkurama-status-chip">aktiv</span></td>
+                    <td class="uk-text-right kalkurama-time">07:15</td>
+                    <td class="uk-text-right">2</td>
+                    <td class="uk-text-right kalkurama-money"><strong>1.450,00 EUR</strong></td>
+                  </tr>
+                  <tr class="kalkurama-project-row" data-project-row aria-selected="false">
+                    <td><strong>Hosting 2026</strong></td>
+                    <td><span class="kalkurama-status-chip">pausiert</span></td>
+                    <td class="uk-text-right">—</td>
+                    <td class="uk-text-right">1</td>
+                    <td class="uk-text-right kalkurama-money"><strong>360,00 EUR</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <div class="kalkurama-workspace-actions">
+            <div>
+              <button class="uk-button uk-button-primary uk-button-small" type="button">+ Position</button>
+              <button class="uk-button uk-button-default uk-button-small" type="button">Timer starten</button>
+              <button class="uk-button uk-button-default uk-button-small" type="button">Neue Rechnung</button>
+              <button class="uk-button uk-button-default uk-button-small" type="button">Neues Angebot</button>
+            </div>
+            <ul class="uk-subnav uk-subnav-pill uk-margin-remove">
+              <li class="uk-active"><a href="#">Arbeit</a></li>
+              <li><a href="./estimates.html">Angebote</a></li>
+              <li><a href="./invoices.html">Rechnungen</a></li>
+              <li><a href="./payments.html">Zahlungen</a></li>
+              <li><a href="./credit-notes.html">Gutschriften</a></li>
+            </ul>
+          </div>
+
+          <section class="kalkurama-panel">
+            <div class="kalkurama-running-timer">
+              <span class="uk-label uk-label-success">Timer läuft</span>
+              <strong>Website Relaunch · Umsetzung</strong>
+              <span class="kalkurama-timer-value">01:24:18</span>
+              <button class="uk-button uk-button-danger uk-button-small" type="button">Stoppen</button>
+            </div>
+
+            <div class="kalkurama-panel-header">
+              <h2>Arbeit · Website Relaunch</h2>
+              <span class="uk-text-meta">5 unverrechnete Positionen · 1.285,00 EUR</span>
+            </div>
+
+            <div class="uk-overflow-auto">
+              <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                <thead><tr><th>Datum</th><th>Typ</th><th>Beschreibung</th><th class="uk-text-right">Menge/Zeit</th><th class="uk-text-right">Betrag</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>08.10.2026</td><td>Zeit</td><td>Frontend-Umsetzung</td><td class="uk-text-right">3:30 h</td><td class="uk-text-right">455,00 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
+                  <tr><td>07.10.2026</td><td>Zeit</td><td>UI-Abstimmung</td><td class="uk-text-right">1:45 h</td><td class="uk-text-right">227,50 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
+                  <tr><td>06.10.2026</td><td>Fix</td><td>Responsive Prototyp</td><td class="uk-text-right">1</td><td class="uk-text-right">420,00 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
+                  <tr><td>05.10.2026</td><td>Auslage</td><td>Stockmaterial</td><td class="uk-text-right">1</td><td class="uk-text-right">182,50 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
