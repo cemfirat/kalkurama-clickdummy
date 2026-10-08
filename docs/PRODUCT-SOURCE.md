@@ -124,6 +124,28 @@ controls and visible item tables rather than inventing drag-and-drop or arbitrar
 layout semantics.
 
 
+
+### #85 — explicit Invoice line discounts
+
+Issue #85 is **Class A — documented v1 baseline** and closes the commercial
+snapshot gap between Estimate Items and Invoice Lines.
+
+The productive baseline currently snapshots quantity, unit price, net, tax and
+gross on Invoice Lines but does not yet persist an explicit discount snapshot.
+
+Clickdummy consequence:
+
+- draft Invoice Lines expose discount rate explicitly;
+- pre-discount amount and discount amount remain visible beside net/tax/gross;
+- source Work traceability stays visible for imported lines;
+- issuing must freeze the discount snapshot together with all other line values;
+- HTML, PDF, e-invoice and full credit-note presentation must remain consistent;
+- calculations remain exact and integer-backed in the productive domain.
+
+The clickdummy models this as a commercial line field, not as a visual-only
+adjustment or promotional coupon system.
+
+
 ## Scope guard
 
 Until the productive source explicitly changes, the clickdummy must not add
