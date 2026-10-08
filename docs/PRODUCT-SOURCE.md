@@ -18,6 +18,26 @@ Inspected baseline:
 
 The clickdummy is not a second product specification.
 
+## Mirror contract
+
+For product-facing UI, the clickdummy is a **static mirror** of the recorded productive Kalkurama baseline.
+
+It must mirror:
+
+- shared shell/header/sidebar/offcanvas structure;
+- productive CSS selectors and layout behavior;
+- product-surface classes and UIkit composition;
+- navigation hierarchy and interaction architecture.
+
+Only these substitutions are expected in the clickdummy:
+
+- mock data instead of database-backed values;
+- static links instead of Symfony routes;
+- browser-only mock interactions instead of server actions;
+- Styleguide and Kalkurama Studio tooling that never ships to production.
+
+A product-facing clickdummy deviation is not a new product decision. Either realign it to production or record and prioritize the intended production change first.
+
 ## North Star
 
 Kalkurama connects the complete commercial path:
@@ -68,8 +88,9 @@ Before substantial clickdummy UI work:
 1. refresh current `kalkurama/main`
 2. inspect relevant product docs/issues
 3. compare productive Twig/CSS behavior
-4. record intentional deviations
-5. update the clickdummy baseline only after the new source state is understood.
+4. realign product-facing shell/layout/classes to the productive implementation
+5. record any deliberate remaining deviation explicitly
+6. update the clickdummy baseline only after the new source state is understood.
 
 ## Issue alignment
 
