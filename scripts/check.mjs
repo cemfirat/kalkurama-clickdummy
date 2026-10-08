@@ -245,7 +245,7 @@ assert(viteConfig.includes("await less.render"), "Theme Studio must compile LESS
 assert(viteConfig.includes("rolledBack: true"), "Theme Studio must report rollback after compile failure.");
 assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/verify"'), "Theme Studio Git verify endpoint missing.");
 assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/publish"'), "Theme Studio Git publish endpoint missing.");
-assert(viteConfig.includes('execFileSync("npm", ["run", "verify"]'), "Git Sync must run local full verification.");
+assert(viteConfig.includes('runNpmScript("verify")'), "Git Sync must run local full verification.");
 assert(viteConfig.includes('return "studio/theme-" + stamp'), "Git Sync must create studio/* working branches.");
 assert(viteConfig.includes('const verifyBranch = "verify/studio-theme-" + shortSha'), "Git Sync must create an exact verify/** branch.");
 assert(viteConfig.includes("Git Sync requires origin to be cemfirat/kalkurama-clickdummy."), "Git Sync must pin the exact repository origin.");
