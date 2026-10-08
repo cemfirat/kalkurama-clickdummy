@@ -235,3 +235,83 @@
     justify-content: flex-start;
   }
 }
+
+
+/* Invoice line discounts ------------------------------------------------- */
+
+.kalkurama-invoice-editor {
+  align-items: start;
+}
+
+.kalkurama-invoice-lines th,
+.kalkurama-invoice-lines td {
+  white-space: nowrap;
+}
+
+.kalkurama-invoice-lines td:first-child,
+.kalkurama-invoice-lines td:nth-child(2) {
+  white-space: normal;
+}
+
+.kalkurama-invoice-line-editor-row > td {
+  background: @global-muted-background;
+}
+
+.kalkurama-invoice-line-editor-form {
+  padding: .65rem .4rem;
+}
+
+.kalkurama-invoice-lines-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .55rem .875rem;
+  border-top: 1px solid @kalkurama-border;
+}
+
+.kalkurama-invoice-summary {
+  position: sticky;
+  top: 64px;
+}
+
+.kalkurama-invoice-totals {
+  margin: 0;
+}
+
+.kalkurama-invoice-totals > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .35rem 0;
+}
+
+.kalkurama-invoice-totals dt,
+.kalkurama-invoice-totals dd {
+  margin: 0;
+}
+
+.kalkurama-invoice-discount-total {
+  color: @kalkurama-muted;
+}
+
+.kalkurama-invoice-total {
+  margin-top: .25rem;
+  padding-top: .65rem !important;
+  border-top: 1px solid @kalkurama-border;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 1100px) {
+  .kalkurama-invoice-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) {
+  .kalkurama-invoice-lines-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
