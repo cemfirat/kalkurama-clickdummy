@@ -15,7 +15,7 @@ document.querySelectorAll("[data-nav-page]").forEach((item) => {
   const active = item.dataset.navPage === currentPage;
   item.classList.toggle("uk-active", active);
 
-  const link = item.querySelector("a");
+  const link = item.matches("a") ? item : item.querySelector("a");
   if (link) {
     if (active) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
