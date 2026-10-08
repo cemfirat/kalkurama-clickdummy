@@ -55,6 +55,7 @@ const styleguideExampleFiles = await readdir(new URL("../partials/styleguide/", 
 const themeEntries = await readdir(new URL("../src/themes/", import.meta.url));
 const customerEditModal = await readFile(new URL("../partials/customer-edit-modal.html", import.meta.url), "utf8");
 const projectEditModal = await readFile(new URL("../partials/project-edit-modal.html", import.meta.url), "utf8");
+const workCorrectionAudit = await readFile(new URL("../partials/work-correction-audit.html", import.meta.url), "utf8");
 const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
 const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
 const sharedPartials = [
@@ -148,6 +149,10 @@ for (const page of [
   assert(html[page].includes("unverrechnet"), page + " must state that direct correction is limited to unbilled work.");
   assert(html[page].includes("Original"), page + " must expose the original commercial values.");
   assert(
+    html[page].includes("@include partials/work-correction-audit.html"),
+    page + " must include the shared correction audit semantics."
+  );
+  assert(
     html[page].includes("reserviert") || html[page].includes("Entwurfsrechnung"),
     page + " must explain the selected_for_draft_invoice correction boundary."
   );
@@ -156,6 +161,12 @@ for (const page of [
     page + " must explain terminal billing-state correction boundaries."
   );
 }
+
+assert(workCorrectionAudit.includes("Bearbeiter"), "Correction audit must expose the actor.");
+assert(workCorrectionAudit.includes("Serverzeit"), "Correction audit must expose save-time semantics.");
+assert(workCorrectionAudit.includes("Pflichtfeld aus der Korrektur"), "Correction audit must preserve the required reason.");
+assert(workCorrectionAudit.includes("Originalwerte"), "Correction audit must preserve original commercial values.");
+assert(workCorrectionAudit.includes("append-only"), "Correction audit history must remain append-only.");
 
 assert(html["work-correction-fixed.html"].includes('name="entry_type" value="fixed"'), "Fixed correction type must remain explicit.");
 assert(html["work-correction-fixed.html"].includes("Betrag"), "Fixed correction must expose amount.");
