@@ -6,7 +6,7 @@ The productive source of truth is:
 
 Inspected baseline:
 
-`2bd658c65020984fe2583161ae8cceeae583f618`
+`ed273d6c38464a000751cd8ed0ca54e8266dfc27`
 
 ## Authority order
 
@@ -80,6 +80,19 @@ assets.
 - `importmap.php`
 
 The productive app pins UIkit `3.25.25`, which the clickdummy matches exactly.
+
+## Productive visual identity
+
+PR `cemfirat/kalkurama#118` is part of the recorded productive baseline.
+
+The product mirror therefore includes:
+
+- the Kalkurama SVG logo and SVG/ICO favicons;
+- AssetMapper-equivalent theme ownership under the clickdummy Kalkurama theme;
+- the productive magenta primary identity `#ff00ff` with the same hover/active steps;
+- the productive UIkit primary bridge and all app-specific branded states from `assets/styles/app.css`.
+
+The independent `standard` Vite mode is the only intentional visual exception: it normalizes the mirrored product identity back to the stock UIkit reference colors so UIkit Standard remains inspectable. The normal `kalkurama` and `pages` modes re-apply the productive identity after that reference-only normalization.
 
 ## Sync rule
 
