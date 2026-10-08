@@ -36,7 +36,8 @@ const standardTheme = await readFile(new URL("../src/themes/standard.less", impo
 const kalkuramaTheme = await readFile(new URL("../src/themes/kalkurama.less", import.meta.url), "utf8");
 const kalkuramaImports = await readFile(new URL("../src/themes/kalkurama/_import.less", import.meta.url), "utf8");
 const offcanvasTheme = await readFile(new URL("../src/themes/kalkurama/offcanvas.less", import.meta.url), "utf8");
-const systemMirror = await readFile(new URL("../src/themes/kalkurama/system.less", import.meta.url), "utf8");
+const systemMirror = await readFile(new URL("../src/styles/system.less", import.meta.url), "utf8");
+const brandTheme = await readFile(new URL("../src/themes/kalkurama/brand.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
 const productLess = await readFile(new URL("../src/styles/product.less", import.meta.url), "utf8");
 const prototypeLess = await readFile(new URL("../src/styles/prototype.less", import.meta.url), "utf8");
@@ -201,10 +202,14 @@ assert(kalkuramaTheme.includes('@import "standard.less";'), "Kalkurama theme mus
 assert(kalkuramaTheme.includes('@import "kalkurama/_import.less";'), "Kalkurama theme must load component customizations.");
 assert(kalkuramaImports.includes('@import "variables.less";'), "Kalkurama theme variables import missing.");
 assert(kalkuramaImports.includes('@import "offcanvas.less";'), "Kalkurama Offcanvas theme import missing.");
-assert(kalkuramaImports.includes('@import "system.less";'), "Productive Kalkurama style mirror import missing.");
-assert(systemMirror.includes("Mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
+assert(standardTheme.includes('@import "../styles/system.less";'), "UIkit Standard must load the productive structural CSS mirror.");
+assert(kalkuramaImports.includes('@import "brand.less";'), "Kalkurama branding import missing.");
+assert(systemMirror.includes("Exact structural CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
 assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
 assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
+assert(brandTheme.includes("--kalkurama-accent: @magenta;"), "Kalkurama branding must own the approved accent override.");
+assert(!shellLess.includes(".kalkurama-header"), "Legacy shell.less must not redefine productive shell structure.");
+assert(!productLess.includes(".kalkurama-customer-workspace"), "Prototype product.less must not redefine productive customer workspace structure.");
 assert(offcanvasTheme.includes("@offcanvas-bar-background"), "Light customer drawer must use UIkit Offcanvas variable.");
 assert(offcanvasTheme.includes(".hook-offcanvas-bar()"), "Offcanvas custom declaration must use UIkit hook.");
 
