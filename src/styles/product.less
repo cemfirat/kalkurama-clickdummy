@@ -109,3 +109,129 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Estimate sections ------------------------------------------------------ */
+
+.kalkurama-estimate-editor {
+  align-items: start;
+}
+
+.kalkurama-estimate-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .7rem .875rem;
+  border: 1px solid @kalkurama-border;
+  border-top: 0;
+  background: darken(@global-muted-background, 1%);
+}
+
+.kalkurama-estimate-toolbar > div {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+}
+
+.kalkurama-estimate-section {
+  border: 1px solid @kalkurama-border;
+  border-top: 0;
+  background: @kalkurama-surface;
+}
+
+.kalkurama-estimate-section-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: start;
+  padding: .75rem .875rem;
+  background: @global-muted-background;
+}
+
+.kalkurama-estimate-section-order {
+  display: flex;
+  gap: .2rem;
+}
+
+.kalkurama-estimate-section-title {
+  min-width: 0;
+}
+
+.kalkurama-estimate-section-title h2 {
+  margin: .05rem 0 .15rem;
+  font-size: 1rem;
+}
+
+.kalkurama-estimate-section-title p {
+  margin: 0;
+  color: @kalkurama-muted;
+  font-size: .8rem;
+}
+
+.kalkurama-estimate-section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: .5rem;
+}
+
+.kalkurama-estimate-section-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .55rem .875rem;
+  border-top: 1px solid @kalkurama-border;
+}
+
+.kalkurama-estimate-section--ungrouped {
+  margin-top: .75rem;
+  border-top: 1px solid @kalkurama-border;
+}
+
+.kalkurama-estimate-summary {
+  position: sticky;
+  top: 64px;
+}
+
+.kalkurama-estimate-totals {
+  margin: 0;
+}
+
+.kalkurama-estimate-totals > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .35rem 0;
+}
+
+.kalkurama-estimate-totals dt,
+.kalkurama-estimate-totals dd {
+  margin: 0;
+}
+
+.kalkurama-estimate-total {
+  margin-top: .25rem;
+  padding-top: .65rem !important;
+  border-top: 1px solid @kalkurama-border;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 1100px) {
+  .kalkurama-estimate-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) {
+  .kalkurama-estimate-section-header {
+    grid-template-columns: 1fr;
+  }
+
+  .kalkurama-estimate-section-order,
+  .kalkurama-estimate-section-actions {
+    justify-content: flex-start;
+  }
+}
