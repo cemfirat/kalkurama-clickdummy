@@ -58,6 +58,7 @@ const projectEditModal = await readFile(new URL("../partials/project-edit-modal.
 const workCorrectionAudit = await readFile(new URL("../partials/work-correction-audit.html", import.meta.url), "utf8");
 const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
 const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
+const themeStudioPartial = await readFile(new URL("../partials/theme-studio.html", import.meta.url), "utf8");
 const sharedPartials = [
   await readFile(new URL("../partials/header.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8"),
