@@ -15,6 +15,7 @@ const productPages = [
   ["estimates.html", "estimates"],
   ["estimate.html", "estimates"],
   ["invoices.html", "invoices"],
+  ["invoice.html", "invoices"],
   ["payments.html", "payments"],
   ["credit-notes.html", "credit-notes"],
   ["services.html", "services"],
@@ -82,6 +83,15 @@ assert(html["index.html"].includes("kalkurama-running-timer"), "Daily landing mu
 assert(html["index.html"].includes("uk-subnav uk-subnav-pill"), "Customer workspace must expose project-scoped document tabs.");
 assert(html["project.html"].includes("Unverrechnete Arbeit"), "Project view must keep work as a central surface.");
 
+assert(html["invoices.html"].includes('href="./invoice.html"'), "Invoice list must link to the discount prototype.");
+assert(html["invoice.html"].includes("Vor Rabatt"), "Invoice detail must expose the pre-discount amount.");
+assert(html["invoice.html"].includes("Rabatt %"), "Invoice detail must expose explicit discount-rate editing.");
+assert(html["invoice.html"].includes("−130,00 EUR"), "Invoice detail must expose explicit discount amount.");
+assert(html["invoice.html"].includes('data-source-work="time:1842"'), "Invoice detail must preserve source Work traceability.");
+assert(html["invoice.html"].includes("selected_for_draft_invoice"), "Invoice detail must preserve draft work-reservation semantics.");
+assert(html["invoice.html"].includes("Discount Rate/Amount"), "Invoice detail must state issued discount snapshot semantics.");
+assert(html["invoice.html"].includes("HTML, PDF, E-Invoice"), "Invoice detail must preserve presentation consistency requirements.");
+
 assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the section prototype.");
 assert(html["estimate.html"].includes('data-estimate-section="concept"'), "Estimate detail must expose an explicit first section.");
 assert(html["estimate.html"].includes('data-estimate-section="implementation"'), "Estimate detail must expose ordered multiple sections.");
@@ -136,6 +146,7 @@ assert(!viteConfig.includes('const files = ["src/themes/standard.less"]'), "UIki
 assert(viteConfig.includes("await less.render"), "Theme Studio must compile LESS before accepting saves.");
 assert(viteConfig.includes("rolledBack: true"), "Theme Studio must report rollback after compile failure.");
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
+assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
 assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfig), "Standard Vite mode missing.");
 assert(/\bkalkurama:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Kalkurama Vite mode missing.");
@@ -183,6 +194,8 @@ assert(!studioSource.includes("api.github.com"), "Theme Studio client must not t
 
 assert(productSourceGuide.includes("Billings-like daily interaction architecture"), "Product source guide must preserve UX target.");
 assert(productSourceGuide.includes("3.25.25"), "Product source guide must record productive UIkit version.");
+assert(productSourceGuide.includes("#85 — explicit Invoice line discounts"), "Product source guide must document Invoice discount issue #85.");
+assert(productSourceGuide.includes("pre-discount amount"), "Product source guide must preserve explicit pre-discount semantics.");
 assert(productSourceGuide.includes("#84 — explicit Estimate sections"), "Product source guide must document Estimate Sections issue #84.");
 assert(productSourceGuide.includes("sections are optional"), "Product source guide must preserve optional Estimate section semantics.");
 assert(themesGuide.includes("UIkit Standard") && themesGuide.includes("Kalkurama"), "Theme guide must document hierarchy.");
@@ -196,6 +209,7 @@ assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide m
 assert(transferStatus.includes('"partials/theme-studio.html"'), "Theme Studio must remain prototype-only for transfer.");
 assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples must remain prototype-only for transfer.");
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
+assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
 assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
 
 assert(branchWorkflow.includes('"verify/**"'), "Branch verify workflow must target verify/**.");

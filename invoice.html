@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rechnungsentwurf · Kalkurama Clickdummy</title>
+</head>
+<body data-page="invoices">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+
+      <main class="kalkurama-main" id="main-content">
+        <div class="kalkurama-page-heading">
+          <div>
+            <div class="uk-text-meta">
+              <a href="./index.html">Atelier Morgen</a>
+              · Rechnung · Entwurf
+            </div>
+            <h1>Rechnungsentwurf · Website Relaunch</h1>
+            <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
+              <div><span class="uk-label uk-label-warning">Entwurf</span></div>
+              <div><span class="uk-text-meta">noch keine Rechnungsnummer</span></div>
+            </div>
+          </div>
+
+          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./invoices.html">Alle Rechnungen</a></div>
+            <div><button class="uk-button uk-button-default uk-button-small" type="button">Entwurf speichern</button></div>
+            <div><button class="uk-button uk-button-primary uk-button-small" type="button">Rechnung ausstellen</button></div>
+          </div>
+        </div>
+
+        <div class="kalkurama-detail-grid kalkurama-invoice-editor">
+          <div>
+            <section class="kalkurama-panel">
+              <div class="kalkurama-panel-header">
+                <div>
+                  <h2>Rechnungspositionen</h2>
+                  <span class="uk-text-meta">Work-backed und manuelle Lines behalten ihren eigenen kommerziellen Snapshot.</span>
+                </div>
+                <button class="uk-button uk-button-default uk-button-small" type="button">+ Manuelle Position</button>
+              </div>
+
+              <div class="uk-alert uk-alert-primary">
+                Rabatte werden pro Draft-Line explizit gespeichert: Pre-discount, Rate, Discount amount, Net, Tax und Gross.
+              </div>
+
+              <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove kalkurama-invoice-lines">
+                  <thead>
+                    <tr>
+                      <th>Position</th>
+                      <th>Projekt / Quelle</th>
+                      <th class="uk-text-right">Menge</th>
+                      <th>Einheit</th>
+                      <th class="uk-text-right">Einzelpreis</th>
+                      <th class="uk-text-right">Vor Rabatt</th>
+                      <th class="uk-text-right">Rabatt</th>
+                      <th class="uk-text-right">Netto</th>
+                      <th class="uk-text-right">Steuer</th>
+                      <th class="uk-text-right">Brutto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-invoice-line data-source-work="time:1842">
+                      <td>
+                        <strong>Frontend Development</strong>
+                        <div class="uk-text-meta">Work-backed line</div>
+                      </td>
+                      <td>
+                        Website Relaunch
+                        <div class="uk-text-meta">TimeEntry #1842 · reserviert</div>
+                      </td>
+                      <td class="uk-text-right">10,000</td>
+                      <td>h</td>
+                      <td class="uk-text-right">130,00 EUR</td>
+                      <td class="uk-text-right">1.300,00 EUR</td>
+                      <td class="uk-text-right">
+                        <strong>10,00 %</strong>
+                        <div class="uk-text-meta">−130,00 EUR</div>
+                      </td>
+                      <td class="uk-text-right">1.170,00 EUR</td>
+                      <td class="uk-text-right">20,00 %<div class="uk-text-meta">234,00 EUR</div></td>
+                      <td class="uk-text-right"><strong>1.404,00 EUR</strong></td>
+                    </tr>
+
+                    <tr class="kalkurama-invoice-line-editor-row">
+                      <td colspan="10">
+                        <form class="uk-form-stacked kalkurama-invoice-line-editor-form">
+                          <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l" data-uk-grid>
+                            <div>
+                              <label class="uk-form-label" for="invoice-line-description">Beschreibung</label>
+                              <input id="invoice-line-description" class="uk-input uk-form-small" value="Frontend Development">
+                            </div>
+                            <div>
+                              <label class="uk-form-label" for="invoice-line-quantity">Menge</label>
+                              <input id="invoice-line-quantity" class="uk-input uk-form-small" value="10,000">
+                            </div>
+                            <div>
+                              <label class="uk-form-label" for="invoice-line-price">Einzelpreis</label>
+                              <input id="invoice-line-price" class="uk-input uk-form-small" value="130,00">
+                            </div>
+                            <div>
+                              <label class="uk-form-label" for="invoice-line-discount">Rabatt %</label>
+                              <input id="invoice-line-discount" class="uk-input uk-form-small" value="10,00">
+                            </div>
+                          </div>
+
+                          <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap uk-margin-small-top">
+                            <span class="uk-text-meta">Quelle bleibt TimeEntry #1842; spätere Work-Änderungen dürfen den Invoice-Snapshot nicht umschreiben.</span>
+                            <button class="uk-button uk-button-text uk-button-small" type="button">Line aktualisieren</button>
+                          </div>
+                        </form>
+                      </td>
+                    </tr>
+
+                    <tr data-invoice-line data-source-work="fixed:602">
+                      <td>
+                        <strong>Responsive QA</strong>
+                        <div class="uk-text-meta">Work-backed line</div>
+                      </td>
+                      <td>
+                        Website Relaunch
+                        <div class="uk-text-meta">FixedWork #602 · reserviert</div>
+                      </td>
+                      <td class="uk-text-right">1,000</td>
+                      <td>Pauschale</td>
+                      <td class="uk-text-right">680,00 EUR</td>
+                      <td class="uk-text-right">680,00 EUR</td>
+                      <td class="uk-text-right">0,00 %<div class="uk-text-meta">0,00 EUR</div></td>
+                      <td class="uk-text-right">680,00 EUR</td>
+                      <td class="uk-text-right">20,00 %<div class="uk-text-meta">136,00 EUR</div></td>
+                      <td class="uk-text-right"><strong>816,00 EUR</strong></td>
+                    </tr>
+
+                    <tr data-invoice-line data-source-work="expense:91">
+                      <td>
+                        <strong>Stockmaterial</strong>
+                        <div class="uk-text-meta">Work-backed line</div>
+                      </td>
+                      <td>
+                        Website Relaunch
+                        <div class="uk-text-meta">Expense #91 · reserviert</div>
+                      </td>
+                      <td class="uk-text-right">1,000</td>
+                      <td>Auslage</td>
+                      <td class="uk-text-right">182,50 EUR</td>
+                      <td class="uk-text-right">182,50 EUR</td>
+                      <td class="uk-text-right">0,00 %<div class="uk-text-meta">0,00 EUR</div></td>
+                      <td class="uk-text-right">182,50 EUR</td>
+                      <td class="uk-text-right">20,00 %<div class="uk-text-meta">36,50 EUR</div></td>
+                      <td class="uk-text-right"><strong>219,00 EUR</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="kalkurama-invoice-lines-footer">
+                <span class="uk-text-meta">3 Lines · alle Beträge integer-basiert im Domainmodell</span>
+                <button class="uk-button uk-button-text uk-button-small" type="button">Weitere unverrechnete Arbeit hinzufügen</button>
+              </div>
+            </section>
+
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header">
+                <div>
+                  <h2>Source Work &amp; Historie</h2>
+                  <span class="uk-text-meta">Work bleibt bis Issue reserviert und wird beim Entfernen aus dem Draft wieder freigegeben.</span>
+                </div>
+              </div>
+
+              <ul class="uk-list uk-list-divider uk-margin-remove">
+                <li class="uk-flex uk-flex-between uk-flex-middle">
+                  <span>TimeEntry #1842 · Frontend Development</span>
+                  <span class="uk-label">selected_for_draft_invoice</span>
+                </li>
+                <li class="uk-flex uk-flex-between uk-flex-middle">
+                  <span>FixedWork #602 · Responsive QA</span>
+                  <span class="uk-label">selected_for_draft_invoice</span>
+                </li>
+                <li class="uk-flex uk-flex-between uk-flex-middle">
+                  <span>Expense #91 · Stockmaterial</span>
+                  <span class="uk-label">selected_for_draft_invoice</span>
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <aside class="kalkurama-invoice-summary">
+            <section class="kalkurama-panel">
+              <div class="kalkurama-panel-header">
+                <h2>Rechnung</h2>
+                <span class="uk-label uk-label-warning">Entwurf</span>
+              </div>
+
+              <dl class="uk-description-list">
+                <dt>Kunde</dt><dd>Atelier Morgen</dd>
+                <dt>Währung</dt><dd>EUR</dd>
+                <dt>Quelle</dt><dd>3 Work Entries</dd>
+                <dt>Zahlungsziel</dt><dd>14 Tage</dd>
+              </dl>
+
+              <div class="uk-alert uk-alert-primary">
+                Eine finale Rechnungsnummer wird erst beim erfolgreichen Ausstellen vergeben.
+              </div>
+            </section>
+
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header"><h2>Summen</h2></div>
+              <dl class="kalkurama-invoice-totals">
+                <div><dt>Vor Rabatt</dt><dd>2.162,50 EUR</dd></div>
+                <div class="kalkurama-invoice-discount-total"><dt>Rabatt</dt><dd>−130,00 EUR</dd></div>
+                <div><dt>Netto</dt><dd>2.032,50 EUR</dd></div>
+                <div><dt>USt. 20 %</dt><dd>406,50 EUR</dd></div>
+                <div class="kalkurama-invoice-total"><dt>Gesamt</dt><dd>2.439,00 EUR</dd></div>
+              </dl>
+            </section>
+
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header"><h2>Ausstellen</h2></div>
+              <label class="uk-form-label" for="invoice-issue-date">Rechnungsdatum</label>
+              <input id="invoice-issue-date" class="uk-input" type="date" value="2026-10-08">
+
+              <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-top" type="button">Rechnung ausstellen</button>
+              <p class="uk-text-meta uk-margin-small-top">
+                Beim Issue werden Discount Rate/Amount, Pre-discount, Net, Tax und Gross jeder Line unveränderlich gesichert.
+              </p>
+            </section>
+
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header"><h2>Nach Issue</h2></div>
+              <p class="uk-text-meta">
+                Derselbe Discount-Snapshot muss in HTML, PDF, E-Invoice und einer späteren Vollgutschrift konsistent dargestellt werden.
+              </p>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
