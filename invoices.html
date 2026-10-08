@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Rechnungen · Kalkurama Clickdummy</title></head>
+<body data-page="invoices">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <div class="kalkurama-page-heading">
+          <div><div class="uk-text-meta">Abrechnung</div><h1>Rechnungen</h1></div>
+          <a class="uk-button uk-button-primary" href="#">Neue Rechnung</a>
+        </div>
+        <div class="uk-card uk-card-default">
+          <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+              <thead><tr><th>Rechnung</th><th>Kunde</th><th>Fällig</th><th>Status</th><th class="uk-text-right">Gesamt</th><th class="uk-text-right">Bezahlt</th><th class="uk-text-right">Offen</th></tr></thead>
+              <tbody>
+                <tr><td><strong>RE-2026-031</strong><br><span class="uk-text-meta">06.10.2026</span></td><td>Atelier Morgen</td><td>20.10.2026</td><td><span class="uk-label">offen</span></td><td class="uk-text-right">2.460,00 EUR</td><td class="uk-text-right">0,00 EUR</td><td class="uk-text-right"><strong>2.460,00 EUR</strong></td></tr>
+                <tr><td><strong>RE-2026-029</strong><br><span class="uk-text-meta">18.09.2026</span></td><td>Nordlicht GmbH</td><td>02.10.2026</td><td><span class="uk-label uk-label-danger">überfällig</span></td><td class="uk-text-right">1.240,00 EUR</td><td class="uk-text-right">0,00 EUR</td><td class="uk-text-right"><strong>1.240,00 EUR</strong></td></tr>
+                <tr><td><strong>RE-2026-028</strong><br><span class="uk-text-meta">12.09.2026</span></td><td>Praxis Feld</td><td>26.09.2026</td><td><span class="uk-label uk-label-success">bezahlt</span></td><td class="uk-text-right">890,00 EUR</td><td class="uk-text-right">890,00 EUR</td><td class="uk-text-right"><strong>0,00 EUR</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
