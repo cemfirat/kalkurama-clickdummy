@@ -1,0 +1,26 @@
+{
+  "name": "kalkurama-clickdummy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HTML-first UIkit clickdummy for Kalkurama.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode kalkurama",
+    "dev:standard": "vite --mode standard",
+    "check": "node scripts/check.mjs",
+    "build": "vite build --mode kalkurama",
+    "build:standard": "vite build --mode standard",
+    "build:pages": "vite build --mode pages",
+    "verify": "npm run check && npm run build:standard && npm run build && npm run build:pages",
+    "transfer:status": "node scripts/transfer-status.mjs",
+    "preview": "vite preview",
+    "studio": "vite --mode kalkurama --host 127.0.0.1"
+  },
+  "dependencies": {
+    "uikit": "3.25.25"
+  },
+  "devDependencies": {
+    "less": "4.9.1",
+    "vite": "8.3.3"
+  }
+}

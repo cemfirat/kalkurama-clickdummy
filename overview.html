@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Übersicht · Kalkurama Clickdummy</title>
+</head>
+<body data-page="overview">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <!-- @include partials/page-heading.html {"eyebrow":"Allgemein","title":"Übersicht","description":"Sekundärer Überblick – die tägliche Arbeit bleibt im Kunden-/Projektkontext."} -->
+
+        <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l" data-uk-grid>
+          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Laufender Timer</span><strong class="uk-display-block uk-text-large">01:24:18</strong><a href="./index.html">Website Relaunch</a></div></div>
+          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Unverrechnete Arbeit</span><strong class="uk-display-block uk-text-large">3.482,50 EUR</strong><a href="./work.html">Arbeit öffnen</a></div></div>
+          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Offene Rechnungen</span><strong class="uk-display-block uk-text-large">8.920,00 EUR</strong><a href="./invoices.html">Rechnungen öffnen</a></div></div>
+          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Überfällig</span><strong class="uk-display-block uk-text-large">1.240,00 EUR</strong><a href="./invoices.html">1 Rechnung</a></div></div>
+        </div>
+
+        <div class="uk-grid-medium uk-margin-top" data-uk-grid>
+          <div class="uk-width-2-3@l">
+            <section class="uk-card uk-card-default">
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Zuletzt bearbeitet</h2></div>
+              <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                  <thead><tr><th>Kunde</th><th>Projekt</th><th>Letzte Aktivität</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>Atelier Morgen</td><td><a href="./index.html">Website Relaunch</a></td><td>heute, 16:42</td><td><span class="uk-label uk-label-success">aktiv</span></td></tr>
+                    <tr><td>Nordlicht GmbH</td><td>Jahreskampagne</td><td>heute, 11:18</td><td><span class="uk-label">aktiv</span></td></tr>
+                    <tr><td>Praxis Feld</td><td>Webpflege</td><td>02.10.2026</td><td><span class="uk-label uk-label-warning">ruhig</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <div class="uk-width-1-3@l">
+            <section class="uk-card uk-card-default uk-card-body">
+              <h2 class="uk-card-title">Workflow</h2>
+              <ul class="uk-list uk-list-divider">
+                <li>Kunde → Projekt</li>
+                <li>Leistung / Arbeit</li>
+                <li>Angebot → Ist-Arbeit</li>
+                <li>Rechnung → Zahlung</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

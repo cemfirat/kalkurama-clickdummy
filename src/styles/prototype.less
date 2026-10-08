@@ -1,0 +1,53 @@
+.styleguide-section {
+  margin-bottom: 4rem;
+  scroll-margin-top: 2rem;
+}
+
+.styleguide-preview,
+.styleguide-markup {
+  border: 1px solid @kalkurama-border;
+  background: @kalkurama-surface;
+}
+
+.styleguide-preview {
+  padding: 1.5rem;
+}
+
+.styleguide-markup pre {
+  max-height: 28rem;
+  margin: 0;
+  padding: 1rem;
+  overflow: auto;
+  border: 0;
+  background: @global-muted-background;
+  font-size: .8rem;
+}
+
+.theme-studio-panel {
+  width: min(52rem, 96vw);
+  max-width: 96vw;
+  padding: 2rem;
+}
+
+.theme-studio-editor {
+  min-height: 34rem;
+  resize: vertical;
+  tab-size: 2;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+.theme-studio-error {
+  white-space: pre-wrap;
+}
+
+.theme-studio-diff {
+  max-height: 24rem;
+  overflow: auto;
+  border: 1px solid fade(#fff, 22%);
+  background: #1f2329;
+  color: #fff;
+  font-size: .76rem;
+  line-height: 1.55;
+}

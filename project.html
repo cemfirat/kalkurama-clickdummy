@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Brand Refresh · Kalkurama Clickdummy</title></head>
+<body data-page="project">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <div class="kalkurama-page-heading">
+          <div><div class="uk-text-meta"><a href="./index.html">Atelier Morgen</a> · Projekt</div><h1>Brand Refresh</h1><span class="uk-label uk-label-success">aktiv</span></div>
+          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
+            <div><button class="uk-button uk-button-primary uk-button-small">Timer starten</button></div>
+            <div><button class="uk-button uk-button-default uk-button-small">Zeit hinzufügen</button></div>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./estimates.html">Neues Angebot</a></div>
+          </div>
+        </div>
+
+        <div class="kalkurama-detail-grid">
+          <section class="kalkurama-panel">
+            <div class="kalkurama-panel-header"><h2>Unverrechnete Arbeit</h2><span class="uk-text-meta">2 Positionen · 620,00 EUR</span></div>
+            <div class="uk-overflow-auto">
+              <table class="uk-table uk-table-divider uk-table-small uk-margin-remove">
+                <thead><tr><th>Datum</th><th>Beschreibung</th><th>Typ</th><th class="uk-text-right">Betrag</th></tr></thead>
+                <tbody>
+                  <tr><td>08.10.2026</td><td>Logo-Ausarbeitung</td><td>Zeit</td><td class="uk-text-right">390,00 EUR</td></tr>
+                  <tr><td>07.10.2026</td><td>Typografie-Konzept</td><td>Fix</td><td class="uk-text-right">230,00 EUR</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <aside>
+            <section class="kalkurama-panel">
+              <div class="kalkurama-panel-header"><h2>Lifecycle</h2></div>
+              <p><span class="uk-label uk-label-success">aktiv</span></p>
+              <button class="uk-button uk-button-default uk-button-small">Pausieren</button>
+              <button class="uk-button uk-button-text uk-button-small">Abschließen</button>
+            </section>
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header"><h2>Angebote</h2></div>
+              <ul class="uk-list uk-list-divider uk-margin-remove">
+                <li class="uk-flex uk-flex-between"><a href="./estimates.html"><strong>AN-2026-014</strong></a><span class="uk-text-meta">angenommen</span></li>
+              </ul>
+            </section>
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header"><h2>Rechnungen</h2></div>
+              <ul class="uk-list uk-list-divider uk-margin-remove">
+                <li class="uk-flex uk-flex-between"><a href="./invoices.html"><strong>RE-2026-031</strong></a><span class="uk-text-meta">offen</span></li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

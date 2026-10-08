@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Einstellungen · Kalkurama Clickdummy</title></head>
+<body data-page="settings">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <!-- @include partials/page-heading.html {"eyebrow":"Kalkurama","title":"Einstellungen","description":"Workspace, Dokumente, Steuern, Nummernkreise und persönliche Präferenzen."} -->
+
+        <div class="uk-grid-medium" data-uk-grid>
+          <aside class="uk-width-1-4@l">
+            <ul class="uk-nav uk-nav-default">
+              <li class="uk-active"><a href="#">Unternehmen</a></li>
+              <li><a href="#">Dokumente</a></li>
+              <li><a href="#">Steuern & Währungen</a></li>
+              <li><a href="#">Nummernkreise</a></li>
+              <li><a href="#">Konto & Sprache</a></li>
+            </ul>
+          </aside>
+          <div class="uk-width-expand@l">
+            <form class="uk-card uk-card-default uk-card-body uk-form-stacked">
+              <h2 class="uk-card-title">Unternehmen</h2>
+              <div class="uk-margin">
+                <label class="uk-form-label" for="company-name">Name</label>
+                <input id="company-name" class="uk-input" value="Demo Workspace">
+              </div>
+              <div class="uk-grid-small uk-child-width-1-2@m" data-uk-grid>
+                <div><label class="uk-form-label" for="currency">Standardwährung</label><select id="currency" class="uk-select"><option>EUR</option></select></div>
+                <div><label class="uk-form-label" for="language">Sprache</label><select id="language" class="uk-select"><option>Deutsch</option><option>English</option></select></div>
+              </div>
+              <div class="uk-margin"><button class="uk-button uk-button-primary" type="button">Speichern</button></div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

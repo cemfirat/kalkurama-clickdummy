@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Styleguide · Kalkurama Clickdummy</title>
+</head>
+<body data-page="styleguide">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <div class="kalkurama-page-heading">
+          <div>
+            <div class="uk-text-meta">UI Lab</div>
+            <h1>UI Styleguide</h1>
+            <p class="uk-text-meta uk-margin-small-top">UIkit-Referenz, Kalkurama Theme und produktbezogene Muster.</p>
+          </div>
+          <button class="uk-button uk-button-primary uk-button-small" type="button" data-studio-open="src/themes/kalkurama/variables.less" disabled>Theme Studio</button>
+        </div>
+
+        <div class="uk-alert uk-alert-primary">
+          Aktives Theme: <span class="uk-label" data-active-theme>kalkurama</span>.
+          Der öffentliche Preview ist read-only; Theme Studio funktioniert nur lokal.
+        </div>
+
+        <div class="uk-grid-large" data-uk-grid>
+          <aside class="uk-width-1-4@l">
+            <div data-uk-sticky="offset: 24; end: true">
+              <ul class="uk-nav uk-nav-default">
+                <li class="uk-nav-header">Grundlagen</li>
+                <li><a href="#theme" data-uk-scroll>Theme System</a></li>
+                <li><a href="#tokens" data-uk-scroll>Tokens</a></li>
+                <li class="uk-nav-divider"></li>
+                <li class="uk-nav-header">Komponenten</li>
+                <li><a href="#buttons" data-uk-scroll>Button</a></li>
+                <li><a href="#forms" data-uk-scroll>Form</a></li>
+                <li><a href="#tables" data-uk-scroll>Table</a></li>
+                <li><a href="#navigation" data-uk-scroll>Navigation</a></li>
+                <li><a href="#status" data-uk-scroll>Status & Alert</a></li>
+                <li class="uk-nav-divider"></li>
+                <li class="uk-nav-header">Kalkurama</li>
+                <li><a href="#kalkurama-components" data-uk-scroll>Produktmuster</a></li>
+              </ul>
+            </div>
+          </aside>
+
+          <div class="uk-width-expand@l">
+            <section id="theme" class="styleguide-section">
+              <div class="uk-text-meta">Theme Architecture</div>
+              <h2 class="uk-heading-small uk-margin-small-top">Standard → Kalkurama → Customer</h2>
+              <p class="uk-text-lead">UIkit Standard bleibt Systemreferenz. Kalkurama erbt davon über Variablen und Hooks. Kunden-Themes sind optional und erben Kalkurama.</p>
+              <div class="uk-grid-small uk-child-width-1-3@m" data-uk-grid>
+                <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-label">Level 1</span><h3 class="uk-card-title">UIkit Standard</h3><code>src/themes/standard.less</code></div></div>
+                <div><div class="uk-card uk-card-primary uk-card-body"><span class="uk-label">Level 2</span><h3 class="uk-card-title">Kalkurama</h3><code>src/themes/kalkurama.less</code><p>Variablen und Hooks für Kalkurama.</p><button class="uk-button uk-button-default uk-button-small" type="button" data-studio-open="src/themes/kalkurama/variables.less" disabled>Theme bearbeiten</button></div></div>
+                <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-label">Level 3</span><h3 class="uk-card-title">Customer</h3><code>src/themes/customers/&lt;slug&gt;.less</code><p class="uk-text-meta">Optional; keine erfundenen Kundenbrands.</p></div></div>
+              </div>
+            </section>
+
+            <section id="tokens" class="styleguide-section">
+              <div class="uk-flex uk-flex-between uk-flex-bottom uk-flex-wrap">
+                <div>
+                  <div class="uk-text-meta">Theme Tokens</div>
+                  <h2 class="uk-heading-small uk-margin-small-top">Kalkurama Basiswerte</h2>
+                </div>
+                <button class="uk-button uk-button-text" type="button" data-studio-open="src/themes/kalkurama/variables.less" disabled>variables.less bearbeiten</button>
+              </div>
+              <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l" data-uk-grid>
+                <div><div class="uk-card uk-card-default uk-card-body"><strong>Primary</strong><code class="uk-display-block">@global-primary-background</code><span>#1e87f0</span></div></div>
+                <div><div class="uk-card uk-card-default uk-card-body"><strong>Surface</strong><code class="uk-display-block">@global-background</code><span>#ffffff</span></div></div>
+                <div><div class="uk-card uk-card-default uk-card-body"><strong>Muted</strong><code class="uk-display-block">@global-muted-color</code><span>#5c6570</span></div></div>
+                <div><div class="uk-card uk-card-default uk-card-body"><strong>Text</strong><code class="uk-display-block">@global-color</code><span>#20242a</span></div></div>
+              </div>
+            </section>
+
+            <section id="buttons" class="styleguide-section">
+    <div class="uk-flex uk-flex-between uk-flex-bottom uk-flex-wrap">
+      <div>
+        <div class="uk-text-meta">UIkit Component</div>
+        <h2 class="uk-heading-small uk-margin-small-top uk-margin-remove-bottom">Button</h2>
+        <p class="uk-text-lead uk-margin-small-top">Aktionen bleiben native UIkit Buttons; Kalkurama ergänzt nur Kontext und Dichte.</p>
+      </div>
+      <a class="uk-button uk-button-text" href="https://getuikit.com/docs/button" target="_blank" rel="noreferrer">UIkit Docs</a>
+    </div>
+    <ul class="uk-tab" data-uk-tab="connect: #buttons-switcher">
+      <li class="uk-active"><a href="#">Preview</a></li>
+      <li><a href="#">Markup</a></li>
+    </ul>
+    <ul id="buttons-switcher" class="uk-switcher">
+      <li><div class="styleguide-preview"><!-- @include partials/styleguide/buttons.html --></div></li>
+      <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/buttons.html --></code></pre></div></li>
+    </ul>
+  </section>
+            <section id="forms" class="styleguide-section">
+    <div class="uk-flex uk-flex-between uk-flex-bottom uk-flex-wrap">
+      <div>
+        <div class="uk-text-meta">UIkit Component</div>
+        <h2 class="uk-heading-small uk-margin-small-top uk-margin-remove-bottom">Form</h2>
+        <p class="uk-text-lead uk-margin-small-top">Formulare nutzen UIkit Controls und bleiben im Workflow kompakt.</p>
+      </div>
+      <a class="uk-button uk-button-text" href="https://getuikit.com/docs/form" target="_blank" rel="noreferrer">UIkit Docs</a>
+    </div>
+    <ul class="uk-tab" data-uk-tab="connect: #forms-switcher">
+      <li class="uk-active"><a href="#">Preview</a></li>
+      <li><a href="#">Markup</a></li>
+    </ul>
+    <ul id="forms-switcher" class="uk-switcher">
+      <li><div class="styleguide-preview"><!-- @include partials/styleguide/forms.html --></div></li>
+      <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/forms.html --></code></pre></div></li>
+    </ul>
+  </section>
+            <section id="tables" class="styleguide-section">
+    <div class="uk-flex uk-flex-between uk-flex-bottom uk-flex-wrap">
+      <div>
+        <div class="uk-text-meta">UIkit Component</div>
+        <h2 class="uk-heading-small uk-margin-small-top uk-margin-remove-bottom">Table</h2>
+        <p class="uk-text-lead uk-margin-small-top">Kalkurama ist datenreich; Tabellen sind ein primäres Arbeitsmuster.</p>
+      </div>
+      <a class="uk-button uk-button-text" href="https://getuikit.com/docs/table" target="_blank" rel="noreferrer">UIkit Docs</a>
+    </div>
+    <ul class="uk-tab" data-uk-tab="connect: #tables-switcher">
+      <li class="uk-active"><a href="#">Preview</a></li>
+      <li><a href="#">Markup</a></li>
+    </ul>
+    <ul id="tables-switcher" class="uk-switcher">
+      <li><div class="styleguide-preview"><!-- @include partials/styleguide/tables.html --></div></li>
+      <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/tables.html --></code></pre></div></li>
+    </ul>
+  </section>
+            <section id="navigation" class="styleguide-section">
+    <div class="uk-flex uk-flex-between uk-flex-bottom uk-flex-wrap">
+      <div>
+        <div class="uk-text-meta">UIkit Component</div>
+        <h2 class="uk-heading-small uk-margin-small-top uk-margin-remove-bottom">Navigation</h2>
+        <p class="uk-text-lead uk-margin-small-top">Subnav und Breadcrumb unterstützen Projekt- und Dokumentkontext.</p>
+      </div>
+      <a class="uk-button uk-button-text" href="https://getuikit.com/docs/nav" target="_blank" rel="noreferrer">UIkit Docs</a>
+    </div>
+    <ul class="uk-tab" data-uk-tab="connect: #navigation-switcher">
+      <li class="uk-active"><a href="#">Preview</a></li>
+      <li><a href="#">Markup</a></li>
+    </ul>
+    <ul id="navigation-switcher" class="uk-switcher">
+      <li><div class="styleguide-preview"><!-- @include partials/styleguide/navigation.html --></div></li>
+      <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/navigation.html --></code></pre></div></li>
+    </ul>
+  </section>
+            <section id="status" class="styleguide-section">
+    <div class="uk-flex uk-flex-between uk-flex-bottom uk-flex-wrap">
+      <div>
+        <div class="uk-text-meta">UIkit Component</div>
+        <h2 class="uk-heading-small uk-margin-small-top uk-margin-remove-bottom">Status & Alert</h2>
+        <p class="uk-text-lead uk-margin-small-top">Dokument-, Projekt- und Zahlungszustände werden semantisch sichtbar.</p>
+      </div>
+      <a class="uk-button uk-button-text" href="https://getuikit.com/docs/alert" target="_blank" rel="noreferrer">UIkit Docs</a>
+    </div>
+    <ul class="uk-tab" data-uk-tab="connect: #status-switcher">
+      <li class="uk-active"><a href="#">Preview</a></li>
+      <li><a href="#">Markup</a></li>
+    </ul>
+    <ul id="status-switcher" class="uk-switcher">
+      <li><div class="styleguide-preview"><!-- @include partials/styleguide/status.html --></div></li>
+      <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/status.html --></code></pre></div></li>
+    </ul>
+  </section>
+
+            <section id="kalkurama-components" class="styleguide-section">
+              <div class="uk-text-meta">Kalkurama</div>
+              <h2 class="uk-heading-small uk-margin-small-top">Produktmuster</h2>
+              <p class="uk-text-lead">Nur Muster, die der kommerzielle Workflow wirklich braucht, werden zusätzlich zu UIkit definiert.</p>
+              <ul class="uk-tab" data-uk-tab="connect: #kalkurama-switcher">
+                <li class="uk-active"><a href="#">Preview</a></li>
+                <li><a href="#">Markup</a></li>
+              </ul>
+              <ul id="kalkurama-switcher" class="uk-switcher">
+                <li><div class="styleguide-preview"><!-- @include partials/styleguide/kalkurama.html --></div></li>
+                <li><div class="styleguide-markup"><pre><code><!-- @include-code partials/styleguide/kalkurama.html --></code></pre></div></li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- @include partials/mobile-sidebar.html -->
+    <!-- @include partials/theme-studio.html -->
+  </div>
+
+  <script type="module" src="/src/app.js"></script>
+  <script type="module" src="/src/studio.js"></script>
+</body>
+</html>

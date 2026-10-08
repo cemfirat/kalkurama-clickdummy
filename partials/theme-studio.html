@@ -1,0 +1,44 @@
+<div id="theme-studio" data-uk-offcanvas="flip: true; overlay: true">
+  <div class="uk-offcanvas-bar theme-studio-panel">
+    <button class="uk-offcanvas-close" type="button" data-uk-close aria-label="Theme Studio schließen"></button>
+
+    <p class="uk-text-meta uk-margin-remove-bottom">Local UI Lab</p>
+    <h2 class="uk-heading-small uk-margin-small-top">Theme Studio</h2>
+
+    <div class="uk-alert uk-alert-warning uk-hidden" data-studio-unavailable>
+      Theme Studio ist nur im lokalen Vite-Development-Modus verfügbar.
+    </div>
+    <div class="uk-alert uk-alert-danger uk-hidden theme-studio-error" data-studio-error aria-live="polite"></div>
+
+    <div data-studio-workspace>
+      <div class="uk-margin">
+        <label class="uk-form-label" for="theme-studio-file">Theme-Datei</label>
+        <select id="theme-studio-file" class="uk-select" data-studio-file></select>
+      </div>
+
+      <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+        <div><span class="uk-label" data-studio-mode>kalkurama</span> <span class="uk-text-meta" data-studio-branch></span></div>
+        <span class="uk-text-meta" data-studio-state>Bereit</span>
+      </div>
+
+      <div class="uk-margin">
+        <textarea class="uk-textarea theme-studio-editor" rows="24" spellcheck="false" data-studio-editor aria-label="LESS Theme-Datei bearbeiten"></textarea>
+      </div>
+
+      <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+        <div>
+          <button class="uk-button uk-button-primary" type="button" data-studio-save>Speichern &amp; kompilieren</button>
+          <button class="uk-button uk-button-default" type="button" data-studio-reload>Neu laden</button>
+        </div>
+        <button class="uk-button uk-button-text" type="button" data-studio-reset>HEAD übernehmen</button>
+      </div>
+
+      <hr>
+      <div class="uk-flex uk-flex-between uk-flex-middle">
+        <h3 class="uk-h4 uk-margin-remove">Diff zu HEAD</h3>
+        <span class="uk-label" data-studio-git-status>clean</span>
+      </div>
+      <pre class="theme-studio-diff"><code data-studio-diff>Keine Änderungen.</code></pre>
+    </div>
+  </div>
+</div>
