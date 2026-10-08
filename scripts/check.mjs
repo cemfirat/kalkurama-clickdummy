@@ -58,6 +58,7 @@ const projectEditModal = await readFile(new URL("../partials/project-edit-modal.
 const workCorrectionAudit = await readFile(new URL("../partials/work-correction-audit.html", import.meta.url), "utf8");
 const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
 const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
+const themeStudioPartial = await readFile(new URL("../partials/theme-studio.html", import.meta.url), "utf8");
 const sharedPartials = [
   await readFile(new URL("../partials/header.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8"),
@@ -243,6 +244,23 @@ assert(viteConfig.includes('const files = ["src/themes/kalkurama.less"]'), "Them
 assert(!viteConfig.includes('const files = ["src/themes/standard.less"]'), "UIkit Standard must remain read-only.");
 assert(viteConfig.includes("await less.render"), "Theme Studio must compile LESS before accepting saves.");
 assert(viteConfig.includes("rolledBack: true"), "Theme Studio must report rollback after compile failure.");
+assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/verify"'), "Theme Studio Git verify endpoint missing.");
+assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/publish"'), "Theme Studio Git publish endpoint missing.");
+assert(viteConfig.includes('runNpmScript("verify")'), "Git Sync must run local full verification.");
+assert(viteConfig.includes('return "studio/theme-" + stamp'), "Git Sync must create studio/* working branches.");
+assert(viteConfig.includes('const verifyBranch = "verify/studio-theme-" + shortSha'), "Git Sync must create an exact verify/** branch.");
+assert(viteConfig.includes("Git Sync requires origin to be cemfirat/kalkurama-clickdummy."), "Git Sync must pin the exact repository origin.");
+assert(viteConfig.includes("Local main is not synchronized with origin/main."), "Git Sync must verify current origin/main.");
+assert(viteConfig.includes("Git user.name and user.email must be configured"), "Git Sync must validate Git identity before staging.");
+assert(viteConfig.includes("Git Sync found staged changes"), "Git Sync must reject pre-existing staged changes.");
+assert(viteConfig.includes("Git Sync found a non-Theme-Studio change"), "Git Sync must reject unrelated working-tree changes.");
+assert(viteConfig.includes("Commit message must contain 5–120 characters on one line."), "Git Sync must validate commit messages.");
+assert(viteConfig.includes('GIT_TERMINAL_PROMPT: "0"'), "Remote Git commands must not prompt inside Vite.");
+assert(viteConfig.includes('gitRaw(["add", "--", ...paths])'), "Git Sync must stage only explicit Theme Studio paths.");
+assert(viteConfig.includes('gitRawOptional(["reset", "--", ...paths])'), "Git Sync must unstage controlled paths after commit/staging failure.");
+assert(!viteConfig.includes('shell: true'), "Theme Studio must never enable shell command execution.");
+assert(!viteConfig.includes('/__studio/git/pr'), "Theme Studio must not expose a PR creation endpoint.");
+assert(!viteConfig.includes('pushGitRef(["-u", "origin", "main"'), "Theme Studio must never push directly to main.");
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
 assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
@@ -301,6 +319,14 @@ assert(html["styleguide.html"].includes("@include partials/theme-studio.html"), 
 assert(html["styleguide.html"].includes('src="/src/studio.js"'), "Styleguide must load Theme Studio client.");
 assert(studioSource.includes('const endpoint = "/__studio"'), "Theme Studio client must use only local Studio endpoints.");
 assert(!studioSource.includes("api.github.com"), "Theme Studio client must not talk to GitHub directly.");
+assert(studioSource.includes('api("/git/verify"'), "Theme Studio client must expose local verification.");
+assert(studioSource.includes('api("/git/publish"'), "Theme Studio client must expose controlled publish.");
+assert(studioSource.includes("Ungespeicherte LESS-Änderungen vorhanden"), "Git Sync must block unsaved editor changes.");
+assert(themeStudioPartial.includes("data-studio-commit-message"), "Theme Studio Git Sync commit field missing.");
+assert(themeStudioPartial.includes("data-studio-git-verify"), "Theme Studio local verification control missing.");
+assert(themeStudioPartial.includes("data-studio-git-publish"), "Theme Studio controlled publish control missing.");
+assert(themeStudioPartial.includes("Das Studio erstellt keinen Pull Request"), "Theme Studio must state that it does not create PRs.");
+assert(themeStudioPartial.includes("Pull Request erst nach grüner Branch-CI"), "Theme Studio must expose the CI-before-PR rule.");
 
 assert(productSourceGuide.includes("Billings-like daily interaction architecture"), "Product source guide must preserve UX target.");
 assert(productSourceGuide.includes("3.25.25"), "Product source guide must record productive UIkit version.");

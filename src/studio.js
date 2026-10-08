@@ -16,6 +16,13 @@ const saveButton = document.querySelector("[data-studio-save]");
 const reloadButton = document.querySelector("[data-studio-reload]");
 const resetButton = document.querySelector("[data-studio-reset]");
 
+const mainSyncLabel = document.querySelector("[data-studio-main-sync]");
+const gitNotice = document.querySelector("[data-studio-git-notice]");
+const commitMessageInput = document.querySelector("[data-studio-commit-message]");
+const gitVerifyButton = document.querySelector("[data-studio-git-verify]");
+const gitPublishButton = document.querySelector("[data-studio-git-publish]");
+const gitResult = document.querySelector("[data-studio-git-result]");
+
 let studioAvailable = false;
 let currentFile = null;
 let loadedContent = "";
@@ -40,6 +47,38 @@ function setWorkspaceAvailable(available) {
     button.setAttribute("aria-disabled", String(!available));
     if (!available) button.title = "Nur lokal im Vite-Development-Modus verfügbar";
   });
+}
+
+function renderGitStatus(git) {
+  if (!git) return;
+
+  if (mainSyncLabel) {
+    mainSyncLabel.textContent = git.mainSynchronized ? "main aktuell" : "main prüfen";
+    mainSyncLabel.className = "uk-label" + (git.mainSynchronized ? " uk-label-success" : " uk-label-warning");
+  }
+
+  if (gitNotice && git.syncError) {
+    gitNotice.textContent = git.syncError;
+  } else if (gitNotice) {
+    gitNotice.textContent = "Es werden ausschließlich freigegebene Theme-Dateien synchronisiert. " +
+      "Das Studio erstellt keinen Pull Request. Nach dem Push wird ein identischer verify/**-Branch " +
+      "erzeugt und damit genau ein Branch-CI-Run gestartet.";
+  }
+}
+
+function hasUnsavedEditorChanges() {
+  return Boolean(currentFile && editor && editor.value !== loadedContent);
+}
+
+function assertSavedEditor() {
+  if (hasUnsavedEditorChanges()) {
+    throw new Error("Ungespeicherte LESS-Änderungen vorhanden. Zuerst Speichern & kompilieren.");
+  }
+}
+
+function setGitBusy(busy) {
+  if (gitVerifyButton) gitVerifyButton.disabled = busy;
+  if (gitPublishButton) gitPublishButton.disabled = busy;
 }
 
 function renderFile(file) {
@@ -90,6 +129,7 @@ async function loadStatus() {
     setWorkspaceAvailable(true);
     modeLabel.textContent = payload.mode || "kalkurama";
     branchLabel.textContent = [payload.branch, payload.head].filter(Boolean).join(" · ");
+    renderGitStatus(payload.git);
 
     fileSelect.replaceChildren(
       ...payload.files.map((path) => {
@@ -143,6 +183,88 @@ async function saveCurrentFile() {
   }
 }
 
+async function verifyGitCandidate() {
+  try {
+    assertSavedEditor();
+    setGitBusy(true);
+    setError("");
+    gitResult.textContent = "Lokale Vollprüfung läuft …";
+
+    const payload = await api("/git/verify", {
+      method: "POST",
+      body: "{}"
+    });
+
+    gitResult.textContent = [
+      "Lokale Prüfung erfolgreich.",
+      "",
+      payload.verification?.output || "",
+      "",
+      "Branch: " + (payload.git?.branch || "—"),
+      "HEAD: " + (payload.git?.head || "—")
+    ].join("\n").trim();
+
+    renderGitStatus(payload.git);
+
+    UIkit.notification({
+      message: "Lokale Vollprüfung erfolgreich.",
+      status: "success",
+      pos: "bottom-right",
+      timeout: 2200
+    });
+  } catch (error) {
+    setError(error.message);
+    gitResult.textContent = error.message;
+  } finally {
+    setGitBusy(false);
+  }
+}
+
+async function publishGitCandidate() {
+  try {
+    assertSavedEditor();
+    setGitBusy(true);
+    setError("");
+    gitResult.textContent = "Prüfe finalen Kandidaten …";
+
+    const payload = await api("/git/publish", {
+      method: "POST",
+      body: JSON.stringify({
+        message: commitMessageInput?.value || ""
+      })
+    });
+
+    gitResult.textContent = [
+      "Lokal verifiziert, committed und gepusht.",
+      "",
+      "Feature branch: " + payload.branch,
+      "Commit: " + payload.commitSha,
+      "Verify branch: " + payload.verifyBranch,
+      "",
+      "GitHub Branch-CI wurde durch den verify/**-Push gestartet.",
+      "Kein Pull Request wurde erstellt."
+    ].join("\n");
+
+    UIkit.notification({
+      message: "Theme gepusht · Branch-CI gestartet.",
+      status: "success",
+      pos: "bottom-right",
+      timeout: 3000
+    });
+
+    const selectedPath = currentFile?.path;
+    await loadStatus();
+    if (selectedPath && [...fileSelect.options].some((option) => option.value === selectedPath)) {
+      await loadFile(selectedPath);
+    }
+  } catch (error) {
+    setError(error.message);
+    gitResult.textContent = error.message;
+  } finally {
+    setGitBusy(false);
+  }
+}
+
 fileSelect?.addEventListener("change", () => loadFile(fileSelect.value));
 saveButton?.addEventListener("click", saveCurrentFile);
 reloadButton?.addEventListener("click", () => currentFile && loadFile(currentFile.path));
@@ -151,6 +273,9 @@ resetButton?.addEventListener("click", () => {
   editor.value = currentFile.headContent;
   setState("HEAD im Editor · noch nicht gespeichert");
 });
+
+gitVerifyButton?.addEventListener("click", verifyGitCandidate);
+gitPublishButton?.addEventListener("click", publishGitCandidate);
 
 editor?.addEventListener("input", () => {
   if (!currentFile) return;
