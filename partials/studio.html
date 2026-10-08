@@ -1,0 +1,79 @@
+<div id="theme-studio" data-uk-offcanvas="flip: true; overlay: true">
+  <div class="uk-offcanvas-bar theme-studio-panel">
+    <button class="uk-offcanvas-close" type="button" data-uk-close aria-label="Kalkurama Studio schließen"></button>
+
+    <p class="uk-text-meta uk-margin-remove-bottom">Local UI Lab</p>
+    <h2 class="uk-heading-small uk-margin-small-top">Kalkurama Studio</h2>
+
+    <div class="uk-alert uk-alert-warning uk-hidden" data-studio-unavailable>
+      Kalkurama Studio ist nur im lokalen Vite-Development-Modus verfügbar.
+    </div>
+    <div class="uk-alert uk-alert-danger uk-hidden theme-studio-error" data-studio-error aria-live="polite"></div>
+
+    <div data-studio-workspace>
+      <div class="uk-margin">
+        <label class="uk-form-label" for="theme-studio-file">Studio-Datei</label>
+        <select id="theme-studio-file" class="uk-select" data-studio-file></select>
+      </div>
+
+      <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+        <div><span class="uk-label" data-studio-mode>kalkurama</span> <span class="uk-label" data-studio-type>Theme</span> <span class="uk-text-meta" data-studio-branch></span></div>
+        <span class="uk-text-meta" data-studio-state>Bereit</span>
+      </div>
+
+      <div class="uk-margin">
+        <textarea class="uk-textarea theme-studio-editor" rows="24" spellcheck="false" data-studio-editor aria-label="Studio-Datei bearbeiten"></textarea>
+      </div>
+
+      <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+        <div>
+          <button class="uk-button uk-button-primary" type="button" data-studio-save>Speichern &amp; prüfen</button>
+          <button class="uk-button uk-button-default" type="button" data-studio-reload>Neu laden</button>
+        </div>
+        <button class="uk-button uk-button-text" type="button" data-studio-reset>HEAD übernehmen</button>
+      </div>
+
+      <hr>
+      <div class="uk-flex uk-flex-between uk-flex-middle">
+        <h3 class="uk-h4 uk-margin-remove">Diff zu HEAD</h3>
+        <span class="uk-label" data-studio-git-status>clean</span>
+      </div>
+      <pre class="theme-studio-diff"><code data-studio-diff>Keine Änderungen.</code></pre>
+      <hr>
+      <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+        <div>
+          <p class="uk-text-meta uk-margin-remove-bottom">GitHub Sync</p>
+          <h3 class="uk-h4 uk-margin-small-top uk-margin-remove-bottom">Verifizieren · Commit · Push · CI</h3>
+        </div>
+        <span class="uk-label" data-studio-main-sync>main prüfen</span>
+      </div>
+
+      <div class="uk-alert uk-alert-primary uk-margin-small-top" data-studio-git-notice>
+        Es werden ausschließlich freigegebene Studio-Dateien synchronisiert. Das Studio erstellt keinen Pull Request.
+        Nach dem Push wird ein identischer <code>verify/**</code>-Branch erzeugt und damit genau ein Branch-CI-Run gestartet.
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="theme-studio-commit-message">Commit-Message</label>
+        <input
+          id="theme-studio-commit-message"
+          class="uk-input"
+          type="text"
+          maxlength="120"
+          value="Update Kalkurama theme"
+          data-studio-commit-message
+        >
+      </div>
+
+      <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+        <button class="uk-button uk-button-default" type="button" data-studio-git-verify>Lokal prüfen</button>
+        <button class="uk-button uk-button-primary" type="button" data-studio-git-publish>Commit &amp; Push + CI</button>
+      </div>
+
+      <pre class="theme-studio-diff uk-margin-small-top"><code data-studio-git-result>Noch nicht geprüft.</code></pre>
+      <p class="uk-text-meta">
+        Pull Request erst nach grüner Branch-CI. Der PR wird bewusst nicht vom Browser-Studio erzeugt.
+      </p>
+    </div>
+  </div>
+</div>
