@@ -20,9 +20,6 @@ const productPages = [
   ["credit-notes.html", "credit-notes"],
   ["services.html", "services"],
   ["work.html", "work"],
-  ["work-correction-fixed.html", "work"],
-  ["work-correction-quantity.html", "work"],
-  ["work-correction-expense.html", "work"],
   ["time.html", "time"],
   ["settings.html", "settings"]
 ];
@@ -142,69 +139,38 @@ assert(projectEditModal.includes('id="project-name"'), "Project editor must expo
 assert(projectEditModal.includes("ändert nur die aktuelle Projektbezeichnung"), "Project rename must preserve live-label semantics.");
 assert(projectEditModal.includes("Dokument-Snapshots") && projectEditModal.includes("Historie bleiben unverändert"), "Project editor must preserve issued-history semantics.");
 
-assert(html["work.html"].includes('href="./work-correction-fixed.html"'), "Work list must expose Fixed correction.");
-assert(html["work.html"].includes('href="./work-correction-quantity.html"'), "Work list must expose Quantity correction.");
-assert(html["work.html"].includes('href="./work-correction-expense.html"'), "Work list must expose Expense correction.");
-assert(html["work.html"].includes("data-work-correction-history"), "Work list must expose correction audit history.");
-assert(html["work.html"].includes("Vorher") && html["work.html"].includes("Nachher"), "Correction history must show before/after values.");
+assert(html["work.html"].includes('data-work-list="time"'), "Work mirror must expose productive Time list.");
+assert(html["work.html"].includes('data-work-list="fixed"'), "Work mirror must expose productive Fixed list.");
+assert(html["work.html"].includes('data-work-list="quantity"'), "Work mirror must expose productive Quantity list.");
+assert(html["work.html"].includes('data-work-list="expense"'), "Work mirror must expose productive Expense list.");
+assert(html["work.html"].includes("data-billing-history"), "Work mirror must expose productive billing history.");
+assert(html["work.html"].includes("data-correction-history"), "Work mirror must expose productive time-correction history.");
+assert(!html["work.html"].includes("work-correction-fixed.html"), "Product mirror must not expose an unimplemented Fixed correction route.");
+assert(!html["work.html"].includes("work-correction-quantity.html"), "Product mirror must not expose an unimplemented Quantity correction route.");
+assert(!html["work.html"].includes("work-correction-expense.html"), "Product mirror must not expose an unimplemented Expense correction route.");
 
-for (const page of [
-  "work-correction-fixed.html",
-  "work-correction-quantity.html",
-  "work-correction-expense.html"
-]) {
-  assert(html[page].includes("Korrekturgrund"), page + " must require an explicit correction reason.");
-  assert(html[page].includes("unverrechnet"), page + " must state that direct correction is limited to unbilled work.");
-  assert(html[page].includes("Original"), page + " must expose the original commercial values.");
-  assert(
-    html[page].includes("@include partials/work-correction-audit.html"),
-    page + " must include the shared correction audit semantics."
-  );
-  assert(
-    html[page].includes("reserviert") || html[page].includes("Entwurfsrechnung"),
-    page + " must explain the selected_for_draft_invoice correction boundary."
-  );
-  assert(
-    html[page].includes("verrechnet") && html[page].includes("nicht verrechenbar"),
-    page + " must explain terminal billing-state correction boundaries."
-  );
-}
+assert(workCorrectionAudit.includes("Bearbeiter"), "Styleguide correction prototype must expose the actor.");
+assert(workCorrectionAudit.includes("Serverzeit"), "Styleguide correction prototype must expose save-time semantics.");
+assert(workCorrectionAudit.includes("Pflichtfeld aus der Korrektur"), "Styleguide correction prototype must preserve the required reason.");
+assert(workCorrectionAudit.includes("Originalwerte"), "Styleguide correction prototype must preserve original commercial values.");
+assert(workCorrectionAudit.includes("append-only"), "Styleguide correction prototype must remain append-only.");
 
-assert(workCorrectionAudit.includes("Bearbeiter"), "Correction audit must expose the actor.");
-assert(workCorrectionAudit.includes("Serverzeit"), "Correction audit must expose save-time semantics.");
-assert(workCorrectionAudit.includes("Pflichtfeld aus der Korrektur"), "Correction audit must preserve the required reason.");
-assert(workCorrectionAudit.includes("Originalwerte"), "Correction audit must preserve original commercial values.");
-assert(workCorrectionAudit.includes("append-only"), "Correction audit history must remain append-only.");
+assert(html["invoices.html"].includes('href="./invoice.html"'), "Invoice list must link to the productive detail mirror.");
+assert(html["invoice.html"].includes("data-invoice-settlement"), "Invoice detail must mirror productive settlement status.");
+assert(html["invoice.html"].includes("data-invoice-paid"), "Invoice detail must mirror productive paid total.");
+assert(html["invoice.html"].includes("data-invoice-outstanding"), "Invoice detail must mirror productive outstanding total.");
+assert(html["invoice.html"].includes("data-invoice-payments"), "Invoice detail must mirror productive payment history.");
+assert(html["invoice.html"].includes("data-invoice-email"), "Invoice detail must mirror productive email form.");
+assert(html["invoice.html"].includes("data-invoice-credit-note-form"), "Invoice detail must mirror productive credit-note action.");
+assert(!html["invoice.html"].includes("Rabatt %"), "Product invoice mirror must not expose unimplemented Invoice discounts.");
+assert(html["credit-notes.html"].includes("uk-table uk-table-divider uk-table-middle"), "Credit Notes must mirror productive list structure.");
 
-assert(html["work-correction-fixed.html"].includes('name="entry_type" value="fixed"'), "Fixed correction type must remain explicit.");
-assert(html["work-correction-fixed.html"].includes("Betrag"), "Fixed correction must expose amount.");
-assert(html["work-correction-quantity.html"].includes('name="entry_type" value="quantity"'), "Quantity correction type must remain explicit.");
-assert(html["work-correction-quantity.html"].includes("Menge") && html["work-correction-quantity.html"].includes("Einzelpreis"), "Quantity correction must expose quantity and unit price.");
-assert(html["work-correction-expense.html"].includes('name="entry_type" value="expense"'), "Expense correction type must remain explicit.");
-assert(html["work-correction-expense.html"].includes("Betrag"), "Expense correction must expose amount.");
-
-assert(html["invoices.html"].includes('href="./invoice.html"'), "Invoice list must link to the discount prototype.");
-assert(html["invoice.html"].includes("Vor Rabatt"), "Invoice detail must expose the pre-discount amount.");
-assert(html["invoice.html"].includes("Rabatt %"), "Invoice detail must expose explicit discount-rate editing.");
-assert(html["invoice.html"].includes("−130,00 EUR"), "Invoice detail must expose explicit discount amount.");
-assert(html["invoice.html"].includes('data-source-work="time:1842"'), "Invoice detail must preserve source Work traceability.");
-assert(html["invoice.html"].includes("selected_for_draft_invoice"), "Invoice detail must preserve draft work-reservation semantics.");
-assert(html["invoice.html"].includes("Discount Rate/Amount"), "Invoice detail must state issued discount snapshot semantics.");
-assert(html["invoice.html"].includes("HTML, PDF, E-Mail, E-Invoice"), "Invoice detail must preserve HTML/PDF/email/e-invoice presentation consistency.");
-assert(html["credit-notes.html"].includes("data-credit-note-snapshot"), "Credit Notes must expose issued Invoice snapshot semantics.");
-assert(html["credit-notes.html"].includes("Rabatt Rate/Amount"), "Credit Notes must preserve the Invoice discount snapshot.");
-assert(html["credit-notes.html"].includes("nicht aus später veränderten Work-Daten neu berechnet"), "Credit Notes must not recalculate discounts from later Work state.");
-
-assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the section prototype.");
-assert(html["estimate.html"].includes('data-estimate-section="concept"'), "Estimate detail must expose an explicit first section.");
-assert(html["estimate.html"].includes('data-estimate-section="implementation"'), "Estimate detail must expose ordered multiple sections.");
-assert(html["estimate.html"].includes("Section nach oben") && html["estimate.html"].includes("Section nach unten"), "Estimate sections must expose explicit ordering controls.");
-assert(html["estimate.html"].includes("data-estimate-ungrouped"), "Estimate sections must remain optional by supporting ungrouped items.");
-assert(html["estimate.html"].includes("Sections sind optional"), "Estimate detail must state that sections are optional.");
-assert(html["estimate.html"].includes("historischen Snapshot"), "Estimate detail must preserve section ordering in the issued snapshot.");
-assert(html["estimate.html"].includes("data-estimate-issued-snapshot"), "Estimate detail must expose issued Section snapshot semantics.");
-assert(html["estimate.html"].includes("HTML, PDF und E-Mail"), "Estimate Section presentation must remain consistent across output channels.");
-assert(html["estimate.html"].includes("Frühere ausgestellte Revisionen bleiben unverändert"), "Estimate revisions must preserve previous issued snapshots.");
+assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the productive detail mirror.");
+assert(html["estimate.html"].includes("data-estimate-items"), "Estimate detail must mirror productive item table.");
+assert(html["estimate.html"].includes("data-estimate-email"), "Estimate detail must mirror productive email form.");
+assert(html["estimate.html"].includes("data-estimate-planned-ready"), "Accepted Estimate mirror must expose productive planned-work state.");
+assert(html["estimate.html"].includes("data-estimate-actuals"), "Accepted Estimate mirror must expose productive estimate-vs-actual state.");
+assert(!html["estimate.html"].includes("data-estimate-section="), "Product estimate mirror must not expose unimplemented Estimate sections.");
 
 for (const marker of [
   "uk-card uk-card-default",
@@ -285,9 +251,6 @@ assert(!viteConfig.includes('pushGitRef(["-u", "origin", "main"'), "Kalkurama St
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
 assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
-assert(viteConfig.includes('workCorrectionFixed: "work-correction-fixed.html"'), "Vite build must include Fixed correction page.");
-assert(viteConfig.includes('workCorrectionQuantity: "work-correction-quantity.html"'), "Vite build must include Quantity correction page.");
-assert(viteConfig.includes('workCorrectionExpense: "work-correction-expense.html"'), "Vite build must include Expense correction page.");
 assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfig), "Standard Vite mode missing.");
 assert(/\bkalkurama:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Kalkurama Vite mode missing.");
 assert(/\bpages:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Pages must compile the Kalkurama theme.");
@@ -384,9 +347,6 @@ assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples m
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
 assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
 assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
-assert(transferStatus.includes('"work-correction-fixed.html"'), "Fixed correction page must be classified for transfer.");
-assert(transferStatus.includes('"work-correction-quantity.html"'), "Quantity correction page must be classified for transfer.");
-assert(transferStatus.includes('"work-correction-expense.html"'), "Expense correction page must be classified for transfer.");
 
 assert(branchWorkflow.includes('"verify/**"'), "Branch verify workflow must target verify/**.");
 assert(branchWorkflow.includes("npm run verify"), "Branch verify workflow must run full verification.");
