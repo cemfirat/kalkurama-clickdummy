@@ -4,7 +4,7 @@ Append-only record of clickdummy baselines and intentionally promoted UI decisio
 
 | Date | Clickdummy commit | Kalkurama source | Scope | Result |
 | --- | --- | --- | --- | --- |
-| 2026-10-08 | `5f36146c4faf9ddd63a8ad9e2c207bcb6730d2bc` | `2bd658c65020984fe2583161ae8cceeae583f618` | Initial HTML-first/UIkit-first foundation: Billings-like customer/project shell, product pages, Theme hierarchy, Styleguide and local Theme Studio | Active baseline; no production promotion |
+| 2026-10-08 | `6a6a494e759b366e103045645e7e1143e75eabad` | `2bd658c65020984fe2583161ae8cceeae583f618` | Initial HTML-first/UIkit-first foundation: Billings-like customer/project shell, product pages, Theme hierarchy, Styleguide and local Theme Studio | Active baseline; no production promotion |
 
 ## Logging rule
 
