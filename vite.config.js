@@ -97,7 +97,7 @@ function normalizeStudioPath(value) {
   return String(value ?? "").replaceAll("\\", "/").replace(/^\.\//, "");
 }
 
-function listStudioFiles() {
+function listThemeStudioFiles() {
   const files = ["src/themes/kalkurama.less"];
   const kalkuramaDirectory = resolve(rootDirectory, "src/themes/kalkurama");
 
@@ -153,7 +153,7 @@ function listMarkupStudioFiles() {
 
 function listStudioFiles() {
   return [...new Set([
-    ...listStudioFiles(),
+    ...listThemeStudioFiles(),
     ...listMarkupStudioFiles()
   ])].sort();
 }
