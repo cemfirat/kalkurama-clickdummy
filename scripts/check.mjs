@@ -77,12 +77,19 @@ assert(packageJson.scripts?.studio === "vite --mode kalkurama --host 127.0.0.1",
 const html = {};
 for (const [page, pageId] of allPages) {
   html[page] = await readFile(new URL("../" + page, import.meta.url), "utf8");
-  assert(html[page].includes('<body data-page="' + pageId + '">'), page + " must expose its page id.");
+  assert(html[page].includes('<body data-page="' + pageId + '"'), page + " must expose its page id.");
   assert(html[page].includes("<!-- @include partials/header.html -->"), page + " must use the shared header.");
   assert(html[page].includes("<!-- @include partials/sidebar.html -->"), page + " must use the shared desktop sidebar.");
   assert(html[page].includes("<!-- @include partials/mobile-sidebar.html -->"), page + " must use the shared mobile sidebar.");
   assert(html[page].includes('<script type="module" src="/src/app.js"></script>'), page + " must load behavior-only app.js.");
 }
+
+assert(html["index.html"].includes('data-project="website-relaunch"'), "Daily landing must expose the selected Website Relaunch project.");
+assert(html["project.html"].includes('data-project="brand-refresh"'), "Project page must expose the selected Brand Refresh project.");
+assert(sharedPartials.includes('data-project-context="website-relaunch"'), "Sidebar must expose Website Relaunch project metadata.");
+assert(sharedPartials.includes('data-project-context="brand-refresh"'), "Sidebar must expose Brand Refresh project metadata.");
+assert(appSource.includes("document.body.dataset.project"), "Product app.js must activate project context from body metadata.");
+assert(appSource.includes("[data-project-context]"), "Product app.js must target semantic project links.");
 
 assert(html["index.html"].includes("kalkurama-customer-workspace"), "Daily landing must be customer/project-first.");
 assert(html["index.html"].includes("kalkurama-project-list"), "Daily landing must keep the project list visible.");
