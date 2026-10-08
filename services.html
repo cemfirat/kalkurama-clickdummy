@@ -1,7 +1,11 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Leistungen · Kalkurama Clickdummy</title>
-  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml"></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leistungen · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+</head>
 <body data-page="services">
   <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
@@ -10,20 +14,18 @@
       <main class="kalkurama-main" id="main-content">
         <div class="kalkurama-page-heading">
           <div><div class="uk-text-meta">Katalog</div><h1>Leistungen</h1></div>
-          <button class="uk-button uk-button-primary">Neue Leistung</button>
+          <a class="uk-button uk-button-primary" href="./services.html">Neue Leistung</a>
         </div>
+
         <div class="uk-card uk-card-default">
-          <div class="uk-overflow-auto">
-            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
-              <thead><tr><th>Leistung</th><th>Typ</th><th>Einheit</th><th class="uk-text-right">Satz</th><th>Rundung</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Design & Beratung</strong></td><td>Stündlich</td><td>Stunde</td><td class="uk-text-right">130,00 EUR</td><td>15 Min.</td></tr>
-                <tr><td><strong>Frontend Development</strong></td><td>Stündlich</td><td>Stunde</td><td class="uk-text-right">130,00 EUR</td><td>15 Min.</td></tr>
-                <tr><td><strong>Logo-Konzept</strong></td><td>Fix</td><td>Pauschale</td><td class="uk-text-right">1.450,00 EUR</td><td>—</td></tr>
-                <tr><td><strong>Hosting</strong></td><td>Fix</td><td>Jahr</td><td class="uk-text-right">360,00 EUR</td><td>—</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+            <thead><tr><th>Leistung</th><th>Typ</th><th>Rate / Preis</th><th>Rundung</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Beratung</strong></td><td>Stündlich</td><td>130,00 EUR</td><td>15 min</td></tr>
+              <tr><td><strong>Design</strong></td><td>Stündlich</td><td>145,00 EUR</td><td>15 min</td></tr>
+              <tr><td><strong>Hosting</strong></td><td>Fix</td><td>360,00 EUR</td><td>Exakt</td></tr>
+            </tbody>
+          </table>
         </div>
       </main>
     </div>
