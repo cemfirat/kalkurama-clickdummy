@@ -264,7 +264,9 @@ for (const example of [
   "navigation.html",
   "status.html",
   "feedback.html",
-  "kalkurama.html"
+  "kalkurama.html",
+  "estimate-sections.html",
+  "invoice-discount.html"
 ]) {
   assert(styleguideExampleFiles.includes(example), "Missing Styleguide example: " + example);
 }
@@ -280,12 +282,19 @@ for (const section of [
   'id="navigation"',
   'id="status"',
   'id="feedback"',
-  'id="kalkurama-components"'
+  'id="kalkurama-project-work"',
+  'id="kalkurama-estimate-sections"',
+  'id="kalkurama-invoice-discounts"',
+  'id="kalkurama-work-corrections"'
 ]) {
   assert(html["styleguide.html"].includes(section), "Missing Styleguide section: " + section);
 }
 
 assert(html["styleguide.html"].includes("@include-code partials/styleguide/"), "Styleguide must expose Markup from the same example source.");
+assert(html["styleguide.html"].includes("@include-code partials/work-correction-audit.html"), "Styleguide must reuse the real Work correction audit partial for Markup.");
+assert(html["styleguide.html"].includes("Estimate Sections"), "Styleguide must document Estimate Sections.");
+assert(html["styleguide.html"].includes("Invoice Line Discounts"), "Styleguide must document Invoice Line Discounts.");
+assert(html["styleguide.html"].includes("Audited Work Corrections"), "Styleguide must document audited Work corrections.");
 assert(html["styleguide.html"].includes("styleguide-example-tabs"), "Styleguide must use consistent Preview/Markup tabs.");
 assert(html["styleguide.html"].includes("data-studio-open"), "Styleguide must expose local Theme Studio entry points.");
 assert(html["styleguide.html"].includes("@include partials/theme-studio.html"), "Styleguide must include Theme Studio.");
@@ -312,6 +321,8 @@ assert(themesGuide.includes("UIkit Standard") && themesGuide.includes("Kalkurama
 assert(styleguideGuide.includes("Preview") && styleguideGuide.includes("Markup"), "Styleguide guide must document Preview/Markup.");
 assert(styleguideGuide.includes("Single source for Preview + Markup"), "Styleguide guide must document synchronized example sources.");
 assert(styleguideGuide.includes("Product emphasis"), "Styleguide guide must explain Kalkurama-specific documentation priorities.");
+assert(styleguideGuide.includes("Kalkurama product patterns"), "Styleguide guide must document the v1 product-pattern split.");
+assert(styleguideGuide.includes("partials/work-correction-audit.html"), "Styleguide guide must document reuse of the real Work correction audit partial.");
 assert(styleguideGuide.includes("UIkit-first rule"), "Styleguide guide must preserve the UIkit-first rule.");
 assert(themeStudioGuide.includes("No PR before green branch CI"), "Theme Studio guide must preserve CI rule.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve CI rule.");
