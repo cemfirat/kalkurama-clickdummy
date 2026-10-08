@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zeit · Kalkurama Clickdummy</title></head>
+<body data-page="time">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <!-- @include partials/page-heading.html {"eyebrow":"Mehr","title":"Zeit","description":"Globale Zeitübersicht; der Timer selbst wird bevorzugt im Projektkontext gestartet."} -->
+
+        <div class="uk-grid-medium" data-uk-grid>
+          <div class="uk-width-1-3@l">
+            <section class="uk-card uk-card-default uk-card-body">
+              <span class="uk-label uk-label-success">läuft</span>
+              <h2 class="uk-card-title uk-margin-small-top">Website Relaunch</h2>
+              <p class="uk-text-meta">Atelier Morgen · Frontend Development</p>
+              <div class="kalkurama-timer-value uk-text-large">01:24:18</div>
+              <button class="uk-button uk-button-danger uk-width-1-1 uk-margin-top">Timer stoppen</button>
+            </section>
+          </div>
+          <div class="uk-width-expand@l">
+            <section class="uk-card uk-card-default">
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Letzte Zeiteinträge</h2></div>
+              <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divider uk-table-small uk-margin-remove">
+                  <thead><tr><th>Datum</th><th>Kunde / Projekt</th><th>Beschreibung</th><th class="uk-text-right">Gemessen</th><th class="uk-text-right">Verrechenbar</th></tr></thead>
+                  <tbody>
+                    <tr><td>08.10.2026</td><td>Atelier Morgen · Website Relaunch</td><td>Frontend-Umsetzung</td><td class="uk-text-right">3:24</td><td class="uk-text-right">3:30</td></tr>
+                    <tr><td>07.10.2026</td><td>Atelier Morgen · Brand Refresh</td><td>Logo-Ausarbeitung</td><td class="uk-text-right">2:52</td><td class="uk-text-right">3:00</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
