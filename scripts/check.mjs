@@ -20,6 +20,9 @@ const productPages = [
   ["credit-notes.html", "credit-notes"],
   ["services.html", "services"],
   ["work.html", "work"],
+  ["work-correction-fixed.html", "work"],
+  ["work-correction-quantity.html", "work"],
+  ["work-correction-expense.html", "work"],
   ["time.html", "time"],
   ["settings.html", "settings"]
 ];
@@ -82,6 +85,37 @@ assert(html["index.html"].includes("kalkurama-project-list"), "Daily landing mus
 assert(html["index.html"].includes("kalkurama-running-timer"), "Daily landing must keep timer state in project context.");
 assert(html["index.html"].includes("uk-subnav uk-subnav-pill"), "Customer workspace must expose project-scoped document tabs.");
 assert(html["project.html"].includes("Unverrechnete Arbeit"), "Project view must keep work as a central surface.");
+
+assert(html["work.html"].includes('href="./work-correction-fixed.html"'), "Work list must expose Fixed correction.");
+assert(html["work.html"].includes('href="./work-correction-quantity.html"'), "Work list must expose Quantity correction.");
+assert(html["work.html"].includes('href="./work-correction-expense.html"'), "Work list must expose Expense correction.");
+assert(html["work.html"].includes("data-work-correction-history"), "Work list must expose correction audit history.");
+assert(html["work.html"].includes("Vorher") && html["work.html"].includes("Nachher"), "Correction history must show before/after values.");
+
+for (const page of [
+  "work-correction-fixed.html",
+  "work-correction-quantity.html",
+  "work-correction-expense.html"
+]) {
+  assert(html[page].includes("Korrekturgrund"), page + " must require an explicit correction reason.");
+  assert(html[page].includes("unverrechnet"), page + " must state that direct correction is limited to unbilled work.");
+  assert(html[page].includes("Original"), page + " must expose the original commercial values.");
+  assert(
+    html[page].includes("reserviert") || html[page].includes("Entwurfsrechnung"),
+    page + " must explain the selected_for_draft_invoice correction boundary."
+  );
+  assert(
+    html[page].includes("verrechnet") && html[page].includes("nicht verrechenbar"),
+    page + " must explain terminal billing-state correction boundaries."
+  );
+}
+
+assert(html["work-correction-fixed.html"].includes('name="entry_type" value="fixed"'), "Fixed correction type must remain explicit.");
+assert(html["work-correction-fixed.html"].includes("Betrag"), "Fixed correction must expose amount.");
+assert(html["work-correction-quantity.html"].includes('name="entry_type" value="quantity"'), "Quantity correction type must remain explicit.");
+assert(html["work-correction-quantity.html"].includes("Menge") && html["work-correction-quantity.html"].includes("Einzelpreis"), "Quantity correction must expose quantity and unit price.");
+assert(html["work-correction-expense.html"].includes('name="entry_type" value="expense"'), "Expense correction type must remain explicit.");
+assert(html["work-correction-expense.html"].includes("Betrag"), "Expense correction must expose amount.");
 
 assert(html["invoices.html"].includes('href="./invoice.html"'), "Invoice list must link to the discount prototype.");
 assert(html["invoice.html"].includes("Vor Rabatt"), "Invoice detail must expose the pre-discount amount.");
@@ -148,6 +182,9 @@ assert(viteConfig.includes("rolledBack: true"), "Theme Studio must report rollba
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
 assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
+assert(viteConfig.includes('workCorrectionFixed: "work-correction-fixed.html"'), "Vite build must include Fixed correction page.");
+assert(viteConfig.includes('workCorrectionQuantity: "work-correction-quantity.html"'), "Vite build must include Quantity correction page.");
+assert(viteConfig.includes('workCorrectionExpense: "work-correction-expense.html"'), "Vite build must include Expense correction page.");
 assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfig), "Standard Vite mode missing.");
 assert(/\bkalkurama:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Kalkurama Vite mode missing.");
 assert(/\bpages:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Pages must compile the Kalkurama theme.");
@@ -198,6 +235,9 @@ assert(productSourceGuide.includes("#85 — explicit Invoice line discounts"), "
 assert(productSourceGuide.includes("pre-discount amount"), "Product source guide must preserve explicit pre-discount semantics.");
 assert(productSourceGuide.includes("#84 — explicit Estimate sections"), "Product source guide must document Estimate Sections issue #84.");
 assert(productSourceGuide.includes("sections are optional"), "Product source guide must preserve optional Estimate section semantics.");
+assert(productSourceGuide.includes("#86 — audited corrections for fixed, quantity and expense work"), "Product source guide must document Work correction issue #86.");
+assert(productSourceGuide.includes("selected_for_draft_invoice"), "Product source guide must preserve the draft-reservation correction boundary.");
+assert(productSourceGuide.includes("original and corrected commercial values"), "Product source guide must preserve before/after audit semantics.");
 assert(themesGuide.includes("UIkit Standard") && themesGuide.includes("Kalkurama"), "Theme guide must document hierarchy.");
 assert(styleguideGuide.includes("Preview") && styleguideGuide.includes("Markup"), "Styleguide guide must document Preview/Markup.");
 assert(styleguideGuide.includes("Single source for Preview + Markup"), "Styleguide guide must document synchronized example sources.");
@@ -211,6 +251,9 @@ assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples m
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
 assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
 assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
+assert(transferStatus.includes('"work-correction-fixed.html"'), "Fixed correction page must be classified for transfer.");
+assert(transferStatus.includes('"work-correction-quantity.html"'), "Quantity correction page must be classified for transfer.");
+assert(transferStatus.includes('"work-correction-expense.html"'), "Expense correction page must be classified for transfer.");
 
 assert(branchWorkflow.includes('"verify/**"'), "Branch verify workflow must target verify/**.");
 assert(branchWorkflow.includes("npm run verify"), "Branch verify workflow must run full verification.");
