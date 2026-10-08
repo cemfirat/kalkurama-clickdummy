@@ -68,7 +68,7 @@ assert(packageJson.scripts?.studio === "vite --mode kalkurama --host 127.0.0.1",
 const html = {};
 for (const [page, pageId] of allPages) {
   html[page] = await readFile(new URL("../" + page, import.meta.url), "utf8");
-  assert(html[page].includes('<body data-page="' + pageId + '">'), page + " must expose its page id.");
+  assert(html[page].includes('<body data-page="' + pageId + '"'), page + " must expose its page id.");
   assert(html[page].includes("<!-- @include partials/header.html -->"), page + " must use the shared header.");
   assert(html[page].includes("<!-- @include partials/sidebar.html -->"), page + " must use the shared desktop sidebar.");
   assert(html[page].includes("<!-- @include partials/mobile-sidebar.html -->"), page + " must use the shared mobile sidebar.");
