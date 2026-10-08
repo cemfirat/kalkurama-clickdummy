@@ -140,7 +140,7 @@ function listMarkupStudioFiles() {
       }
 
       if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
-      if (relativePath === "partials/theme-studio.html") continue;
+      if (relativePath === "partials/studio.html") continue;
 
       files.push(relativePath);
     }
@@ -280,7 +280,7 @@ function assertStudioGitState() {
 
   for (const change of changes) {
     if (change.index !== " " && change.index !== "?") {
-      throw new Error("Git Sync found staged changes. Unstage them before using Theme Studio Git Sync.");
+      throw new Error("Git Sync found staged changes. Unstage them before using Kalkurama Studio Git Sync.");
     }
 
     if (change.path.includes(" -> ")) {
@@ -288,7 +288,7 @@ function assertStudioGitState() {
     }
 
     if (!allowedFiles.has(change.path)) {
-      throw new Error("Git Sync found a non-Theme-Studio change: " + change.path);
+      throw new Error("Git Sync found a non-Studio change: " + change.path);
     }
   }
 
@@ -486,7 +486,7 @@ function publishStudioChanges(commitMessage) {
     const allowed = new Set(listStudioFiles());
     if (staged.length === 0 || staged.some((path) => !allowed.has(path))) {
       gitRawOptional(["reset", "--", ...paths]);
-      throw new Error("Git Sync staging did not produce an allowed Theme Studio candidate.");
+      throw new Error("Git Sync staging did not produce an allowed Kalkurama Studio candidate.");
     }
 
     try {
@@ -496,7 +496,7 @@ function publishStudioChanges(commitMessage) {
       throw error;
     }
   } else if (!branch.startsWith("studio/") || git(["rev-parse", "HEAD"]) === git(["rev-parse", "origin/main"])) {
-    throw new Error("There are no Theme Studio changes to publish.");
+    throw new Error("There are no Kalkurama Studio changes to publish.");
   }
 
   const commitSha = git(["rev-parse", "HEAD"]);
@@ -560,7 +560,7 @@ function readJsonBody(req) {
     req.on("data", (chunk) => {
       raw += chunk;
       if (raw.length > 512 * 1024) {
-        rejectBody(new Error("Theme Studio request body is too large."));
+        rejectBody(new Error("Kalkurama Studio request body is too large."));
         req.destroy();
       }
     });
@@ -579,7 +579,7 @@ function readJsonBody(req) {
 
 function themeStudioPlugin(mode) {
   return {
-    name: "kalkurama-theme-studio",
+    name: "kalkurama-studio",
     apply: "serve",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
@@ -591,7 +591,7 @@ function themeStudioPlugin(mode) {
 
         const handle = async () => {
           if (!isLoopbackRequest(req)) {
-            sendJson(res, 403, { ok: false, error: "Theme Studio is local-only." });
+            sendJson(res, 403, { ok: false, error: "Kalkurama Studio is local-only." });
             return;
           }
 
@@ -680,7 +680,7 @@ function themeStudioPlugin(mode) {
             return;
           }
 
-          sendJson(res, 404, { ok: false, error: "Unknown Theme Studio endpoint." });
+          sendJson(res, 404, { ok: false, error: "Unknown Kalkurama Studio endpoint." });
         };
 
         handle().catch((error) => {
