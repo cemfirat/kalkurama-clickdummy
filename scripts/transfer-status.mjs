@@ -32,7 +32,8 @@ const prototypeOnlyExact = new Set([
   "src/styles/prototype.less",
   "src/styles/product.less",
   "src/styles/shell.less",
-  "src/styles/system.less"
+  "src/styles/system.less",
+  "src/themes/standard-reset.less"
 ]);
 
 const prototypeOnlyPrefixes = [
