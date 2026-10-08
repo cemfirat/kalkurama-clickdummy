@@ -41,7 +41,10 @@ The current sections are:
 - Navigation
 - Status & Alert
 - Feedback & Modal
-- Kalkurama Product Patterns.
+- Kalkurama Project / Work Context
+- Kalkurama Estimate Sections
+- Kalkurama Invoice Line Discounts
+- Kalkurama Audited Work Corrections.
 
 ## Single source for Preview + Markup
 
@@ -82,10 +85,11 @@ Kalkurama-specific classes are allowed only for real product compositions such
 as:
 
 - persistent customer/project shell
-- project row selection
-- running timer
-- dense commercial panels
-- work/document context.
+- project row selection and running timer
+- Estimate Sections
+- Invoice Line discount snapshots
+- audited Work correction context
+- dense commercial panels and document context.
 
 Do not restyle standard UIkit components in `prototype.less`.
 
@@ -106,6 +110,20 @@ than to decorative showcase components.
 
 Cards are documented because Kalkurama uses them for summaries, but they are not
 the default replacement for dense operational tables/panels.
+
+## Kalkurama product patterns
+
+The product section is split by commercial responsibility instead of using one
+generic showcase:
+
+- **Project / Work Context** — persistent project context, Timer and unbilled Work
+- **Estimate Sections** — optional ordered grouping from v1 issue #84
+- **Invoice Line Discounts** — explicit pre-discount/rate/amount snapshot from v1 issue #85
+- **Audited Work Corrections** — actor/time/reason/original-value semantics from v1 issue #86
+
+Where a reusable product partial already exists, the Styleguide should render
+that same source. The Work Correction example therefore uses
+`partials/work-correction-audit.html` directly for both Preview and Markup.
 
 ## Add a component example
 
