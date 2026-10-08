@@ -242,8 +242,13 @@ Clickdummy consequence:
 - correction does not automatically mutate or repair invoices, credit notes or
   external accounting state.
 
-The clickdummy therefore prototypes a dedicated audited correction form rather
-than a destructive edit/delete flow or an implicit write-off-and-recreate UX.
+Because #86 is still a documented stable-v1 gap rather than current productive UI,
+those non-time correction concepts live only in the Styleguide/prototype layer.
+They are not exposed as product pages until productive Kalkurama implements them.
+
+The same mirror rule applies to other documented future gaps such as #84 Estimate
+sections and #85 Invoice line discounts: Styleguide examples may explore them, but
+the product-facing clickdummy pages mirror the current productive implementation.
 
 ## Scope guard
 
