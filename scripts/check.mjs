@@ -33,6 +33,7 @@ const packageJson = JSON.parse(await readFile(new URL("../package.json", import.
 const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const studioSource = await readFile(new URL("../src/studio.js", import.meta.url), "utf8");
 const standardTheme = await readFile(new URL("../src/themes/standard.less", import.meta.url), "utf8");
+const standardReset = await readFile(new URL("../src/themes/standard-reset.less", import.meta.url), "utf8");
 const kalkuramaTheme = await readFile(new URL("../src/themes/kalkurama.less", import.meta.url), "utf8");
 const kalkuramaImports = await readFile(new URL("../src/themes/kalkurama/_import.less", import.meta.url), "utf8");
 const offcanvasTheme = await readFile(new URL("../src/themes/kalkurama/offcanvas.less", import.meta.url), "utf8");
@@ -70,7 +71,7 @@ const sharedPartials = [
 ].join("\n");
 
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
-assert(kalkuramaSource.commit === "2bd658c65020984fe2583161ae8cceeae583f618", "Unexpected Kalkurama source baseline.");
+assert(kalkuramaSource.commit === "ed273d6c38464a000751cd8ed0ca54e8266dfc27", "Unexpected Kalkurama source baseline.");
 assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy baseline must be a full SHA.");
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must match productive UIkit 3.25.25.");
 assert(packageJson.scripts?.dev === "vite --mode kalkurama", "Kalkurama must be the default dev theme.");
@@ -87,7 +88,8 @@ for (const [page, pageId] of allPages) {
   assert(html[page].includes('<script type="module" src="/src/app.js"></script>'), page + " must load behavior-only app.js.");
   assert(html[page].includes('class="kalkurama-shell kalkurama-shell--app"'), page + " must mirror the productive authenticated shell.");
   assert(html[page].includes('class="kalkurama-body kalkurama-body--with-sidebar"'), page + " must mirror the productive sidebar layout.");
-  assert(html[page].includes('rel="icon" href="/src/themes/kalkurama/images/favicon.svg"'), page + " must use the Kalkurama theme favicon.");
+  assert(html[page].includes('rel="icon" href="/src/themes/kalkurama/images/favicon.svg"'), page + " must use the Kalkurama theme SVG favicon.");
+  assert(html[page].includes('rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico"'), page + " must mirror the productive ICO favicon metadata.");
 }
 
 assert(html["index.html"].includes('data-project="website-relaunch"'), "Daily landing must expose the selected Website Relaunch project.");
@@ -204,14 +206,23 @@ assert(kalkuramaTheme.includes('@import "standard.less";'), "Kalkurama theme mus
 assert(kalkuramaTheme.includes('@import "kalkurama/_import.less";'), "Kalkurama theme must load component customizations.");
 assert(kalkuramaImports.includes('@import "variables.less";'), "Kalkurama theme variables import missing.");
 assert(kalkuramaImports.includes('@import "offcanvas.less";'), "Kalkurama Offcanvas theme import missing.");
-assert(standardTheme.includes('@import "../styles/system.less";'), "UIkit Standard must load the productive structural CSS mirror.");
+assert(standardTheme.includes('@import "../styles/system.less";'), "UIkit Standard must load the productive CSS mirror.");
+assert(standardTheme.includes('@import "standard-reset.less";'), "UIkit Standard must normalize productive branding back to reference colors.");
 assert(kalkuramaImports.includes('@import "brand.less";'), "Kalkurama branding import missing.");
 assert(logoSvg.trimStart().startsWith("<?xml") && logoSvg.includes("<svg"), "Kalkurama logo must be valid SVG text.");
 assert(faviconSvg.trimStart().startsWith("<?xml") && faviconSvg.includes("<svg"), "Kalkurama favicon must be valid SVG text.");
-assert(systemMirror.includes("Exact structural CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
+assert(systemMirror.includes("Exact structural/visual CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
+assert(systemMirror.includes("Product baseline: ed273d6c38464a000751cd8ed0ca54e8266dfc27"), "System mirror must record the exact productive baseline.");
+assert(systemMirror.includes("--kalkurama-accent: #ff00ff;"), "System mirror must include the productive Kalkurama accent.");
 assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
 assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
+assert(standardReset.includes("--kalkurama-accent: #1e87f0;"), "Standard reference reset must restore the stock UIkit primary color.");
+assert(standardReset.includes(".uk-alert-primary"), "Standard reference reset must normalize the productive primary alert.");
 assert(brandTheme.includes("--kalkurama-accent: @magenta;"), "Kalkurama branding must own the approved accent override.");
+assert(brandTheme.includes("--kalkurama-accent-hover: darken(@magenta, 5%);"), "Kalkurama branding must preserve productive hover derivation.");
+assert(brandTheme.includes("--kalkurama-accent-active: darken(@magenta, 10%);"), "Kalkurama branding must preserve productive active derivation.");
+assert(brandTheme.includes("rgba(255, 0, 255, .12)"), "Kalkurama branding must re-apply productive branded states after Standard normalization.");
+assert(brandTheme.includes("background: #ffccff;"), "Kalkurama branding must re-apply the productive primary alert background.");
 assert(!shellLess.includes(".kalkurama-header"), "Legacy shell.less must not redefine productive shell structure.");
 assert(!productLess.includes(".kalkurama-customer-workspace"), "Prototype product.less must not redefine productive customer workspace structure.");
 assert(offcanvasTheme.includes("@offcanvas-bar-background"), "Light customer drawer must use UIkit Offcanvas variable.");
@@ -354,6 +365,7 @@ assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide m
 assert(transferStatus.includes('"partials/studio.html"'), "Kalkurama Studio must remain prototype-only for transfer.");
 assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples must remain prototype-only for transfer.");
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
+assert(transferStatus.includes('"src/themes/standard-reset.less"'), "Standard reference normalization must remain prototype-only for transfer.");
 assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
 assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
 
