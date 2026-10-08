@@ -1,7 +1,7 @@
 import UIkit from "uikit";
 
 const endpoint = "/__studio";
-const studioElement = document.querySelector("#theme-studio");
+const studioElement = document.querySelector("#kalkurama-studio");
 const unavailable = document.querySelector("[data-studio-unavailable]");
 const workspace = document.querySelector("[data-studio-workspace]");
 const errorBox = document.querySelector("[data-studio-error]");
