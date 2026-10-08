@@ -376,8 +376,11 @@ assert(transferStatus.includes('"work-correction-expense.html"'), "Expense corre
 
 assert(branchWorkflow.includes('"verify/**"'), "Branch verify workflow must target verify/**.");
 assert(branchWorkflow.includes("npm run verify"), "Branch verify workflow must run full verification.");
-assert(!/^\s*push:/m.test(pagesWorkflow), "Pages workflow must remain manual until Pages is enabled.");
-assert(pagesWorkflow.includes("workflow_dispatch:"), "Pages workflow must be manually runnable.");
+assert(/\n  push:\n    branches:\n      - "main"\n/.test(pagesWorkflow), "Pages workflow must deploy main after Pages is enabled.");
+assert(pagesWorkflow.includes("workflow_dispatch:"), "Pages workflow must remain manually runnable.");
+assert(pagesWorkflow.includes("npm run build:pages"), "Pages workflow must build the Vite Pages mode.");
+assert(pagesWorkflow.includes("actions/upload-pages-artifact@v4"), "Pages workflow must upload the dist artifact.");
+assert(pagesWorkflow.includes("actions/deploy-pages@v4"), "Pages workflow must deploy through GitHub Pages.");
 
 const themeFilename = resolve(rootDirectory, "src/themes/kalkurama.less");
 await less.render(await readFile(themeFilename, "utf8"), {

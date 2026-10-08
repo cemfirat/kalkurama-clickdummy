@@ -12,6 +12,13 @@ Product source of truth:
 - local Kalkurama Studio: [docs/STUDIO.md](docs/STUDIO.md)
 - transfer rules: [docs/UI-TRANSFER.md](docs/UI-TRANSFER.md)
 
+Public preview:
+
+- [Kalkurama Clickdummy](https://cemfirat.github.io/kalkurama-clickdummy/)
+- [Kalkurama Styleguide](https://cemfirat.github.io/kalkurama-clickdummy/styleguide.html)
+
+The public GitHub Pages build is read-only. Local Theme/Markup editing remains available only through Kalkurama Studio.
+
 ## Product direction
 
 The clickdummy follows Kalkurama's working-product direction:
