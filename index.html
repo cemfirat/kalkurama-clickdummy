@@ -18,7 +18,7 @@
             <h1>Atelier Morgen</h1>
           </div>
           <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
-            <div><button class="uk-button uk-button-default uk-button-small" type="button">Kunde bearbeiten</button></div>
+            <div><button class="uk-button uk-button-default uk-button-small" type="button" data-uk-toggle="target: #customer-edit-modal">Kunde bearbeiten</button></div>
             <div><button class="uk-button uk-button-primary uk-button-small" type="button">Neues Projekt</button></div>
           </div>
         </div>
@@ -58,6 +58,15 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            <div class="uk-padding-small uk-padding-remove-horizontal uk-padding-remove-bottom" data-project-lifecycle>
+              <div class="uk-text-meta uk-margin-small-bottom">Lifecycle · Website Relaunch · Aktiv</div>
+              <div class="uk-flex uk-flex-wrap uk-flex-middle uk-grid-small" data-uk-grid>
+                <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Pausiert setzen</button></div>
+                <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Abgeschlossen setzen</button></div>
+                <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Archiviert setzen</button></div>
+              </div>
             </div>
           </section>
 

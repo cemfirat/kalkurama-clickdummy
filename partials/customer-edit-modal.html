@@ -1,0 +1,58 @@
+<div id="customer-edit-modal" class="uk-modal" data-uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Schließen"></button>
+
+    <div class="uk-text-meta">Kunden</div>
+    <h2 class="uk-modal-title">Atelier Morgen bearbeiten</h2>
+
+    <form class="uk-form-stacked">
+      <div class="uk-margin">
+        <label class="uk-form-label" for="customer-name">Name</label>
+        <input id="customer-name" class="uk-input" maxlength="180" required value="Atelier Morgen">
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="customer-email">Abrechnungs-/Kontakt-E-Mail <span class="uk-text-muted">(optional)</span></label>
+        <input id="customer-email" class="uk-input" type="email" maxlength="180" value="office@atelier-morgen.example">
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="customer-billing-address">Rechnungsadresse <span class="uk-text-muted">(optional)</span></label>
+        <textarea id="customer-billing-address" class="uk-textarea" rows="4" maxlength="2000">Hauptplatz 12
+2700 Wiener Neustadt
+AT</textarea>
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="customer-tax-id">Steuer-/UID-Nummer <span class="uk-text-muted">(optional)</span></label>
+        <input id="customer-tax-id" class="uk-input" maxlength="80" value="ATU12345678">
+      </div>
+
+      <div class="uk-grid-small uk-child-width-1-2@s" data-uk-grid>
+        <div>
+          <label class="uk-form-label" for="customer-payment-terms">Standard-Zahlungsziel (Tage)</label>
+          <input id="customer-payment-terms" class="uk-input" type="number" min="0" max="3650" step="1" value="14" required>
+        </div>
+        <div>
+          <label class="uk-form-label" for="customer-default-currency">Standardwährung <span class="uk-text-muted">(optional)</span></label>
+          <input id="customer-default-currency" class="uk-input" maxlength="3" placeholder="EUR" value="EUR">
+        </div>
+      </div>
+
+      <p class="uk-text-meta uk-margin-small-top">
+        Standardwährung leer lassen, um den Workspace-Standard EUR zu verwenden. Änderungen gelten nur für neu angelegte kommerzielle Datensätze.
+      </p>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="customer-notes">Interne Notizen <span class="uk-text-muted">(optional)</span></label>
+        <textarea id="customer-notes" class="uk-textarea" rows="5" maxlength="10000">Bevorzugt kompakte Freigaberunden. Rechnungsversand an die zentrale Office-Adresse.</textarea>
+        <div class="uk-text-meta uk-margin-small-top">Nur interner Kontext; bestehende kommerzielle Dokumente bleiben unverändert.</div>
+      </div>
+
+      <div class="uk-flex uk-flex-between uk-flex-middle">
+        <button class="uk-button uk-button-text uk-modal-close" type="button">Abbrechen</button>
+        <button class="uk-button uk-button-primary uk-modal-close" type="button">Kunde speichern</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -87,14 +87,63 @@ Clickdummy consequence:
 - use the clickdummy to improve existing v1 interaction architecture, not to
   silently expand product scope.
 
+### #81 — customer commercial baseline and context view
+
+Issue #81 is **Class A — productive baseline** and is already implemented in
+Kalkurama.
+
+The productive Customer editor includes:
+
+- name;
+- billing/contact email;
+- billing address;
+- tax/VAT identifier;
+- default payment terms;
+- optional default currency with Workspace fallback;
+- internal notes.
+
+Changing Customer default currency affects only newly created commercial records.
+Internal notes are non-document context. Existing issued/historical records remain
+unchanged.
+
+Clickdummy consequence:
+
+- the selected Customer remains visible in the persistent shell;
+- the sidebar inspector stays limited to productive contact/address context;
+- the selected-Customer settings action opens a Customer editor rather than
+  generic application settings;
+- Customer editing exposes payment terms, default currency and internal notes in
+  a normal UIkit modal;
+- currency/notes are not invented as extra sidebar metadata.
+
 ### #82 — project lifecycle and contextual project view
 
 Issue #82 classifies Project detail/lifecycle as **Class A** and requires Project
 to be a usable commercial context.
 
 The inspected productive baseline already contains
-`templates/project/show.html.twig` and lifecycle controls. The clickdummy keeps
-this surface and may explore its UI while preserving the domain transitions.
+`templates/project/show.html.twig`, Project rename and explicit lifecycle
+controls.
+
+Current productive transitions are:
+
+- Draft → Active / Archived;
+- Active → Paused / Completed / Archived;
+- Paused → Active / Completed / Archived;
+- Completed → Active / Archived;
+- Archived → Active.
+
+Only Active projects accept new timers and manual Work.
+
+Clickdummy consequence:
+
+- Project detail keeps Work, Estimates and Invoices in one commercial context;
+- the active Project exposes Timer, Time, Fixed, Quantity and Expense actions;
+- Project rename is explicit and states that issued snapshots/history remain
+  unchanged;
+- lifecycle controls expose only transitions allowed by the productive domain;
+- the selected Project in the Customer workspace exposes compact lifecycle
+  controls instead of forcing unrelated module navigation.
 
 ### #5 — structured billable work
 

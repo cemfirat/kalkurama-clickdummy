@@ -53,6 +53,10 @@ const branchWorkflow = await readFile(new URL("../.github/workflows/branch-verif
 const pagesWorkflow = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
 const styleguideExampleFiles = await readdir(new URL("../partials/styleguide/", import.meta.url));
 const themeEntries = await readdir(new URL("../src/themes/", import.meta.url));
+const customerEditModal = await readFile(new URL("../partials/customer-edit-modal.html", import.meta.url), "utf8");
+const projectEditModal = await readFile(new URL("../partials/project-edit-modal.html", import.meta.url), "utf8");
+const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
+const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
 const sharedPartials = [
   await readFile(new URL("../partials/header.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8"),
@@ -85,6 +89,42 @@ assert(html["index.html"].includes("kalkurama-project-list"), "Daily landing mus
 assert(html["index.html"].includes("kalkurama-running-timer"), "Daily landing must keep timer state in project context.");
 assert(html["index.html"].includes("uk-subnav uk-subnav-pill"), "Customer workspace must expose project-scoped document tabs.");
 assert(html["project.html"].includes("Unverrechnete Arbeit"), "Project view must keep work as a central surface.");
+
+assert(sidebarPartial.includes("@include partials/customer-edit-modal.html"), "Shared sidebar must include the selected Customer editor.");
+assert(sidebarInnerPartial.includes('href="#customer-edit-modal"'), "Selected-Customer sidebar settings must open the Customer editor.");
+assert(sidebarInnerPartial.includes('aria-label="Kunde bearbeiten"'), "Selected-Customer settings action must remain explicit.");
+assert(html["index.html"].includes('data-uk-toggle="target: #customer-edit-modal"'), "Customer workspace edit action must open the shared Customer editor.");
+
+for (const field of [
+  'id="customer-name"',
+  'id="customer-email"',
+  'id="customer-billing-address"',
+  'id="customer-tax-id"',
+  'id="customer-payment-terms"',
+  'id="customer-default-currency"',
+  'id="customer-notes"'
+]) {
+  assert(customerEditModal.includes(field), "Customer editor is missing productive #81 field: " + field);
+}
+assert(customerEditModal.includes('min="0" max="3650"'), "Customer payment terms must preserve productive range.");
+assert(customerEditModal.includes("Workspace-Standard EUR"), "Customer default currency must document Workspace fallback.");
+assert(customerEditModal.includes("nur für neu angelegte kommerzielle Datensätze"), "Customer currency helper must preserve new-record-only semantics.");
+assert(customerEditModal.includes("bestehende kommerzielle Dokumente bleiben unverändert"), "Customer notes must preserve historical-document semantics.");
+
+assert(html["index.html"].includes("Lifecycle · Website Relaunch · Aktiv"), "Selected Project must expose compact lifecycle context.");
+for (const transition of ["Auf Pausiert setzen", "Auf Abgeschlossen setzen", "Auf Archiviert setzen"]) {
+  assert(html["index.html"].includes(transition), "Customer workspace is missing active Project transition: " + transition);
+  assert(html["project.html"].includes(transition), "Project detail is missing active Project transition: " + transition);
+}
+assert(html["project.html"].includes("Nur aktive Projekte akzeptieren neue Timer und manuell erfasste Arbeit."), "Project lifecycle must explain the Active-only Work rule.");
+for (const action of ["Zeit hinzufügen", "Fix hinzufügen", "Menge hinzufügen", "Auslage hinzufügen"]) {
+  assert(html["project.html"].includes(action), "Active Project detail is missing productive Work action: " + action);
+}
+assert(html["project.html"].includes('data-uk-toggle="target: #project-edit-modal"'), "Project detail must expose Project rename.");
+assert(html["project.html"].includes("@include partials/project-edit-modal.html"), "Project detail must include the Project editor.");
+assert(projectEditModal.includes('id="project-name"'), "Project editor must expose Project name.");
+assert(projectEditModal.includes("ändert nur die aktuelle Projektbezeichnung"), "Project rename must preserve live-label semantics.");
+assert(projectEditModal.includes("Dokument-Snapshots") && projectEditModal.includes("Historie bleiben unverändert"), "Project editor must preserve issued-history semantics.");
 
 assert(html["work.html"].includes('href="./work-correction-fixed.html"'), "Work list must expose Fixed correction.");
 assert(html["work.html"].includes('href="./work-correction-quantity.html"'), "Work list must expose Quantity correction.");
@@ -235,6 +275,12 @@ assert(productSourceGuide.includes("#85 — explicit Invoice line discounts"), "
 assert(productSourceGuide.includes("pre-discount amount"), "Product source guide must preserve explicit pre-discount semantics.");
 assert(productSourceGuide.includes("#84 — explicit Estimate sections"), "Product source guide must document Estimate Sections issue #84.");
 assert(productSourceGuide.includes("sections are optional"), "Product source guide must preserve optional Estimate section semantics.");
+assert(productSourceGuide.includes("#81 — customer commercial baseline and context view"), "Product source guide must document productive Customer baseline #81.");
+assert(productSourceGuide.includes("optional default currency with Workspace fallback"), "Product source guide must preserve Customer currency fallback.");
+assert(productSourceGuide.includes("internal notes"), "Product source guide must preserve Customer notes baseline.");
+assert(productSourceGuide.includes("#82 — project lifecycle and contextual project view"), "Product source guide must document productive Project baseline #82.");
+assert(productSourceGuide.includes("Active → Paused / Completed / Archived"), "Product source guide must preserve Active Project transitions.");
+assert(productSourceGuide.includes("Only Active projects accept new timers and manual Work"), "Product source guide must preserve Active-only Work semantics.");
 assert(productSourceGuide.includes("#86 — audited corrections for fixed, quantity and expense work"), "Product source guide must document Work correction issue #86.");
 assert(productSourceGuide.includes("selected_for_draft_invoice"), "Product source guide must preserve the draft-reservation correction boundary.");
 assert(productSourceGuide.includes("original and corrected commercial values"), "Product source guide must preserve before/after audit semantics.");
