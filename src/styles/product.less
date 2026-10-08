@@ -315,3 +315,61 @@
     flex-direction: column;
   }
 }
+
+
+/* Audited non-time work corrections ------------------------------------- */
+
+.kalkurama-correction-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 1rem;
+  align-items: start;
+}
+
+.kalkurama-audit-values {
+  margin: .75rem 0 0;
+}
+
+.kalkurama-audit-values > div {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: .75rem;
+  padding: .4rem 0;
+  border-top: 1px solid @kalkurama-border;
+}
+
+.kalkurama-audit-values > div:first-child {
+  border-top: 0;
+}
+
+.kalkurama-audit-values dt,
+.kalkurama-audit-values dd {
+  margin: 0;
+}
+
+.kalkurama-audit-values dt {
+  color: @kalkurama-muted;
+  font-size: .78rem;
+}
+
+.kalkurama-audit-values dd {
+  color: @kalkurama-emphasis;
+  text-align: right;
+}
+
+@media (max-width: 1100px) {
+  .kalkurama-correction-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .kalkurama-audit-values > div {
+    grid-template-columns: 1fr;
+    gap: .1rem;
+  }
+
+  .kalkurama-audit-values dd {
+    text-align: left;
+  }
+}
