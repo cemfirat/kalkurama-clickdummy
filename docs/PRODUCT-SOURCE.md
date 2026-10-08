@@ -146,6 +146,35 @@ The clickdummy models this as a commercial line field, not as a visual-only
 adjustment or promotional coupon system.
 
 
+
+### #86 — audited corrections for fixed, quantity and expense work
+
+Issue #86 is **Class A — documented v1 baseline** and addresses the remaining
+manual-correction gap for non-time Work entries.
+
+The productive baseline already has audited Time corrections. Fixed, Quantity and
+Expense entries currently have only the safe fallback: mark the incorrect entry
+non-billable/written-off with a required reason and create a replacement.
+
+Clickdummy consequence:
+
+- direct correction is available only while the Work entry is `unbilled`;
+- Fixed corrections expose work date, description, amount and currency;
+- Quantity corrections expose work date, description, quantity, unit price and
+  currency;
+- Expense corrections expose work date, description, amount and currency;
+- Work type, Work ID, Customer/Project context and Planned-Work linkage stay
+  identity/history context rather than becoming silently replaceable;
+- every correction requires a reason and exposes actor/time audit semantics;
+- original and corrected commercial values remain visibly traceable;
+- `selected_for_draft_invoice`, `invoiced`, `non_billable` and
+  `written_off` entries cannot be directly corrected;
+- correction does not automatically mutate or repair invoices, credit notes or
+  external accounting state.
+
+The clickdummy therefore prototypes a dedicated audited correction form rather
+than a destructive edit/delete flow or an implicit write-off-and-recreate UX.
+
 ## Scope guard
 
 Until the productive source explicitly changes, the clickdummy must not add
