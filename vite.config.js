@@ -11,6 +11,7 @@ const htmlEntries = {
   overview: "overview.html",
   project: "project.html",
   estimates: "estimates.html",
+  estimate: "estimate.html",
   invoices: "invoices.html",
   payments: "payments.html",
   creditNotes: "credit-notes.html",
