@@ -13,6 +13,7 @@ const htmlEntries = {
   estimates: "estimates.html",
   estimate: "estimate.html",
   invoices: "invoices.html",
+  invoice: "invoice.html",
   payments: "payments.html",
   creditNotes: "credit-notes.html",
   services: "services.html",
