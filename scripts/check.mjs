@@ -47,7 +47,7 @@ const transferStatus = await readFile(new URL("./transfer-status.mjs", import.me
 const productSourceGuide = await readFile(new URL("../docs/PRODUCT-SOURCE.md", import.meta.url), "utf8");
 const themesGuide = await readFile(new URL("../docs/THEMES.md", import.meta.url), "utf8");
 const styleguideGuide = await readFile(new URL("../docs/STYLEGUIDE.md", import.meta.url), "utf8");
-const themeStudioGuide = await readFile(new URL("../docs/THEME-STUDIO.md", import.meta.url), "utf8");
+const themeStudioGuide = await readFile(new URL("../docs/STUDIO.md", import.meta.url), "utf8");
 const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.meta.url), "utf8");
 const branchWorkflow = await readFile(new URL("../.github/workflows/branch-verify.yml", import.meta.url), "utf8");
 const pagesWorkflow = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
@@ -58,14 +58,14 @@ const projectEditModal = await readFile(new URL("../partials/project-edit-modal.
 const workCorrectionAudit = await readFile(new URL("../partials/work-correction-audit.html", import.meta.url), "utf8");
 const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
 const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
-const themeStudioPartial = await readFile(new URL("../partials/theme-studio.html", import.meta.url), "utf8");
+const themeStudioPartial = await readFile(new URL("../partials/studio.html", import.meta.url), "utf8");
 const sharedPartials = [
   await readFile(new URL("../partials/header.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar-content.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/mobile-sidebar.html", import.meta.url), "utf8"),
-  await readFile(new URL("../partials/theme-studio.html", import.meta.url), "utf8")
+  await readFile(new URL("../partials/studio.html", import.meta.url), "utf8")
 ].join("\n");
 
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
@@ -74,7 +74,7 @@ assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy basel
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must match productive UIkit 3.25.25.");
 assert(packageJson.scripts?.dev === "vite --mode kalkurama", "Kalkurama must be the default dev theme.");
 assert(packageJson.scripts?.build === "vite build --mode kalkurama", "Kalkurama must be the default build theme.");
-assert(packageJson.scripts?.studio === "vite --mode kalkurama --host 127.0.0.1", "Theme Studio must bind to loopback.");
+assert(packageJson.scripts?.studio === "vite --mode kalkurama --host 127.0.0.1", "Kalkurama Studio must bind to loopback.");
 
 const html = {};
 for (const [page, pageId] of allPages) {
@@ -237,30 +237,37 @@ for (const selector of [".uk-button", ".uk-input", ".uk-select", ".uk-textarea",
 }
 
 assert(viteConfig.includes('name: "kalkurama-html-partials"'), "HTML partial plugin missing.");
-assert(viteConfig.includes('name: "kalkurama-theme-studio"'), "Theme Studio plugin missing.");
-assert(viteConfig.includes('apply: "serve"'), "Theme Studio must be dev-server only.");
-assert(viteConfig.includes('address === "127.0.0.1" || address === "::1"'), "Theme Studio must enforce loopback.");
-assert(viteConfig.includes('const files = ["src/themes/kalkurama.less"]'), "Theme Studio allowlist must start at Kalkurama.");
+assert(viteConfig.includes('name: "kalkurama-studio"'), "Kalkurama Studio plugin missing.");
+assert(viteConfig.includes('apply: "serve"'), "Kalkurama Studio must be dev-server only.");
+assert(viteConfig.includes('address === "127.0.0.1" || address === "::1"'), "Kalkurama Studio must enforce loopback.");
+assert(viteConfig.includes('const files = ["src/themes/kalkurama.less"]'), "Kalkurama Studio allowlist must start at Kalkurama.");
+assert(viteConfig.includes("function listMarkupStudioFiles()"), "Kalkurama Studio must expose a markup allowlist.");
+assert(viteConfig.includes("Object.values(htmlEntries)"), "Markup allowlist must start from known HTML entry points.");
+assert(viteConfig.includes('relativePath === "partials/studio.html"'), "Studio UI partial must remain outside the editable markup allowlist.");
+assert(viteConfig.includes("function validateMarkupSources()"), "Markup saves must validate all HTML entry points.");
+assert(viteConfig.includes("expandHtmlPartials(expandCodePartials(source))"), "Markup validation must expand shared includes and code examples.");
+assert(viteConfig.includes('type === "theme"'), "Studio save flow must distinguish Theme from Markup.");
+assert(viteConfig.includes('validated: type === "markup" ? ["markup"] : []'), "Markup save response must report validation.");
 assert(!viteConfig.includes('const files = ["src/themes/standard.less"]'), "UIkit Standard must remain read-only.");
-assert(viteConfig.includes("await less.render"), "Theme Studio must compile LESS before accepting saves.");
-assert(viteConfig.includes("rolledBack: true"), "Theme Studio must report rollback after compile failure.");
-assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/verify"'), "Theme Studio Git verify endpoint missing.");
-assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/publish"'), "Theme Studio Git publish endpoint missing.");
+assert(viteConfig.includes("await less.render"), "Kalkurama Studio must compile LESS before accepting saves.");
+assert(viteConfig.includes("rolledBack: true"), "Kalkurama Studio must report rollback after compile failure.");
+assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/verify"'), "Kalkurama Studio Git verify endpoint missing.");
+assert(viteConfig.includes('requestUrl.pathname === "/__studio/git/publish"'), "Kalkurama Studio Git publish endpoint missing.");
 assert(viteConfig.includes('runNpmScript("verify")'), "Git Sync must run local full verification.");
-assert(viteConfig.includes('return "studio/theme-" + stamp'), "Git Sync must create studio/* working branches.");
-assert(viteConfig.includes('const verifyBranch = "verify/studio-theme-" + shortSha'), "Git Sync must create an exact verify/** branch.");
+assert(viteConfig.includes('return "studio/ui-" + stamp'), "Git Sync must create studio/* working branches.");
+assert(viteConfig.includes('const verifyBranch = "verify/studio-ui-" + shortSha'), "Git Sync must create an exact verify/** branch.");
 assert(viteConfig.includes("Git Sync requires origin to be cemfirat/kalkurama-clickdummy."), "Git Sync must pin the exact repository origin.");
 assert(viteConfig.includes("Local main is not synchronized with origin/main."), "Git Sync must verify current origin/main.");
 assert(viteConfig.includes("Git user.name and user.email must be configured"), "Git Sync must validate Git identity before staging.");
 assert(viteConfig.includes("Git Sync found staged changes"), "Git Sync must reject pre-existing staged changes.");
-assert(viteConfig.includes("Git Sync found a non-Theme-Studio change"), "Git Sync must reject unrelated working-tree changes.");
+assert(viteConfig.includes("Git Sync found a non-Studio change"), "Git Sync must reject unrelated working-tree changes.");
 assert(viteConfig.includes("Commit message must contain 5–120 characters on one line."), "Git Sync must validate commit messages.");
 assert(viteConfig.includes('GIT_TERMINAL_PROMPT: "0"'), "Remote Git commands must not prompt inside Vite.");
-assert(viteConfig.includes('gitRaw(["add", "--", ...paths])'), "Git Sync must stage only explicit Theme Studio paths.");
+assert(viteConfig.includes('gitRaw(["add", "--", ...paths])'), "Git Sync must stage only explicit Kalkurama Studio paths.");
 assert(viteConfig.includes('gitRawOptional(["reset", "--", ...paths])'), "Git Sync must unstage controlled paths after commit/staging failure.");
-assert(!viteConfig.includes('shell: true'), "Theme Studio must never enable shell command execution.");
-assert(!viteConfig.includes('/__studio/git/pr'), "Theme Studio must not expose a PR creation endpoint.");
-assert(!viteConfig.includes('pushGitRef(["-u", "origin", "main"'), "Theme Studio must never push directly to main.");
+assert(!viteConfig.includes('shell: true'), "Kalkurama Studio must never enable shell command execution.");
+assert(!viteConfig.includes('/__studio/git/pr'), "Kalkurama Studio must not expose a PR creation endpoint.");
+assert(!viteConfig.includes('pushGitRef(["-u", "origin", "main"'), "Kalkurama Studio must never push directly to main.");
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
 assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
@@ -314,19 +321,21 @@ assert(html["styleguide.html"].includes("Estimate Sections"), "Styleguide must d
 assert(html["styleguide.html"].includes("Invoice Line Discounts"), "Styleguide must document Invoice Line Discounts.");
 assert(html["styleguide.html"].includes("Audited Work Corrections"), "Styleguide must document audited Work corrections.");
 assert(html["styleguide.html"].includes("styleguide-example-tabs"), "Styleguide must use consistent Preview/Markup tabs.");
-assert(html["styleguide.html"].includes("data-studio-open"), "Styleguide must expose local Theme Studio entry points.");
-assert(html["styleguide.html"].includes("@include partials/theme-studio.html"), "Styleguide must include Theme Studio.");
-assert(html["styleguide.html"].includes('src="/src/studio.js"'), "Styleguide must load Theme Studio client.");
-assert(studioSource.includes('const endpoint = "/__studio"'), "Theme Studio client must use only local Studio endpoints.");
-assert(!studioSource.includes("api.github.com"), "Theme Studio client must not talk to GitHub directly.");
-assert(studioSource.includes('api("/git/verify"'), "Theme Studio client must expose local verification.");
-assert(studioSource.includes('api("/git/publish"'), "Theme Studio client must expose controlled publish.");
+assert(html["styleguide.html"].includes("data-studio-open"), "Styleguide must expose local Kalkurama Studio entry points.");
+assert(html["styleguide.html"].includes("@include partials/studio.html"), "Styleguide must include Kalkurama Studio.");
+assert(studioSource.includes('file.type === "markup" ? "Markup" : "Theme"'), "Studio client must expose the active file type.");
+assert(html["styleguide.html"].includes("@include partials/theme-studio.html"), "Styleguide must include Kalkurama Studio.");
+assert(html["styleguide.html"].includes('src="/src/studio.js"'), "Styleguide must load Kalkurama Studio client.");
+assert(studioSource.includes('const endpoint = "/__studio"'), "Kalkurama Studio client must use only local Studio endpoints.");
+assert(!studioSource.includes("api.github.com"), "Kalkurama Studio client must not talk to GitHub directly.");
+assert(studioSource.includes('api("/git/verify"'), "Kalkurama Studio client must expose local verification.");
+assert(studioSource.includes('api("/git/publish"'), "Kalkurama Studio client must expose controlled publish.");
 assert(studioSource.includes("Ungespeicherte LESS-Änderungen vorhanden"), "Git Sync must block unsaved editor changes.");
-assert(themeStudioPartial.includes("data-studio-commit-message"), "Theme Studio Git Sync commit field missing.");
-assert(themeStudioPartial.includes("data-studio-git-verify"), "Theme Studio local verification control missing.");
-assert(themeStudioPartial.includes("data-studio-git-publish"), "Theme Studio controlled publish control missing.");
-assert(themeStudioPartial.includes("Das Studio erstellt keinen Pull Request"), "Theme Studio must state that it does not create PRs.");
-assert(themeStudioPartial.includes("Pull Request erst nach grüner Branch-CI"), "Theme Studio must expose the CI-before-PR rule.");
+assert(themeStudioPartial.includes("data-studio-commit-message"), "Kalkurama Studio Git Sync commit field missing.");
+assert(themeStudioPartial.includes("data-studio-git-verify"), "Kalkurama Studio local verification control missing.");
+assert(themeStudioPartial.includes("data-studio-git-publish"), "Kalkurama Studio controlled publish control missing.");
+assert(themeStudioPartial.includes("Das Studio erstellt keinen Pull Request"), "Kalkurama Studio must state that it does not create PRs.");
+assert(themeStudioPartial.includes("Pull Request erst nach grüner Branch-CI"), "Kalkurama Studio must expose the CI-before-PR rule.");
 
 assert(productSourceGuide.includes("Billings-like daily interaction architecture"), "Product source guide must preserve UX target.");
 assert(productSourceGuide.includes("3.25.25"), "Product source guide must record productive UIkit version.");
@@ -350,10 +359,10 @@ assert(styleguideGuide.includes("Product emphasis"), "Styleguide guide must expl
 assert(styleguideGuide.includes("Kalkurama product patterns"), "Styleguide guide must document the v1 product-pattern split.");
 assert(styleguideGuide.includes("partials/work-correction-audit.html"), "Styleguide guide must document reuse of the real Work correction audit partial.");
 assert(styleguideGuide.includes("UIkit-first rule"), "Styleguide guide must preserve the UIkit-first rule.");
-assert(themeStudioGuide.includes("No PR before green branch CI"), "Theme Studio guide must preserve CI rule.");
+assert(themeStudioGuide.includes("No PR before green branch CI"), "Kalkurama Studio guide must preserve CI rule.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve CI rule.");
 
-assert(transferStatus.includes('"partials/theme-studio.html"'), "Theme Studio must remain prototype-only for transfer.");
+assert(transferStatus.includes('"partials/studio.html"'), "Kalkurama Studio must remain prototype-only for transfer.");
 assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples must remain prototype-only for transfer.");
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
 assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
