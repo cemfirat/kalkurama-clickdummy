@@ -1,20 +1,23 @@
 <header class="kalkurama-header">
   <div class="kalkurama-header-inner">
-    <button class="uk-icon-button kalkurama-mobile-toggle" type="button" data-uk-icon="icon: menu" data-uk-toggle="target: #kalkurama-mobile-sidebar" aria-label="Kundenansicht öffnen"></button>
-
-    <a class="uk-navbar-item uk-logo" href="./index.html" aria-label="Back to Home">
-      <img src="../src/themes/kalkurama/images/logo.svg" width="156" height="auto" uk-svg>
+    <a class="kalkurama-brand" href="./index.html" aria-label="Kalkurama">
+      <img src="/src/themes/kalkurama/images/logo.svg" width="156" height="20" alt="Kalkurama">
     </a>
 
-    <nav class="kalkurama-topnav" aria-label="Sekundäre Navigation">
-      <a class="kalkurama-topnav-link" href="./overview.html" data-nav-page="overview">Übersicht</a>
+    <button class="kalkurama-shell-sidebar-toggle uk-hidden@m"
+            type="button"
+            uk-toggle="target: #kalkurama-shell-offcanvas"
+            uk-icon="icon: menu"
+            aria-label="Kundenansicht öffnen"
+            data-shell-sidebar-toggle></button>
 
-      <div class="uk-inline">
-        <button class="kalkurama-topnav-trigger" type="button">
-          Dokumente <span data-uk-icon="icon: triangle-down; ratio: .7"></span>
-        </button>
-        <div data-uk-dropdown="mode: click; pos: bottom-left">
-          <ul class="uk-nav uk-dropdown-nav">
+    <nav class="kalkurama-topnav" aria-label="Sekundäre Navigation" data-shell-topnav>
+      <a href="./overview.html" data-nav-page="overview">Übersicht</a>
+
+      <div class="uk-inline kalkurama-topnav-menu">
+        <button class="kalkurama-topnav-trigger" type="button">Dokumente <span uk-icon="icon: triangle-down; ratio: 0.7"></span></button>
+        <div uk-dropdown="mode: click; pos: bottom-left">
+          <ul class="uk-nav uk-dropdown-nav" data-shell-documents-menu>
             <li data-nav-page="estimates"><a href="./estimates.html">Angebote</a></li>
             <li data-nav-page="invoices"><a href="./invoices.html">Rechnungen</a></li>
             <li data-nav-page="payments"><a href="./payments.html">Zahlungen</a></li>
@@ -23,26 +26,24 @@
         </div>
       </div>
 
-      <div class="uk-inline">
-        <button class="kalkurama-topnav-trigger" type="button">
-          Mehr <span data-uk-icon="icon: triangle-down; ratio: .7"></span>
-        </button>
-        <div data-uk-dropdown="mode: click; pos: bottom-left">
-          <ul class="uk-nav uk-dropdown-nav">
+      <div class="uk-inline kalkurama-topnav-menu">
+        <button class="kalkurama-topnav-trigger" type="button">Mehr <span uk-icon="icon: triangle-down; ratio: 0.7"></span></button>
+        <div uk-dropdown="mode: click; pos: bottom-left">
+          <ul class="uk-nav uk-dropdown-nav" data-shell-more-menu>
             <li data-nav-page="services"><a href="./services.html">Leistungen</a></li>
             <li data-nav-page="work"><a href="./work.html">Arbeit</a></li>
             <li data-nav-page="time"><a href="./time.html">Zeit</a></li>
             <li class="uk-nav-divider"></li>
             <li data-nav-page="settings"><a href="./settings.html">Einstellungen</a></li>
-            <li><a href="./styleguide.html">Styleguide</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
     <div class="kalkurama-header-user">
-      <span class="uk-text-meta kalkurama-workspace-name">Demo Workspace</span>
+      <span class="uk-text-meta uk-visible@s">Demo Workspace</span>
       <a href="./settings.html">Cem Firat</a>
+      <button class="uk-button uk-button-text" type="button">Abmelden</button>
     </div>
   </div>
 </header>

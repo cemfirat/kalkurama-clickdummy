@@ -1,25 +1,30 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Rechnungen · Kalkurama Clickdummy</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rechnungen · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+</head>
 <body data-page="invoices">
-  <div class="kalkurama-shell">
+  <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
-    <div class="kalkurama-body">
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
         <div class="kalkurama-page-heading">
           <div><div class="uk-text-meta">Abrechnung</div><h1>Rechnungen</h1></div>
-          <a class="uk-button uk-button-primary" href="#">Neue Rechnung</a>
+          <a class="uk-button uk-button-primary" href="./invoice.html">Neue Rechnung</a>
         </div>
+
         <div class="uk-card uk-card-default">
           <div class="uk-overflow-auto">
             <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
               <thead><tr><th>Rechnung</th><th>Kunde</th><th>Fällig</th><th>Status</th><th class="uk-text-right">Gesamt</th><th class="uk-text-right">Bezahlt</th><th class="uk-text-right">Offen</th></tr></thead>
               <tbody>
-                <tr><td><a href="./invoice.html"><strong>Entwurf</strong></a><br><span class="uk-text-meta">3 Work Lines · Discount Snapshot</span></td><td>Atelier Morgen</td><td>—</td><td><span class="uk-label uk-label-warning">Entwurf</span></td><td class="uk-text-right">2.439,00 EUR</td><td class="uk-text-right">—</td><td class="uk-text-right">—</td></tr>
-                <tr><td><strong>RE-2026-031</strong><br><span class="uk-text-meta">06.10.2026</span></td><td>Atelier Morgen</td><td>20.10.2026</td><td><span class="uk-label">offen</span></td><td class="uk-text-right">2.460,00 EUR</td><td class="uk-text-right">0,00 EUR</td><td class="uk-text-right"><strong>2.460,00 EUR</strong></td></tr>
-                <tr><td><strong>RE-2026-029</strong><br><span class="uk-text-meta">18.09.2026</span></td><td>Nordlicht GmbH</td><td>02.10.2026</td><td><span class="uk-label uk-label-danger">überfällig</span></td><td class="uk-text-right">1.240,00 EUR</td><td class="uk-text-right">0,00 EUR</td><td class="uk-text-right"><strong>1.240,00 EUR</strong></td></tr>
-                <tr><td><strong>RE-2026-028</strong><br><span class="uk-text-meta">12.09.2026</span></td><td>Praxis Feld</td><td>26.09.2026</td><td><span class="uk-label uk-label-success">bezahlt</span></td><td class="uk-text-right">890,00 EUR</td><td class="uk-text-right">890,00 EUR</td><td class="uk-text-right"><strong>0,00 EUR</strong></td></tr>
+                <tr><td><a href="./invoice.html"><strong>RE-2026-104</strong></a><br><span class="uk-text-meta">2026-10-02</span></td><td>Atelier Morgen</td><td>2026-10-16</td><td><span class="uk-label">ausgestellt</span></td><td class="uk-text-right"><strong>2.760,00 EUR</strong></td><td class="uk-text-right">1.000,00 EUR</td><td class="uk-text-right"><strong>1.760,00 EUR</strong></td></tr>
+                <tr><td><a href="./invoice.html"><strong>RE-2026-103</strong></a><br><span class="uk-text-meta">2026-09-20</span></td><td>Nordlicht GmbH</td><td>2026-10-04</td><td><span class="uk-label uk-label-success">bezahlt</span></td><td class="uk-text-right"><strong>980,00 EUR</strong></td><td class="uk-text-right">980,00 EUR</td><td class="uk-text-right"><strong>0,00 EUR</strong></td></tr>
               </tbody>
             </table>
           </div>

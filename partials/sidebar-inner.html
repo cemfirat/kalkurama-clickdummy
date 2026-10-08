@@ -1,13 +1,28 @@
 <!-- @include partials/sidebar-content.html -->
 
-<div class="kalkurama-sidebar-inspector">
-  <strong>Atelier Morgen</strong>
-  <span>office@atelier-morgen.example</span>
-  <span>Hauptplatz 12 · 2700 Wiener Neustadt</span>
-  <a class="uk-link-text" href="./index.html">Kunde öffnen</a>
+<div class="kalkurama-sidebar-inspector" data-shell-inspector>
+  <div class="kalkurama-sidebar-inspector-name">Atelier Morgen</div>
+  <div class="kalkurama-sidebar-inspector-line">
+    <a href="mailto:office@atelier-morgen.example">office@atelier-morgen.example</a>
+  </div>
+  <div class="kalkurama-sidebar-inspector-line kalkurama-sidebar-inspector-address">Hauptplatz 12
+2700 Wiener Neustadt</div>
+  <a class="kalkurama-sidebar-inspector-link" href="./index.html">Kunde öffnen</a>
 </div>
 
-<div class="kalkurama-sidebar-toolbar">
-  <button class="kalkurama-sidebar-tool" type="button" data-uk-icon="icon: plus" aria-label="Neu"></button>
-  <a class="kalkurama-sidebar-tool" href="#customer-edit-modal" data-uk-icon="icon: cog" data-uk-toggle aria-label="Kunde bearbeiten"></a>
+<div class="kalkurama-sidebar-toolbar" data-shell-toolbar>
+  <div class="uk-inline">
+    <button class="kalkurama-sidebar-toolbar-btn" type="button" uk-icon="icon: plus" aria-label="Neu"></button>
+    <div uk-dropdown="mode: click; pos: top-left">
+      <ul class="uk-nav uk-dropdown-nav">
+        <li><a href="./index.html">Kunde erstellen</a></li>
+        <li><a href="./project.html">Neues Projekt</a></li>
+      </ul>
+    </div>
+  </div>
+  <a class="kalkurama-sidebar-toolbar-btn"
+     href="#customer-edit-modal"
+     uk-toggle
+     uk-icon="icon: cog"
+     aria-label="Kunde bearbeiten"></a>
 </div>

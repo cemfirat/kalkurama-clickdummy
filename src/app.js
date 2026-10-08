@@ -22,25 +22,56 @@ document.querySelectorAll("[data-nav-page]").forEach((item) => {
   }
 });
 
-const currentProject = document.body.dataset.project;
-document.querySelectorAll("[data-project-context]").forEach((link) => {
-  const active = Boolean(currentProject) && link.dataset.projectContext === currentProject;
-  link.classList.toggle("is-active", active);
 
-  if (active) link.setAttribute("aria-current", "page");
-  else link.removeAttribute("aria-current");
+document.querySelectorAll("[data-project-list]").forEach((list) => {
+  const rows = [...list.querySelectorAll('[data-project-list-target="row"]')];
+
+  list.addEventListener("click", (event) => {
+    const row = event.target.closest('[data-project-list-target="row"]');
+    if (!(row instanceof HTMLElement) || !list.contains(row)) return;
+    if (event.target.closest("a, button, input, select, textarea, label")) return;
+    if (row.dataset.href) window.location.assign(row.dataset.href);
+  });
+
+  list.addEventListener("keydown", (event) => {
+    if (!["ArrowDown", "ArrowUp", "Home", "End", "Enter", " "].includes(event.key) || rows.length === 0) return;
+
+    const active = document.activeElement instanceof HTMLElement
+      ? document.activeElement.closest('[data-project-list-target="row"]')
+      : null;
+    let index = active ? rows.indexOf(active) : rows.findIndex((row) => row.classList.contains("kalkurama-row-selected"));
+    if (index < 0) index = 0;
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      if (rows[index]?.dataset.href) window.location.assign(rows[index].dataset.href);
+      return;
+    }
+
+    event.preventDefault();
+    if (event.key === "Home") index = 0;
+    else if (event.key === "End") index = rows.length - 1;
+    else if (event.key === "ArrowDown") index = Math.min(rows.length - 1, index + 1);
+    else if (event.key === "ArrowUp") index = Math.max(0, index - 1);
+    rows[index]?.focus();
+  });
 });
 
-document.querySelectorAll("[data-project-row]").forEach((row) => {
-  row.addEventListener("click", (event) => {
-    if (event.target.closest("a, button, input, select, textarea")) return;
+document.querySelectorAll('[data-controller="timer"][data-timer-started-at-value]').forEach((timer) => {
+  const target = timer.querySelector('[data-timer-target="elapsed"]');
+  if (!target) return;
 
-    document.querySelectorAll("[data-project-row]").forEach((candidate) => {
-      candidate.classList.remove("kalkurama-row-selected");
-      candidate.setAttribute("aria-selected", "false");
-    });
+  const startedAt = Date.parse(timer.dataset.timerStartedAtValue);
+  if (!Number.isFinite(startedAt)) return;
 
-    row.classList.add("kalkurama-row-selected");
-    row.setAttribute("aria-selected", "true");
-  });
+  const render = () => {
+    const elapsed = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+    const hours = String(Math.floor(elapsed / 3600)).padStart(2, "0");
+    const minutes = String(Math.floor((elapsed % 3600) / 60)).padStart(2, "0");
+    const seconds = String(elapsed % 60).padStart(2, "0");
+    target.textContent = hours + ":" + minutes + ":" + seconds;
+  };
+
+  render();
+  window.setInterval(render, 1000);
 });

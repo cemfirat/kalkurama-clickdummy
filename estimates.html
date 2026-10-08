@@ -1,24 +1,38 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Angebote · Kalkurama Clickdummy</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angebote · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+</head>
 <body data-page="estimates">
-  <div class="kalkurama-shell">
+  <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
-    <div class="kalkurama-body">
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
         <div class="kalkurama-page-heading">
           <div><div class="uk-text-meta">Kommerzielle Angebote</div><h1>Angebote</h1></div>
-          <a class="uk-button uk-button-primary" href="#">Neues Angebot</a>
+          <a class="uk-button uk-button-primary" href="./estimate.html">Neues Angebot</a>
         </div>
+
         <div class="uk-card uk-card-default">
           <div class="uk-overflow-auto">
-            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
-              <thead><tr><th>Angebot</th><th>Kunde</th><th>Projekt</th><th>Status</th><th>Gültig bis</th><th class="uk-text-right">Gesamt</th></tr></thead>
+            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove" data-estimate-list>
+              <thead>
+                <tr><th>Angebot</th><th>Kunde</th><th>Projekt</th><th>Status</th><th>Gültig bis</th><th class="uk-text-right">Gesamt</th></tr>
+              </thead>
               <tbody>
-                <tr><td><strong>AN-2026-014</strong><br><span class="uk-text-meta">Revision 1</span></td><td>Atelier Morgen</td><td>Brand Refresh</td><td><span class="uk-label uk-label-success">angenommen</span></td><td>31.10.2026</td><td class="uk-text-right"><strong>4.800,00 EUR</strong></td></tr>
-                <tr><td><strong>AN-2026-015</strong><br><span class="uk-text-meta">Revision 2</span></td><td>Nordlicht GmbH</td><td>Jahreskampagne</td><td><span class="uk-label">gesendet</span></td><td>20.10.2026</td><td class="uk-text-right"><strong>7.250,00 EUR</strong></td></tr>
-                <tr><td><a href="./estimate.html"><strong>Entwurf</strong></a><br><span class="uk-text-meta">Revision 1 · Sections</span></td><td>Atelier Morgen</td><td>Website Relaunch</td><td><span class="uk-label uk-label-warning">Entwurf</span></td><td>31.10.2026</td><td class="uk-text-right"><strong>7.036,80 EUR</strong></td></tr>
+                <tr>
+                  <td><a href="./estimate.html"><strong>AN-2026-018</strong></a><br><span class="uk-text-meta">Revision 2</span></td>
+                  <td>Atelier Morgen</td><td>Website Relaunch</td><td><span class="uk-label uk-label-success">angenommen</span></td><td>2026-10-31</td><td class="uk-text-right"><strong>4.620,00 EUR</strong></td>
+                </tr>
+                <tr>
+                  <td><a href="./estimate.html"><strong>Entwurf</strong></a><br><span class="uk-text-meta">Revision 1</span></td>
+                  <td>Nordlicht GmbH</td><td>Website</td><td><span class="uk-label">Entwurf</span></td><td>—</td><td class="uk-text-right"><strong>1.980,00 EUR</strong></td>
+                </tr>
               </tbody>
             </table>
           </div>

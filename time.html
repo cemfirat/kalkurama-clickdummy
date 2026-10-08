@@ -1,37 +1,51 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zeit · Kalkurama Clickdummy</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeit · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+</head>
 <body data-page="time">
-  <div class="kalkurama-shell">
+  <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
-    <div class="kalkurama-body">
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
-        <!-- @include partials/page-heading.html {"eyebrow":"Mehr","title":"Zeit","description":"Globale Zeitübersicht; der Timer selbst wird bevorzugt im Projektkontext gestartet."} -->
+        <div class="kalkurama-page-heading">
+          <div><div class="uk-text-meta">Arbeit</div><h1>Zeiterfassung</h1></div>
+          <a class="uk-button uk-button-default" href="./work.html">Unverrechnete Arbeit</a>
+        </div>
 
-        <div class="uk-grid-medium" data-uk-grid>
-          <div class="uk-width-1-3@l">
-            <section class="uk-card uk-card-default uk-card-body">
-              <span class="uk-label uk-label-success">läuft</span>
-              <h2 class="uk-card-title uk-margin-small-top">Website Relaunch</h2>
-              <p class="uk-text-meta">Atelier Morgen · Frontend Development</p>
-              <div class="kalkurama-timer-value uk-text-large">01:24:18</div>
-              <button class="uk-button uk-button-danger uk-width-1-1 uk-margin-top">Timer stoppen</button>
-            </section>
-          </div>
-          <div class="uk-width-expand@l">
-            <section class="uk-card uk-card-default">
-              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Letzte Zeiteinträge</h2></div>
-              <div class="uk-overflow-auto">
-                <table class="uk-table uk-table-divider uk-table-small uk-margin-remove">
-                  <thead><tr><th>Datum</th><th>Kunde / Projekt</th><th>Beschreibung</th><th class="uk-text-right">Gemessen</th><th class="uk-text-right">Verrechenbar</th></tr></thead>
-                  <tbody>
-                    <tr><td>08.10.2026</td><td>Atelier Morgen · Website Relaunch</td><td>Frontend-Umsetzung</td><td class="uk-text-right">3:24</td><td class="uk-text-right">3:30</td></tr>
-                    <tr><td>07.10.2026</td><td>Atelier Morgen · Brand Refresh</td><td>Logo-Ausarbeitung</td><td class="uk-text-right">2:52</td><td class="uk-text-right">3:00</td></tr>
-                  </tbody>
-                </table>
+        <div class="uk-card uk-card-primary uk-card-body uk-margin-bottom"
+             data-controller="timer"
+             data-timer-started-at-value="2026-10-08T18:00:00+02:00">
+          <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-expand">
+              <div class="uk-text-meta uk-light">Läuft</div>
+              <h2 class="uk-card-title uk-margin-small-top">Atelier Morgen · Website Relaunch</h2>
+              <p class="uk-margin-small">Umsetzung — Responsive Header</p>
+            </div>
+            <div class="uk-width-auto uk-text-right">
+              <div class="kalkurama-timer" data-timer-target="elapsed">01:24:18</div>
+              <div class="uk-margin-small-top">
+                <button class="uk-button uk-button-default" type="button">Timer stoppen</button>
               </div>
-            </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-card uk-card-default">
+          <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Letzte Zeiteinträge</h2></div>
+          <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+              <thead><tr><th>Datum</th><th>Kunde / Projekt</th><th>Leistung</th><th>Notiz</th><th class="uk-text-right">Gemessen</th><th class="uk-text-right">Verrechenbar</th><th class="uk-text-right">Betrag</th><th class="uk-table-shrink"></th></tr></thead>
+              <tbody>
+                <tr><td>2026-10-08 09:15</td><td><strong>Atelier Morgen</strong><br><span class="uk-text-meta">Website Relaunch</span></td><td>Umsetzung</td><td>Frontend</td><td class="uk-text-right kalkurama-status">210 min</td><td class="uk-text-right kalkurama-status">210 min</td><td class="uk-text-right kalkurama-status">455,00 EUR</td><td><a class="uk-button uk-button-text uk-text-small" href="./time.html">Korrigieren</a></td></tr>
+                <tr><td>2026-10-07 13:30</td><td><strong>Atelier Morgen</strong><br><span class="uk-text-meta">Website Relaunch</span></td><td>Beratung</td><td>UI-Abstimmung</td><td class="uk-text-right kalkurama-status">105 min</td><td class="uk-text-right kalkurama-status">105 min</td><td class="uk-text-right kalkurama-status">227,50 EUR</td><td><a class="uk-button uk-button-text uk-text-small" href="./time.html">Korrigieren</a></td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </main>

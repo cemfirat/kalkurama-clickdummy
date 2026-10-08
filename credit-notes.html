@@ -1,30 +1,35 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Gutschriften · Kalkurama Clickdummy</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gutschriften · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+</head>
 <body data-page="credit-notes">
-  <div class="kalkurama-shell">
+  <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
-    <div class="kalkurama-body">
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
-        <!-- @include partials/page-heading.html {"eyebrow":"Dokumente","title":"Gutschriften","description":"Korrekturen und Gutschriften bleiben mit der ursprünglichen Rechnung verknüpft."} -->
-
-        <div class="uk-alert uk-alert-primary" data-credit-note-snapshot>
-          Vollgutschriften referenzieren den ausgestellten Rechnungs-Snapshot.
-          Pre-discount, Rabatt Rate/Amount, Netto, Steuer und Brutto werden aus dem issued Snapshot übernommen
-          und nicht aus später veränderten Work-Daten neu berechnet.
+        <div class="kalkurama-page-heading">
+          <div><div class="uk-text-meta">Abrechnung</div><h1>Gutschriften</h1></div>
+          <a class="uk-button uk-button-default" href="./invoices.html">Rechnungen</a>
         </div>
+
         <div class="uk-card uk-card-default">
           <div class="uk-overflow-auto">
             <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
-              <thead><tr><th>Gutschrift</th><th>Kunde</th><th>Bezug</th><th>Status</th><th class="uk-text-right">Betrag</th></tr></thead>
+              <thead><tr><th>Gutschrift</th><th>Quellrechnung</th><th>Kunde</th><th>Ausstellungsdatum</th><th class="uk-text-right">Gutgeschrieben</th></tr></thead>
               <tbody>
-                <tr><td><strong>GS-2026-004</strong></td><td>Nordlicht GmbH</td><td>RE-2026-024</td><td><span class="uk-label uk-label-success">ausgestellt</span></td><td class="uk-text-right"><strong>240,00 EUR</strong></td></tr>
-                <tr><td><strong>Entwurf</strong></td><td>Atelier Morgen</td><td>RE-2026-031</td><td><span class="uk-label uk-label-warning">Entwurf</span></td><td class="uk-text-right"><strong>180,00 EUR</strong></td></tr>
+                <tr data-credit-note-snapshot><td><a href="./credit-notes.html"><strong>GS-2026-012</strong></a></td><td><a href="./invoice.html">RE-2026-099</a></td><td>Atelier Morgen</td><td>2026-09-22</td><td class="uk-text-right"><strong>420,00 EUR</strong></td></tr>
               </tbody>
             </table>
           </div>
         </div>
+
+        <p class="uk-text-meta uk-margin-small-top">Rabatt Rate/Amount und ausgestellte Rechnungswerte bleiben historischer Snapshot und werden nicht aus später veränderten Work-Daten neu berechnet.</p>
       </main>
     </div>
     <!-- @include partials/mobile-sidebar.html -->

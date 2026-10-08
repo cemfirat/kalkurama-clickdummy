@@ -1,11 +1,11 @@
 # Kalkurama Clickdummy
 
-UIkit-first, HTML-first UI/UX laboratory for Kalkurama.
+UIkit-first, HTML-first static mirror and UI/UX laboratory for the productive Kalkurama application.
 
 Product source of truth:
 
 - `cemfirat/kalkurama`
-- inspected baseline: `2bd658c65020984fe2583161ae8cceeae583f618`
+- inspected baseline: `ed273d6c38464a000751cd8ed0ca54e8266dfc27`
 - product source: [docs/PRODUCT-SOURCE.md](docs/PRODUCT-SOURCE.md)
 - themes: [docs/THEMES.md](docs/THEMES.md)
 - styleguide: [docs/STYLEGUIDE.md](docs/STYLEGUIDE.md)
@@ -17,7 +17,7 @@ Public preview:
 - [Kalkurama Clickdummy](https://cemfirat.github.io/kalkurama-clickdummy/)
 - [Kalkurama Styleguide](https://cemfirat.github.io/kalkurama-clickdummy/styleguide.html)
 
-The public GitHub Pages build is read-only. Local Theme/Markup editing remains available only through Kalkurama Studio.
+The public GitHub Pages build is read-only. Product-facing shell/layout/classes mirror the recorded productive Kalkurama baseline; only mock values, static links and prototype-only tooling may differ. Productive visual identity is part of the mirror baseline; the separate UIkit Standard mode stays a read-only framework reference. Local Theme/Markup editing remains available only through Kalkurama Studio.
 
 ## Product direction
 
@@ -43,19 +43,16 @@ Billings Pro is an interaction-architecture reference, not a visual template.
 - `overview.html`
 - `project.html`
 - `estimates.html`
-- `estimate.html` — Estimate draft/detail with explicit sections
+- `estimate.html` — current productive Estimate detail mirror
 - `invoices.html`
-- `invoice.html` — Invoice draft/detail with explicit line discounts
+- `invoice.html` — current productive Invoice detail mirror
 - `payments.html`
 - `credit-notes.html`
 - `services.html`
 - `work.html`
-- `work-correction-fixed.html` — audited correction prototype for unbilled fixed work
-- `work-correction-quantity.html` — audited correction prototype for unbilled quantity work
-- `work-correction-expense.html` — audited correction prototype for unbilled expenses
 - `time.html`
 - `settings.html`
-- `styleguide.html`
+- `styleguide.html` — UIkit reference plus clearly separated future/prototype patterns such as #84/#85/#86 that are not product pages
 
 ## Local development
 
@@ -84,6 +81,7 @@ npm run transfer:status
 - Shared shell belongs in `partials/`.
 - UIkit Standard → Kalkurama → optional Customer theme.
 - Customer/project context remains visible in daily work.
+- Product-facing structure and visual shell mirror the recorded productive Kalkurama baseline; deliberate deviations must be documented.
 - Mock content is never product authority.
 - No production credentials/APIs/writes.
 - **No PR before green branch CI.**

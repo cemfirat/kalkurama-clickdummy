@@ -3,7 +3,7 @@
 Kalkurama is productive Symfony/Twig software. The clickdummy is an editable
 HTML/UIkit UI laboratory.
 
-Accepted decisions are ported, never copied blindly.
+Direction matters: productive Kalkurama UI is mirrored structurally into the clickdummy; clickdummy-originated changes are never copied blindly back into production.
 
 ## Kalkurama → clickdummy
 
@@ -14,13 +14,15 @@ Product truth flows from:
 - scoped issues
 - productive Twig/CSS implementation.
 
+For the recorded baseline, product-facing shell/layout/classes are mirrored one-to-one in intent and structure. Twig data/route expressions are replaced by mock values and static links only.
+
 ## Clickdummy → Kalkurama
 
 Potentially transferable:
 
 - root product HTML structure as UI/interaction decisions
 - shared shell partials
-- Kalkurama theme variables/hooks
+- Kalkurama theme variables/hooks and owned theme assets
 - shell/product LESS compositions
 - behavior decisions that do not depend on mock data.
 

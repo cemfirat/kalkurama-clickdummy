@@ -1,68 +1,93 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Brand Refresh · Kalkurama Clickdummy</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand Refresh · Atelier Morgen · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+</head>
 <body data-page="project" data-project="brand-refresh">
-  <div class="kalkurama-shell">
+  <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
-    <div class="kalkurama-body">
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
-        <div class="kalkurama-page-heading">
-          <div><div class="uk-text-meta"><a href="./index.html">Atelier Morgen</a> · Projekt</div><h1>Brand Refresh</h1><span class="uk-label uk-label-success">aktiv</span></div>
-          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
-            <div><button class="uk-button uk-button-primary uk-button-small" type="button">Timer starten</button></div>
-            <div><button class="uk-button uk-button-default uk-button-small" type="button">Zeit hinzufügen</button></div>
-            <div><button class="uk-button uk-button-default uk-button-small" type="button">Fix hinzufügen</button></div>
-            <div><button class="uk-button uk-button-default uk-button-small" type="button">Menge hinzufügen</button></div>
-            <div><button class="uk-button uk-button-default uk-button-small" type="button">Auslage hinzufügen</button></div>
-            <div><a class="uk-button uk-button-default uk-button-small" href="./estimates.html">Neues Angebot</a></div>
-            <div><button class="uk-button uk-button-text uk-button-small" type="button" data-uk-toggle="target: #project-edit-modal">Projekt bearbeiten</button></div>
+        <div class="kalkurama-page-heading kalkurama-page-heading--dense">
+          <div>
+            <div class="uk-text-meta"><a href="./index.html">Atelier Morgen</a> · Projekt</div>
+            <h1>Brand Refresh</h1>
+            <span class="uk-label">Aktiv</span>
+          </div>
+          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" uk-grid>
+            <div><a class="uk-button uk-button-primary uk-button-small" href="./time.html">Timer starten</a></div>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./work.html">Zeit hinzufügen</a></div>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./work.html">Fix hinzufügen</a></div>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./work.html">Menge hinzufügen</a></div>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./work.html">Auslage hinzufügen</a></div>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./estimate.html">Neues Angebot</a></div>
+            <div><a class="uk-button uk-button-text uk-button-small" href="#project-edit-modal" data-uk-toggle="target: #project-edit-modal">Bearbeiten</a></div>
           </div>
         </div>
 
-        <div class="kalkurama-detail-grid">
-          <section class="kalkurama-panel">
-            <div class="kalkurama-panel-header"><h2>Unverrechnete Arbeit</h2><span class="uk-text-meta">2 Positionen · 620,00 EUR</span></div>
-            <div class="uk-overflow-auto">
-              <table class="uk-table uk-table-divider uk-table-small uk-margin-remove">
-                <thead><tr><th>Datum</th><th>Beschreibung</th><th>Typ</th><th class="uk-text-right">Betrag</th></tr></thead>
-                <tbody>
-                  <tr><td>08.10.2026</td><td>Logo-Ausarbeitung</td><td>Zeit</td><td class="uk-text-right">390,00 EUR</td></tr>
-                  <tr><td>07.10.2026</td><td>Typografie-Konzept</td><td>Fix</td><td class="uk-text-right">230,00 EUR</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
+        <div class="uk-grid-medium" uk-grid>
+          <div class="uk-width-expand@l">
+            <section class="kalkurama-panel" data-project-work-surface>
+              <div class="kalkurama-panel-header">
+                <h2 class="uk-margin-remove">Unverrechnete Arbeit</h2>
+                <div class="uk-text-meta">2 Positionen · 1.450,00 EUR</div>
+              </div>
 
-          <aside>
-            <section class="kalkurama-panel" data-project-lifecycle>
-              <div class="kalkurama-panel-header"><h2>Lifecycle</h2></div>
-              <p><span class="uk-label uk-label-success">aktiv</span></p>
-              <p class="uk-text-meta">Nur aktive Projekte akzeptieren neue Timer und manuell erfasste Arbeit.</p>
-              <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
-                <div><button class="uk-button uk-button-default uk-button-small uk-width-1-1" type="button">Auf Pausiert setzen</button></div>
-                <div><button class="uk-button uk-button-default uk-button-small uk-width-1-1" type="button">Auf Abgeschlossen setzen</button></div>
-                <div><button class="uk-button uk-button-default uk-button-small uk-width-1-1" type="button">Auf Archiviert setzen</button></div>
+              <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                  <thead><tr><th>Datum</th><th>Typ</th><th>Beschreibung</th><th class="uk-text-right">Menge/Zeit</th><th class="uk-text-right">Betrag</th></tr></thead>
+                  <tbody>
+                    <tr><td>08.10.2026</td><td>Zeit</td><td>Logo- und Typografiearbeit</td><td class="uk-text-right">4:15 h</td><td class="uk-text-right">616,25 EUR</td></tr>
+                    <tr><td>07.10.2026</td><td>Fix</td><td>Brand-Konzept</td><td class="uk-text-right">1</td><td class="uk-text-right">833,75 EUR</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="uk-margin-small-top">
+                <a href="./work.html">Vollständige Arbeitsliste öffnen</a>
+                ·
+                <a href="./index.html">Kunden-Arbeitsbereich öffnen</a>
               </div>
             </section>
+          </div>
+
+          <div class="uk-width-1-3@l">
+            <section class="kalkurama-panel">
+              <div class="kalkurama-panel-header"><h2 class="uk-margin-remove">Lifecycle</h2></div>
+              <p class="uk-text-meta">Nur aktive Projekte akzeptieren neue Timer und manuell erfasste Arbeit.</p>
+              <div class="uk-flex uk-flex-wrap uk-flex-middle uk-grid-small" uk-grid>
+                <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Pausiert setzen</button></div>
+                <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Abgeschlossen setzen</button></div>
+                <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Archiviert setzen</button></div>
+              </div>
+            </section>
+
             <section class="kalkurama-panel uk-margin-top">
-              <div class="kalkurama-panel-header"><h2>Angebote</h2></div>
+              <div class="kalkurama-panel-header"><h2 class="uk-margin-remove">Angebote</h2></div>
               <ul class="uk-list uk-list-divider uk-margin-remove">
-                <li class="uk-flex uk-flex-between"><a href="./estimates.html"><strong>AN-2026-014</strong></a><span class="uk-text-meta">angenommen</span></li>
+                <li class="uk-flex uk-flex-between"><a href="./estimate.html"><strong>AN-2026-016</strong></a><span class="uk-text-meta">Angenommen</span></li>
+                <li class="uk-flex uk-flex-between"><a href="./estimate.html"><strong>Entwurf</strong></a><span class="uk-text-meta">Entwurf</span></li>
               </ul>
             </section>
+
             <section class="kalkurama-panel uk-margin-top">
-              <div class="kalkurama-panel-header"><h2>Rechnungen</h2></div>
+              <div class="kalkurama-panel-header"><h2 class="uk-margin-remove">Rechnungen</h2></div>
               <ul class="uk-list uk-list-divider uk-margin-remove">
-                <li class="uk-flex uk-flex-between"><a href="./invoices.html"><strong>RE-2026-031</strong></a><span class="uk-text-meta">offen</span></li>
+                <li class="uk-flex uk-flex-between"><a href="./invoice.html"><strong>RE-2026-104</strong></a><span class="uk-text-meta">Ausgestellt</span></li>
               </ul>
             </section>
-          </aside>
+          </div>
         </div>
+
+        <!-- @include partials/project-edit-modal.html -->
       </main>
     </div>
     <!-- @include partials/mobile-sidebar.html -->
-    <!-- @include partials/project-edit-modal.html -->
   </div>
   <script type="module" src="/src/app.js"></script>
 </body>

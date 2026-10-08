@@ -6,7 +6,7 @@ The productive source of truth is:
 
 Inspected baseline:
 
-`2bd658c65020984fe2583161ae8cceeae583f618`
+`ed273d6c38464a000751cd8ed0ca54e8266dfc27`
 
 ## Authority order
 
@@ -17,6 +17,26 @@ Inspected baseline:
 5. clickdummy experiments.
 
 The clickdummy is not a second product specification.
+
+## Mirror contract
+
+For product-facing UI, the clickdummy is a **static mirror** of the recorded productive Kalkurama baseline.
+
+It must mirror:
+
+- shared shell/header/sidebar/offcanvas structure;
+- productive CSS selectors and layout behavior;
+- product-surface classes and UIkit composition;
+- navigation hierarchy and interaction architecture.
+
+Only these substitutions are expected in the clickdummy:
+
+- mock data instead of database-backed values;
+- static links instead of Symfony routes;
+- browser-only mock interactions instead of server actions;
+- Styleguide and Kalkurama Studio tooling that never ships to production.
+
+A product-facing clickdummy deviation is not a new product decision. Either realign it to production or record and prioritize the intended production change first.
 
 ## North Star
 
@@ -61,6 +81,19 @@ assets.
 
 The productive app pins UIkit `3.25.25`, which the clickdummy matches exactly.
 
+## Productive visual identity
+
+PR `cemfirat/kalkurama#118` is part of the recorded productive baseline.
+
+The product mirror therefore includes:
+
+- the Kalkurama SVG logo and SVG/ICO favicons;
+- AssetMapper-equivalent theme ownership under the clickdummy Kalkurama theme;
+- the productive magenta primary identity `#ff00ff` with the same hover/active steps;
+- the productive UIkit primary bridge and all app-specific branded states from `assets/styles/app.css`.
+
+The independent `standard` Vite mode is the only intentional visual exception: it normalizes the mirrored product identity back to the stock UIkit reference colors so UIkit Standard remains inspectable. The normal `kalkurama` and `pages` modes re-apply the productive identity after that reference-only normalization.
+
 ## Sync rule
 
 Before substantial clickdummy UI work:
@@ -68,8 +101,9 @@ Before substantial clickdummy UI work:
 1. refresh current `kalkurama/main`
 2. inspect relevant product docs/issues
 3. compare productive Twig/CSS behavior
-4. record intentional deviations
-5. update the clickdummy baseline only after the new source state is understood.
+4. realign product-facing shell/layout/classes to the productive implementation
+5. record any deliberate remaining deviation explicitly
+6. update the clickdummy baseline only after the new source state is understood.
 
 ## Issue alignment
 
@@ -221,8 +255,13 @@ Clickdummy consequence:
 - correction does not automatically mutate or repair invoices, credit notes or
   external accounting state.
 
-The clickdummy therefore prototypes a dedicated audited correction form rather
-than a destructive edit/delete flow or an implicit write-off-and-recreate UX.
+Because #86 is still a documented stable-v1 gap rather than current productive UI,
+those non-time correction concepts live only in the Styleguide/prototype layer.
+They are not exposed as product pages until productive Kalkurama implements them.
+
+The same mirror rule applies to other documented future gaps such as #84 Estimate
+sections and #85 Invoice line discounts: Styleguide examples may explore them, but
+the product-facing clickdummy pages mirror the current productive implementation.
 
 ## Scope guard
 

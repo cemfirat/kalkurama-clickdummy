@@ -1,40 +1,54 @@
 <div class="kalkurama-sidebar-scroll">
-  <div class="kalkurama-sidebar-title">Kundenansicht</div>
+  <div class="kalkurama-sidebar-header">
+    <div class="kalkurama-sidebar-title">Kundenansicht</div>
+  </div>
 
-  <section class="kalkurama-sidebar-section">
+  <section class="kalkurama-sidebar-section" aria-label="Allgemein">
     <div class="kalkurama-sidebar-section-title">Allgemein</div>
-    <ul class="kalkurama-source-list">
-      <li><a class="kalkurama-source-link" href="./overview.html">Übersicht</a></li>
+    <ul class="kalkurama-source-list kalkurama-source-general" data-shell-general>
+      <li><a class="kalkurama-source-general-link" href="./overview.html">Übersicht</a></li>
     </ul>
   </section>
 
-  <section class="kalkurama-sidebar-section">
+  <section class="kalkurama-sidebar-section" aria-label="Aktiv">
     <div class="kalkurama-sidebar-section-title">Aktiv</div>
     <ul class="kalkurama-source-list">
-      <li>
-        <a class="kalkurama-source-link is-active" href="./index.html">
-          <strong>Atelier Morgen</strong><span>3</span>
+      <li class="kalkurama-source-customer is-active" data-shell-active-customer>
+        <a class="kalkurama-source-customer-link" href="./index.html">
+          <strong>Atelier Morgen</strong>
+          <span class="uk-text-meta">3</span>
         </a>
-        <ul class="kalkurama-source-projects">
-          <li><a class="kalkurama-source-link" href="./index.html" data-project-context="website-relaunch">Website Relaunch</a></li>
-          <li><a class="kalkurama-source-link" href="./project.html" data-project-context="brand-refresh">Brand Refresh</a></li>
-        </ul>
       </li>
-      <li><a class="kalkurama-source-link" href="./index.html"><strong>Nordlicht GmbH</strong><span>2</span></a></li>
+      <li class="kalkurama-source-customer">
+        <a class="kalkurama-source-customer-link" href="./index.html">
+          <strong>Nordlicht GmbH</strong>
+          <span class="uk-text-meta">2</span>
+        </a>
+      </li>
     </ul>
   </section>
 
-  <section class="kalkurama-sidebar-section">
+  <section class="kalkurama-sidebar-section" aria-label="Ruhig">
     <div class="kalkurama-sidebar-section-title">Ruhig</div>
     <ul class="kalkurama-source-list">
-      <li><a class="kalkurama-source-link" href="./index.html">Praxis Feld</a></li>
+      <li class="kalkurama-source-customer">
+        <a class="kalkurama-source-customer-link" href="./index.html">
+          <strong>Praxis Feld</strong>
+          <span class="uk-text-meta">1</span>
+        </a>
+      </li>
     </ul>
   </section>
 
-  <section class="kalkurama-sidebar-section">
+  <section class="kalkurama-sidebar-section" aria-label="Inaktiv">
     <div class="kalkurama-sidebar-section-title">Inaktiv</div>
     <ul class="kalkurama-source-list">
-      <li><a class="kalkurama-source-link" href="./index.html">Studio West</a></li>
+      <li class="kalkurama-source-customer">
+        <a class="kalkurama-source-customer-link" href="./index.html">
+          <strong>Studio West</strong>
+          <span class="uk-text-meta">0</span>
+        </a>
+      </li>
     </ul>
   </section>
 </div>

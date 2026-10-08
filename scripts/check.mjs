@@ -20,9 +20,6 @@ const productPages = [
   ["credit-notes.html", "credit-notes"],
   ["services.html", "services"],
   ["work.html", "work"],
-  ["work-correction-fixed.html", "work"],
-  ["work-correction-quantity.html", "work"],
-  ["work-correction-expense.html", "work"],
   ["time.html", "time"],
   ["settings.html", "settings"]
 ];
@@ -36,9 +33,14 @@ const packageJson = JSON.parse(await readFile(new URL("../package.json", import.
 const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const studioSource = await readFile(new URL("../src/studio.js", import.meta.url), "utf8");
 const standardTheme = await readFile(new URL("../src/themes/standard.less", import.meta.url), "utf8");
+const standardReset = await readFile(new URL("../src/themes/standard-reset.less", import.meta.url), "utf8");
 const kalkuramaTheme = await readFile(new URL("../src/themes/kalkurama.less", import.meta.url), "utf8");
 const kalkuramaImports = await readFile(new URL("../src/themes/kalkurama/_import.less", import.meta.url), "utf8");
 const offcanvasTheme = await readFile(new URL("../src/themes/kalkurama/offcanvas.less", import.meta.url), "utf8");
+const logoSvg = await readFile(new URL("../src/themes/kalkurama/images/logo.svg", import.meta.url), "utf8");
+const faviconSvg = await readFile(new URL("../src/themes/kalkurama/images/favicon.svg", import.meta.url), "utf8");
+const systemMirror = await readFile(new URL("../src/styles/system.less", import.meta.url), "utf8");
+const brandTheme = await readFile(new URL("../src/themes/kalkurama/brand.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
 const productLess = await readFile(new URL("../src/styles/product.less", import.meta.url), "utf8");
 const prototypeLess = await readFile(new URL("../src/styles/prototype.less", import.meta.url), "utf8");
@@ -69,7 +71,7 @@ const sharedPartials = [
 ].join("\n");
 
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
-assert(kalkuramaSource.commit === "2bd658c65020984fe2583161ae8cceeae583f618", "Unexpected Kalkurama source baseline.");
+assert(kalkuramaSource.commit === "ed273d6c38464a000751cd8ed0ca54e8266dfc27", "Unexpected Kalkurama source baseline.");
 assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy baseline must be a full SHA.");
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must match productive UIkit 3.25.25.");
 assert(packageJson.scripts?.dev === "vite --mode kalkurama", "Kalkurama must be the default dev theme.");
@@ -84,25 +86,32 @@ for (const [page, pageId] of allPages) {
   assert(html[page].includes("<!-- @include partials/sidebar.html -->"), page + " must use the shared desktop sidebar.");
   assert(html[page].includes("<!-- @include partials/mobile-sidebar.html -->"), page + " must use the shared mobile sidebar.");
   assert(html[page].includes('<script type="module" src="/src/app.js"></script>'), page + " must load behavior-only app.js.");
+  assert(html[page].includes('class="kalkurama-shell kalkurama-shell--app"'), page + " must mirror the productive authenticated shell.");
+  assert(html[page].includes('class="kalkurama-body kalkurama-body--with-sidebar"'), page + " must mirror the productive sidebar layout.");
+  assert(html[page].includes('rel="icon" href="/src/themes/kalkurama/images/favicon.svg"'), page + " must use the Kalkurama theme SVG favicon.");
+  assert(html[page].includes('rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico"'), page + " must mirror the productive ICO favicon metadata.");
 }
 
 assert(html["index.html"].includes('data-project="website-relaunch"'), "Daily landing must expose the selected Website Relaunch project.");
 assert(html["project.html"].includes('data-project="brand-refresh"'), "Project page must expose the selected Brand Refresh project.");
-assert(sharedPartials.includes('data-project-context="website-relaunch"'), "Sidebar must expose Website Relaunch project metadata.");
-assert(sharedPartials.includes('data-project-context="brand-refresh"'), "Sidebar must expose Brand Refresh project metadata.");
-assert(appSource.includes("document.body.dataset.project"), "Product app.js must activate project context from body metadata.");
-assert(appSource.includes("[data-project-context]"), "Product app.js must target semantic project links.");
+assert(!sharedPartials.includes("kalkurama-source-projects"), "Product mirror sidebar must stay customer-only like productive Kalkurama.");
+assert(sharedPartials.includes("kalkurama-source-customer-link"), "Product mirror sidebar must use the productive customer-link structure.");
+assert(sharedPartials.includes("kalkurama-sidebar-inspector-name"), "Product mirror sidebar must use the productive inspector structure.");
+assert(sharedPartials.includes("kalkurama-sidebar-toolbar-btn"), "Product mirror sidebar must use the productive toolbar controls.");
 
 assert(html["index.html"].includes("kalkurama-customer-workspace"), "Daily landing must be customer/project-first.");
+assert(html["index.html"].includes("kalkurama-customer-projects"), "Daily landing must mirror the productive project surface.");
 assert(html["index.html"].includes("kalkurama-project-list"), "Daily landing must keep the project list visible.");
-assert(html["index.html"].includes("kalkurama-running-timer"), "Daily landing must keep timer state in project context.");
-assert(html["index.html"].includes("uk-subnav uk-subnav-pill"), "Customer workspace must expose project-scoped document tabs.");
+assert(html["index.html"].includes("kalkurama-customer-actions"), "Daily landing must mirror productive workspace actions.");
+assert(html["index.html"].includes("kalkurama-customer-timer"), "Daily landing must keep productive timer state in customer context.");
+assert(html["index.html"].includes("kalkurama-customer-positions"), "Daily landing must mirror productive positions surface.");
+assert(html["index.html"].includes('data-workspace-tab="work"'), "Customer workspace must expose productive workspace tabs.");
 assert(html["project.html"].includes("Unverrechnete Arbeit"), "Project view must keep work as a central surface.");
 
 assert(sidebarPartial.includes("@include partials/customer-edit-modal.html"), "Shared sidebar must include the selected Customer editor.");
 assert(sidebarInnerPartial.includes('href="#customer-edit-modal"'), "Selected-Customer sidebar settings must open the Customer editor.");
 assert(sidebarInnerPartial.includes('aria-label="Kunde bearbeiten"'), "Selected-Customer settings action must remain explicit.");
-assert(html["index.html"].includes('data-uk-toggle="target: #customer-edit-modal"'), "Customer workspace edit action must open the shared Customer editor.");
+assert(html["index.html"].includes('href="#customer-edit-modal"') && html["index.html"].includes("uk-toggle"), "Customer workspace edit action must open the shared Customer editor.");
 
 for (const field of [
   'id="customer-name"',
@@ -135,69 +144,38 @@ assert(projectEditModal.includes('id="project-name"'), "Project editor must expo
 assert(projectEditModal.includes("ändert nur die aktuelle Projektbezeichnung"), "Project rename must preserve live-label semantics.");
 assert(projectEditModal.includes("Dokument-Snapshots") && projectEditModal.includes("Historie bleiben unverändert"), "Project editor must preserve issued-history semantics.");
 
-assert(html["work.html"].includes('href="./work-correction-fixed.html"'), "Work list must expose Fixed correction.");
-assert(html["work.html"].includes('href="./work-correction-quantity.html"'), "Work list must expose Quantity correction.");
-assert(html["work.html"].includes('href="./work-correction-expense.html"'), "Work list must expose Expense correction.");
-assert(html["work.html"].includes("data-work-correction-history"), "Work list must expose correction audit history.");
-assert(html["work.html"].includes("Vorher") && html["work.html"].includes("Nachher"), "Correction history must show before/after values.");
+assert(html["work.html"].includes('data-work-list="time"'), "Work mirror must expose productive Time list.");
+assert(html["work.html"].includes('data-work-list="fixed"'), "Work mirror must expose productive Fixed list.");
+assert(html["work.html"].includes('data-work-list="quantity"'), "Work mirror must expose productive Quantity list.");
+assert(html["work.html"].includes('data-work-list="expense"'), "Work mirror must expose productive Expense list.");
+assert(html["work.html"].includes("data-billing-history"), "Work mirror must expose productive billing history.");
+assert(html["work.html"].includes("data-correction-history"), "Work mirror must expose productive time-correction history.");
+assert(!html["work.html"].includes("work-correction-fixed.html"), "Product mirror must not expose an unimplemented Fixed correction route.");
+assert(!html["work.html"].includes("work-correction-quantity.html"), "Product mirror must not expose an unimplemented Quantity correction route.");
+assert(!html["work.html"].includes("work-correction-expense.html"), "Product mirror must not expose an unimplemented Expense correction route.");
 
-for (const page of [
-  "work-correction-fixed.html",
-  "work-correction-quantity.html",
-  "work-correction-expense.html"
-]) {
-  assert(html[page].includes("Korrekturgrund"), page + " must require an explicit correction reason.");
-  assert(html[page].includes("unverrechnet"), page + " must state that direct correction is limited to unbilled work.");
-  assert(html[page].includes("Original"), page + " must expose the original commercial values.");
-  assert(
-    html[page].includes("@include partials/work-correction-audit.html"),
-    page + " must include the shared correction audit semantics."
-  );
-  assert(
-    html[page].includes("reserviert") || html[page].includes("Entwurfsrechnung"),
-    page + " must explain the selected_for_draft_invoice correction boundary."
-  );
-  assert(
-    html[page].includes("verrechnet") && html[page].includes("nicht verrechenbar"),
-    page + " must explain terminal billing-state correction boundaries."
-  );
-}
+assert(workCorrectionAudit.includes("Bearbeiter"), "Styleguide correction prototype must expose the actor.");
+assert(workCorrectionAudit.includes("Serverzeit"), "Styleguide correction prototype must expose save-time semantics.");
+assert(workCorrectionAudit.includes("Pflichtfeld aus der Korrektur"), "Styleguide correction prototype must preserve the required reason.");
+assert(workCorrectionAudit.includes("Originalwerte"), "Styleguide correction prototype must preserve original commercial values.");
+assert(workCorrectionAudit.includes("append-only"), "Styleguide correction prototype must remain append-only.");
 
-assert(workCorrectionAudit.includes("Bearbeiter"), "Correction audit must expose the actor.");
-assert(workCorrectionAudit.includes("Serverzeit"), "Correction audit must expose save-time semantics.");
-assert(workCorrectionAudit.includes("Pflichtfeld aus der Korrektur"), "Correction audit must preserve the required reason.");
-assert(workCorrectionAudit.includes("Originalwerte"), "Correction audit must preserve original commercial values.");
-assert(workCorrectionAudit.includes("append-only"), "Correction audit history must remain append-only.");
+assert(html["invoices.html"].includes('href="./invoice.html"'), "Invoice list must link to the productive detail mirror.");
+assert(html["invoice.html"].includes("data-invoice-settlement"), "Invoice detail must mirror productive settlement status.");
+assert(html["invoice.html"].includes("data-invoice-paid"), "Invoice detail must mirror productive paid total.");
+assert(html["invoice.html"].includes("data-invoice-outstanding"), "Invoice detail must mirror productive outstanding total.");
+assert(html["invoice.html"].includes("data-invoice-payments"), "Invoice detail must mirror productive payment history.");
+assert(html["invoice.html"].includes("data-invoice-email"), "Invoice detail must mirror productive email form.");
+assert(html["invoice.html"].includes("data-invoice-credit-note-form"), "Invoice detail must mirror productive credit-note action.");
+assert(!html["invoice.html"].includes("Rabatt %"), "Product invoice mirror must not expose unimplemented Invoice discounts.");
+assert(html["credit-notes.html"].includes("uk-table uk-table-divider uk-table-middle"), "Credit Notes must mirror productive list structure.");
 
-assert(html["work-correction-fixed.html"].includes('name="entry_type" value="fixed"'), "Fixed correction type must remain explicit.");
-assert(html["work-correction-fixed.html"].includes("Betrag"), "Fixed correction must expose amount.");
-assert(html["work-correction-quantity.html"].includes('name="entry_type" value="quantity"'), "Quantity correction type must remain explicit.");
-assert(html["work-correction-quantity.html"].includes("Menge") && html["work-correction-quantity.html"].includes("Einzelpreis"), "Quantity correction must expose quantity and unit price.");
-assert(html["work-correction-expense.html"].includes('name="entry_type" value="expense"'), "Expense correction type must remain explicit.");
-assert(html["work-correction-expense.html"].includes("Betrag"), "Expense correction must expose amount.");
-
-assert(html["invoices.html"].includes('href="./invoice.html"'), "Invoice list must link to the discount prototype.");
-assert(html["invoice.html"].includes("Vor Rabatt"), "Invoice detail must expose the pre-discount amount.");
-assert(html["invoice.html"].includes("Rabatt %"), "Invoice detail must expose explicit discount-rate editing.");
-assert(html["invoice.html"].includes("−130,00 EUR"), "Invoice detail must expose explicit discount amount.");
-assert(html["invoice.html"].includes('data-source-work="time:1842"'), "Invoice detail must preserve source Work traceability.");
-assert(html["invoice.html"].includes("selected_for_draft_invoice"), "Invoice detail must preserve draft work-reservation semantics.");
-assert(html["invoice.html"].includes("Discount Rate/Amount"), "Invoice detail must state issued discount snapshot semantics.");
-assert(html["invoice.html"].includes("HTML, PDF, E-Mail, E-Invoice"), "Invoice detail must preserve HTML/PDF/email/e-invoice presentation consistency.");
-assert(html["credit-notes.html"].includes("data-credit-note-snapshot"), "Credit Notes must expose issued Invoice snapshot semantics.");
-assert(html["credit-notes.html"].includes("Rabatt Rate/Amount"), "Credit Notes must preserve the Invoice discount snapshot.");
-assert(html["credit-notes.html"].includes("nicht aus später veränderten Work-Daten neu berechnet"), "Credit Notes must not recalculate discounts from later Work state.");
-
-assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the section prototype.");
-assert(html["estimate.html"].includes('data-estimate-section="concept"'), "Estimate detail must expose an explicit first section.");
-assert(html["estimate.html"].includes('data-estimate-section="implementation"'), "Estimate detail must expose ordered multiple sections.");
-assert(html["estimate.html"].includes("Section nach oben") && html["estimate.html"].includes("Section nach unten"), "Estimate sections must expose explicit ordering controls.");
-assert(html["estimate.html"].includes("data-estimate-ungrouped"), "Estimate sections must remain optional by supporting ungrouped items.");
-assert(html["estimate.html"].includes("Sections sind optional"), "Estimate detail must state that sections are optional.");
-assert(html["estimate.html"].includes("historischen Snapshot"), "Estimate detail must preserve section ordering in the issued snapshot.");
-assert(html["estimate.html"].includes("data-estimate-issued-snapshot"), "Estimate detail must expose issued Section snapshot semantics.");
-assert(html["estimate.html"].includes("HTML, PDF und E-Mail"), "Estimate Section presentation must remain consistent across output channels.");
-assert(html["estimate.html"].includes("Frühere ausgestellte Revisionen bleiben unverändert"), "Estimate revisions must preserve previous issued snapshots.");
+assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the productive detail mirror.");
+assert(html["estimate.html"].includes("data-estimate-items"), "Estimate detail must mirror productive item table.");
+assert(html["estimate.html"].includes("data-estimate-email"), "Estimate detail must mirror productive email form.");
+assert(html["estimate.html"].includes("data-estimate-planned-ready"), "Accepted Estimate mirror must expose productive planned-work state.");
+assert(html["estimate.html"].includes("data-estimate-actuals"), "Accepted Estimate mirror must expose productive estimate-vs-actual state.");
+assert(!html["estimate.html"].includes("data-estimate-section="), "Product estimate mirror must not expose unimplemented Estimate sections.");
 
 for (const marker of [
   "uk-card uk-card-default",
@@ -228,6 +206,25 @@ assert(kalkuramaTheme.includes('@import "standard.less";'), "Kalkurama theme mus
 assert(kalkuramaTheme.includes('@import "kalkurama/_import.less";'), "Kalkurama theme must load component customizations.");
 assert(kalkuramaImports.includes('@import "variables.less";'), "Kalkurama theme variables import missing.");
 assert(kalkuramaImports.includes('@import "offcanvas.less";'), "Kalkurama Offcanvas theme import missing.");
+assert(standardTheme.includes('@import "../styles/system.less";'), "UIkit Standard must load the productive CSS mirror.");
+assert(standardTheme.includes('@import "standard-reset.less";'), "UIkit Standard must normalize productive branding back to reference colors.");
+assert(kalkuramaImports.includes('@import "brand.less";'), "Kalkurama branding import missing.");
+assert(logoSvg.trimStart().startsWith("<?xml") && logoSvg.includes("<svg"), "Kalkurama logo must be valid SVG text.");
+assert(faviconSvg.trimStart().startsWith("<?xml") && faviconSvg.includes("<svg"), "Kalkurama favicon must be valid SVG text.");
+assert(systemMirror.includes("Exact structural/visual CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
+assert(systemMirror.includes("Product baseline: ed273d6c38464a000751cd8ed0ca54e8266dfc27"), "System mirror must record the exact productive baseline.");
+assert(systemMirror.includes("--kalkurama-accent: #ff00ff;"), "System mirror must include the productive Kalkurama accent.");
+assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
+assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
+assert(standardReset.includes("--kalkurama-accent: #1e87f0;"), "Standard reference reset must restore the stock UIkit primary color.");
+assert(standardReset.includes(".uk-alert-primary"), "Standard reference reset must normalize the productive primary alert.");
+assert(brandTheme.includes("--kalkurama-accent: @magenta;"), "Kalkurama branding must own the approved accent override.");
+assert(brandTheme.includes("--kalkurama-accent-hover: darken(@magenta, 5%);"), "Kalkurama branding must preserve productive hover derivation.");
+assert(brandTheme.includes("--kalkurama-accent-active: darken(@magenta, 10%);"), "Kalkurama branding must preserve productive active derivation.");
+assert(brandTheme.includes("rgba(255, 0, 255, .12)"), "Kalkurama branding must re-apply productive branded states after Standard normalization.");
+assert(brandTheme.includes("background: #ffccff;"), "Kalkurama branding must re-apply the productive primary alert background.");
+assert(!shellLess.includes(".kalkurama-header"), "Legacy shell.less must not redefine productive shell structure.");
+assert(!productLess.includes(".kalkurama-customer-workspace"), "Prototype product.less must not redefine productive customer workspace structure.");
 assert(offcanvasTheme.includes("@offcanvas-bar-background"), "Light customer drawer must use UIkit Offcanvas variable.");
 assert(offcanvasTheme.includes(".hook-offcanvas-bar()"), "Offcanvas custom declaration must use UIkit hook.");
 
@@ -242,6 +239,9 @@ assert(viteConfig.includes('apply: "serve"'), "Kalkurama Studio must be dev-serv
 assert(viteConfig.includes('address === "127.0.0.1" || address === "::1"'), "Kalkurama Studio must enforce loopback.");
 assert(viteConfig.includes('const files = ["src/themes/kalkurama.less"]'), "Kalkurama Studio allowlist must start at Kalkurama.");
 assert(viteConfig.includes("function listMarkupStudioFiles()"), "Kalkurama Studio must expose a markup allowlist.");
+assert(viteConfig.includes("function listStudioAssetFiles()"), "Kalkurama Studio Git Sync must expose a controlled theme-asset allowlist.");
+assert(viteConfig.includes("function listStudioGitFiles()"), "Kalkurama Studio Git Sync must combine editable files and approved assets.");
+assert(viteConfig.includes("src/themes/kalkurama/images/"), "Kalkurama theme assets must remain scoped to the theme images directory.");
 assert(viteConfig.includes("Object.values(htmlEntries)"), "Markup allowlist must start from known HTML entry points.");
 assert(viteConfig.includes('relativePath === "partials/studio.html"'), "Studio UI partial must remain outside the editable markup allowlist.");
 assert(viteConfig.includes("function validateMarkupSources()"), "Markup saves must validate all HTML entry points.");
@@ -271,9 +271,6 @@ assert(!viteConfig.includes('pushGitRef(["-u", "origin", "main"'), "Kalkurama St
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
 assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
-assert(viteConfig.includes('workCorrectionFixed: "work-correction-fixed.html"'), "Vite build must include Fixed correction page.");
-assert(viteConfig.includes('workCorrectionQuantity: "work-correction-quantity.html"'), "Vite build must include Quantity correction page.");
-assert(viteConfig.includes('workCorrectionExpense: "work-correction-expense.html"'), "Vite build must include Expense correction page.");
 assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfig), "Standard Vite mode missing.");
 assert(/\bkalkurama:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Kalkurama Vite mode missing.");
 assert(/\bpages:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Pages must compile the Kalkurama theme.");
@@ -368,11 +365,9 @@ assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide m
 assert(transferStatus.includes('"partials/studio.html"'), "Kalkurama Studio must remain prototype-only for transfer.");
 assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples must remain prototype-only for transfer.");
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
+assert(transferStatus.includes('"src/themes/standard-reset.less"'), "Standard reference normalization must remain prototype-only for transfer.");
 assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
 assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
-assert(transferStatus.includes('"work-correction-fixed.html"'), "Fixed correction page must be classified for transfer.");
-assert(transferStatus.includes('"work-correction-quantity.html"'), "Quantity correction page must be classified for transfer.");
-assert(transferStatus.includes('"work-correction-expense.html"'), "Expense correction page must be classified for transfer.");
 
 assert(branchWorkflow.includes('"verify/**"'), "Branch verify workflow must target verify/**.");
 assert(branchWorkflow.includes("npm run verify"), "Branch verify workflow must run full verification.");

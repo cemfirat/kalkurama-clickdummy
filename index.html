@@ -3,66 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atelier Morgen · Kalkurama Clickdummy</title>
+  <title>Atelier Morgen · Kunden · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
 </head>
 <body data-page="workspace" data-project="website-relaunch">
-  <div class="kalkurama-shell">
+  <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
-    <div class="kalkurama-body">
+
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
 
       <main class="kalkurama-main" id="main-content">
-        <div class="kalkurama-page-heading">
+        <div class="kalkurama-page-heading kalkurama-page-heading--dense">
           <div>
             <div class="uk-text-meta">Kunde</div>
             <h1>Atelier Morgen</h1>
           </div>
-          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
-            <div><button class="uk-button uk-button-default uk-button-small" type="button" data-uk-toggle="target: #customer-edit-modal">Kunde bearbeiten</button></div>
-            <div><button class="uk-button uk-button-primary uk-button-small" type="button">Neues Projekt</button></div>
+          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" uk-grid>
+            <div>
+              <a class="uk-button uk-button-default uk-button-small"
+                 href="#customer-edit-modal"
+                 uk-toggle
+                 data-shell-modal-open
+                 data-shell-modal-title="Kunde bearbeiten"
+                 data-edit-customer-modal>Kunde bearbeiten</a>
+            </div>
+            <div>
+              <a class="uk-button uk-button-primary uk-button-small"
+                 href="./project.html"
+                 data-shell-modal-open
+                 data-shell-modal-title="Neues Projekt"
+                 data-new-project-modal>Neues Projekt</a>
+            </div>
           </div>
         </div>
 
-        <div class="kalkurama-customer-workspace">
-          <section class="kalkurama-panel">
+        <div class="kalkurama-customer-workspace" data-customer-workspace>
+          <section class="kalkurama-panel kalkurama-customer-projects" data-customer-projects>
             <div class="kalkurama-panel-header">
-              <h2>Projekte</h2>
-              <span class="uk-text-meta">3 Projekte</span>
+              <h2 class="uk-margin-remove">Projekte</h2>
+              <span class="uk-text-meta">3</span>
             </div>
-            <div class="uk-overflow-auto">
-              <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-table-hover uk-margin-remove kalkurama-project-list">
+
+            <div class="uk-overflow-auto"
+                 data-controller="project-list"
+                 data-action="click->project-list#activate"
+                 data-project-list>
+              <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-table-hover uk-margin-remove kalkurama-project-list"
+                     role="grid"
+                     aria-label="Projekte">
                 <thead>
-                  <tr><th>Projekt</th><th>Status</th><th class="uk-text-right">Zeit</th><th class="uk-text-right">Unverrechnet</th><th class="uk-text-right">Gesamt</th></tr>
+                  <tr>
+                    <th scope="col">Projekt</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" class="uk-text-right">Zeit</th>
+                    <th scope="col" class="uk-text-right">Unverrechnet</th>
+                    <th scope="col" class="uk-text-right">Gesamt</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr class="kalkurama-project-row kalkurama-row-selected" data-project-row aria-selected="true">
-                    <td><strong>Website Relaunch</strong></td>
-                    <td><span class="kalkurama-status-chip">aktiv</span></td>
-                    <td class="uk-text-right kalkurama-time">18:40</td>
-                    <td class="uk-text-right">5</td>
-                    <td class="uk-text-right kalkurama-money"><strong>3.860,00 EUR</strong></td>
+                  <tr class="kalkurama-project-row kalkurama-row-selected"
+                      data-project-list-target="row"
+                      data-href="./index.html"
+                      data-project-id="website-relaunch"
+                      tabindex="0"
+                      aria-selected="true">
+                    <td><a class="kalkurama-project-row-link" href="./index.html"><strong>Website Relaunch</strong></a></td>
+                    <td><span class="kalkurama-status-chip">Aktiv</span></td>
+                    <td class="uk-text-right uk-text-nowrap kalkurama-status">18:40</td>
+                    <td class="uk-text-right kalkurama-status">5</td>
+                    <td class="uk-text-right uk-text-nowrap kalkurama-status"><strong>3.860,00 EUR</strong></td>
                   </tr>
-                  <tr class="kalkurama-project-row" data-project-row aria-selected="false">
-                    <td><a href="./project.html"><strong>Brand Refresh</strong></a></td>
-                    <td><span class="kalkurama-status-chip">aktiv</span></td>
-                    <td class="uk-text-right kalkurama-time">07:15</td>
-                    <td class="uk-text-right">2</td>
-                    <td class="uk-text-right kalkurama-money"><strong>1.450,00 EUR</strong></td>
+                  <tr class="kalkurama-project-row"
+                      data-project-list-target="row"
+                      data-href="./project.html"
+                      data-project-id="brand-refresh"
+                      tabindex="-1"
+                      aria-selected="false">
+                    <td><a class="kalkurama-project-row-link" href="./project.html"><strong>Brand Refresh</strong></a></td>
+                    <td><span class="kalkurama-status-chip">Aktiv</span></td>
+                    <td class="uk-text-right uk-text-nowrap kalkurama-status">07:15</td>
+                    <td class="uk-text-right kalkurama-status">2</td>
+                    <td class="uk-text-right uk-text-nowrap kalkurama-status"><strong>1.450,00 EUR</strong></td>
                   </tr>
-                  <tr class="kalkurama-project-row" data-project-row aria-selected="false">
-                    <td><strong>Hosting 2026</strong></td>
-                    <td><span class="kalkurama-status-chip">pausiert</span></td>
-                    <td class="uk-text-right">—</td>
-                    <td class="uk-text-right">1</td>
-                    <td class="uk-text-right kalkurama-money"><strong>360,00 EUR</strong></td>
+                  <tr class="kalkurama-project-row"
+                      data-project-list-target="row"
+                      data-href="./index.html"
+                      data-project-id="hosting-2026"
+                      tabindex="-1"
+                      aria-selected="false">
+                    <td><a class="kalkurama-project-row-link" href="./index.html"><strong>Hosting 2026</strong></a></td>
+                    <td><span class="kalkurama-status-chip">Pausiert</span></td>
+                    <td class="uk-text-right uk-text-nowrap kalkurama-status">—</td>
+                    <td class="uk-text-right kalkurama-status">1</td>
+                    <td class="uk-text-right uk-text-nowrap kalkurama-status"><strong>360,00 EUR</strong></td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div class="uk-padding-small uk-padding-remove-horizontal uk-padding-remove-bottom" data-project-lifecycle>
+            <div class="uk-margin-small-top uk-padding-small uk-padding-remove-horizontal">
               <div class="uk-text-meta uk-margin-small-bottom">Lifecycle · Website Relaunch · Aktiv</div>
-              <div class="uk-flex uk-flex-wrap uk-flex-middle uk-grid-small" data-uk-grid>
+              <div class="uk-flex uk-flex-wrap uk-flex-middle uk-grid-small" uk-grid>
                 <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Pausiert setzen</button></div>
                 <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Abgeschlossen setzen</button></div>
                 <div><button class="uk-button uk-button-default uk-button-small" type="button">Auf Archiviert setzen</button></div>
@@ -70,45 +113,109 @@
             </div>
           </section>
 
-          <div class="kalkurama-workspace-actions">
-            <div>
-              <button class="uk-button uk-button-primary uk-button-small" type="button">+ Position</button>
-              <button class="uk-button uk-button-default uk-button-small" type="button">Timer starten</button>
-              <button class="uk-button uk-button-default uk-button-small" type="button">Neue Rechnung</button>
-              <button class="uk-button uk-button-default uk-button-small" type="button">Neues Angebot</button>
+          <div class="kalkurama-customer-actions" data-customer-actions>
+            <div class="kalkurama-customer-actions-left">
+              <a class="uk-button uk-button-default uk-button-small"
+                 href="./work.html"
+                 data-shell-modal-open
+                 data-shell-modal-title="Neue Position"
+                 data-new-position-modal>Neue Position</a>
+
+              <div class="kalkurama-customer-actions-tabs" role="tablist" aria-label="Arbeitsbereiche">
+                <a class="kalkurama-customer-actions-tab is-active"
+                   href="./index.html"
+                   role="tab"
+                   aria-selected="true"
+                   data-workspace-tab="work">Arbeitspositionen</a>
+                <a class="kalkurama-customer-actions-tab"
+                   href="./estimate.html"
+                   role="tab"
+                   aria-selected="false"
+                   data-workspace-tab="estimate">Angebotspositionen</a>
+                <a class="kalkurama-customer-actions-tab"
+                   href="./estimates.html"
+                   role="tab"
+                   aria-selected="false"
+                   data-workspace-tab="estimates">Angebote</a>
+                <a class="kalkurama-customer-actions-tab"
+                   href="./invoices.html"
+                   role="tab"
+                   aria-selected="false"
+                   data-workspace-tab="invoices">Rechnungen</a>
+                <a class="kalkurama-customer-actions-tab"
+                   href="./payments.html"
+                   role="tab"
+                   aria-selected="false"
+                   data-workspace-tab="payments">Zahlungen</a>
+                <a class="kalkurama-customer-actions-tab"
+                   href="./credit-notes.html"
+                   role="tab"
+                   aria-selected="false"
+                   data-workspace-tab="credit_notes">Gutschriften</a>
+              </div>
             </div>
-            <ul class="uk-subnav uk-subnav-pill uk-margin-remove">
-              <li class="uk-active"><a href="#">Arbeit</a></li>
-              <li><a href="./estimates.html">Angebote</a></li>
-              <li><a href="./invoices.html">Rechnungen</a></li>
-              <li><a href="./payments.html">Zahlungen</a></li>
-              <li><a href="./credit-notes.html">Gutschriften</a></li>
-            </ul>
+
+            <div class="kalkurama-customer-actions-right">
+              <div class="kalkurama-customer-timer"
+                   data-customer-timer
+                   data-controller="timer"
+                   data-timer-started-at-value="2026-10-08T18:00:00+02:00">
+                <div class="kalkurama-customer-timer-meta">
+                  <span class="uk-text-meta">Läuft</span>
+                  <strong>Atelier Morgen · Website Relaunch</strong>
+                  <span class="uk-text-meta">Umsetzung</span>
+                </div>
+                <div class="kalkurama-customer-timer-controls">
+                  <div class="kalkurama-customer-timer-elapsed" data-timer-target="elapsed">01:24:18</div>
+                  <button class="uk-button uk-button-primary uk-button-small" type="button">Timer stoppen</button>
+                </div>
+              </div>
+
+              <a class="uk-button uk-button-default uk-button-small"
+                 href="./invoice.html"
+                 data-shell-modal-open
+                 data-shell-modal-title="Rechnung senden"
+                 data-send-invoice-modal>Rechnung senden</a>
+              <a class="uk-button uk-button-text uk-button-small"
+                 href="./estimate.html"
+                 data-shell-modal-open
+                 data-shell-modal-title="Neues Angebot"
+                 data-new-estimate-modal>Neues Angebot</a>
+            </div>
           </div>
 
-          <section class="kalkurama-panel">
-            <div class="kalkurama-running-timer">
-              <span class="uk-label uk-label-success">Timer läuft</span>
-              <strong>Website Relaunch · Umsetzung</strong>
-              <span class="kalkurama-timer-value">01:24:18</span>
-              <button class="uk-button uk-button-danger uk-button-small" type="button">Stoppen</button>
-            </div>
-
+          <section class="kalkurama-panel kalkurama-customer-positions"
+                   data-customer-positions
+                   data-project-work-surface>
             <div class="kalkurama-panel-header">
-              <h2>Arbeit · Website Relaunch</h2>
-              <span class="uk-text-meta">5 unverrechnete Positionen · 1.285,00 EUR</span>
+              <h2 class="uk-margin-remove">Website Relaunch</h2>
+              <div class="uk-text-meta">5 Positionen · 1.285,00 EUR</div>
             </div>
 
             <div class="uk-overflow-auto">
               <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
-                <thead><tr><th>Datum</th><th>Typ</th><th>Beschreibung</th><th class="uk-text-right">Menge/Zeit</th><th class="uk-text-right">Betrag</th><th>Status</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Datum</th>
+                    <th>Typ</th>
+                    <th>Beschreibung</th>
+                    <th class="uk-text-right">Menge/Zeit</th>
+                    <th class="uk-text-right">Betrag</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td>08.10.2026</td><td>Zeit</td><td>Frontend-Umsetzung</td><td class="uk-text-right">3:30 h</td><td class="uk-text-right">455,00 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
-                  <tr><td>07.10.2026</td><td>Zeit</td><td>UI-Abstimmung</td><td class="uk-text-right">1:45 h</td><td class="uk-text-right">227,50 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
-                  <tr><td>06.10.2026</td><td>Fix</td><td>Responsive Prototyp</td><td class="uk-text-right">1</td><td class="uk-text-right">420,00 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
-                  <tr><td>05.10.2026</td><td>Auslage</td><td>Stockmaterial</td><td class="uk-text-right">1</td><td class="uk-text-right">182,50 EUR</td><td><span class="uk-label">unverrechnet</span></td></tr>
+                  <tr><td>08.10.2026</td><td>Zeit</td><td>Frontend-Umsetzung</td><td class="uk-text-right">3:30 h</td><td class="uk-text-right">455,00 EUR</td><td>unverrechnet</td></tr>
+                  <tr><td>07.10.2026</td><td>Zeit</td><td>UI-Abstimmung</td><td class="uk-text-right">1:45 h</td><td class="uk-text-right">227,50 EUR</td><td>unverrechnet</td></tr>
+                  <tr><td>06.10.2026</td><td>Fix</td><td>Responsive Prototyp</td><td class="uk-text-right">1</td><td class="uk-text-right">420,00 EUR</td><td>unverrechnet</td></tr>
+                  <tr><td>05.10.2026</td><td>Auslage</td><td>Stockmaterial</td><td class="uk-text-right">1</td><td class="uk-text-right">182,50 EUR</td><td>unverrechnet</td></tr>
                 </tbody>
               </table>
+            </div>
+
+            <div class="uk-margin-small-top uk-flex uk-flex-between uk-flex-middle">
+              <a href="./work.html">Vollständige Arbeitsliste öffnen</a>
+              <a class="uk-text-meta" href="./project.html">Projektdetails öffnen</a>
             </div>
           </section>
         </div>

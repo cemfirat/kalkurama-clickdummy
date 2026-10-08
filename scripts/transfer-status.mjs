@@ -14,9 +14,6 @@ const transferableExact = new Set([
   "credit-notes.html",
   "services.html",
   "work.html",
-  "work-correction-fixed.html",
-  "work-correction-quantity.html",
-  "work-correction-expense.html",
   "time.html",
   "settings.html",
   "src/app.js"
@@ -32,7 +29,11 @@ const prototypeOnlyExact = new Set([
   "styleguide.html",
   "partials/studio.html",
   "src/studio.js",
-  "src/styles/prototype.less"
+  "src/styles/prototype.less",
+  "src/styles/product.less",
+  "src/styles/shell.less",
+  "src/styles/system.less",
+  "src/themes/standard-reset.less"
 ]);
 
 const prototypeOnlyPrefixes = [

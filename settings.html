@@ -1,37 +1,137 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Einstellungen · Kalkurama Clickdummy</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kommerzielle Einstellungen · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+</head>
 <body data-page="settings">
-  <div class="kalkurama-shell">
+  <div class="kalkurama-shell kalkurama-shell--app">
     <!-- @include partials/header.html -->
-    <div class="kalkurama-body">
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
-        <!-- @include partials/page-heading.html {"eyebrow":"Kalkurama","title":"Einstellungen","description":"Workspace, Dokumente, Steuern, Nummernkreise und persönliche Präferenzen."} -->
+        <div class="kalkurama-page-heading">
+          <div>
+            <div class="uk-text-meta">Arbeitsbereich-Einstellungen</div>
+            <h1>Kommerzielle Einstellungen</h1>
+            <p class="uk-text-meta"><a href="./settings.html">Installationslizenz</a></p>
+          </div>
+        </div>
 
-        <div class="uk-grid-medium" data-uk-grid>
-          <aside class="uk-width-1-4@l">
-            <ul class="uk-nav uk-nav-default">
-              <li class="uk-active"><a href="#">Unternehmen</a></li>
-              <li><a href="#">Dokumente</a></li>
-              <li><a href="#">Steuern & Währungen</a></li>
-              <li><a href="#">Nummernkreise</a></li>
-              <li><a href="#">Konto & Sprache</a></li>
-            </ul>
-          </aside>
-          <div class="uk-width-expand@l">
-            <form class="uk-card uk-card-default uk-card-body uk-form-stacked">
-              <h2 class="uk-card-title">Unternehmen</h2>
-              <div class="uk-margin">
-                <label class="uk-form-label" for="company-name">Name</label>
-                <input id="company-name" class="uk-input" value="Demo Workspace">
-              </div>
-              <div class="uk-grid-small uk-child-width-1-2@m" data-uk-grid>
-                <div><label class="uk-form-label" for="currency">Standardwährung</label><select id="currency" class="uk-select"><option>EUR</option></select></div>
-                <div><label class="uk-form-label" for="language">Sprache</label><select id="language" class="uk-select"><option>Deutsch</option><option>English</option></select></div>
-              </div>
-              <div class="uk-margin"><button class="uk-button uk-button-primary" type="button">Speichern</button></div>
-            </form>
+        <div class="uk-grid-medium uk-child-width-1-1 uk-child-width-2-3@l" uk-grid>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <h2 class="uk-card-title">Unternehmensidentität & Standards</h2>
+
+              <form class="uk-form-stacked">
+                <div class="uk-margin">
+                  <label class="uk-form-label" for="legal_name">Rechtlicher / Unternehmensname</label>
+                  <input class="uk-input" id="legal_name" value="Creative Consulting & Design Management by Cem Cemil Firat">
+                </div>
+
+                <div class="uk-grid-small uk-child-width-1-2@s" uk-grid>
+                  <div><label class="uk-form-label" for="address_line1">Adresszeile 1</label><input class="uk-input" id="address_line1" value="Beispielstraße 1"></div>
+                  <div><label class="uk-form-label" for="address_line2">Adresszeile 2</label><input class="uk-input" id="address_line2" value=""></div>
+                </div>
+
+                <div class="uk-grid-small uk-child-width-1-3@s uk-margin" uk-grid>
+                  <div><label class="uk-form-label" for="postal_code">PLZ</label><input class="uk-input" id="postal_code" value="2540"></div>
+                  <div><label class="uk-form-label" for="city">Ort</label><input class="uk-input" id="city" value="Bad Vöslau"></div>
+                  <div><label class="uk-form-label" for="country_code">Ländercode</label><input class="uk-input" id="country_code" value="AT"></div>
+                </div>
+
+                <div class="uk-margin">
+                  <label class="uk-form-label" for="tax_identifier">Steuer- / UID-Nummer</label>
+                  <input class="uk-input" id="tax_identifier" value="ATU00000000">
+                </div>
+
+                <div class="uk-grid-small uk-child-width-1-3@s" uk-grid>
+                  <div><label class="uk-form-label" for="default_currency">Standardwährung</label><input class="uk-input" id="default_currency" value="EUR"></div>
+                  <div><label class="uk-form-label" for="default_payment_term_days">Zahlungsziel (Tage)</label><input class="uk-input" type="number" id="default_payment_term_days" value="14"></div>
+                  <div><label class="uk-form-label" for="default_tax_rate_id">Standardsteuersatz</label><select class="uk-select" id="default_tax_rate_id"><option>20 % USt.</option></select></div>
+                </div>
+
+                <div class="uk-margin">
+                  <label class="uk-form-label" for="payment_instructions">Zahlungshinweise</label>
+                  <textarea class="uk-textarea" id="payment_instructions" rows="4">Bitte überweisen Sie unter Angabe der Rechnungsnummer.</textarea>
+                  <div class="uk-text-meta">Freitext-Zahlungshinweise für ausgestellte Rechnungen.</div>
+                </div>
+
+                <div class="uk-grid-small uk-child-width-1-2@s uk-margin" uk-grid>
+                  <div><label class="uk-form-label" for="sepa_iban">Zahlungs-IBAN (EPC / Swiss QR)</label><input class="uk-input" id="sepa_iban" value="AT61 1904 3002 3457 3201"></div>
+                  <div><label class="uk-form-label" for="sepa_bic">BIC (optional)</label><input class="uk-input" id="sepa_bic" value="BKAUATWW"></div>
+                </div>
+
+                <hr>
+                <h3 class="uk-card-title">Ausgehende E-Mail</h3>
+                <p class="uk-text-meta">Ausgestellte Angebote und Rechnungen mit PDF-Anhang versenden. Zugangsdaten gehören nicht ins Repository.</p>
+
+                <div class="uk-grid-small uk-child-width-1-2@s uk-margin" uk-grid>
+                  <div><label class="uk-form-label" for="mail_from_address">Absender-E-Mail</label><input class="uk-input" id="mail_from_address" type="email" value="billing@example.com"></div>
+                  <div><label class="uk-form-label" for="mail_from_name">Absendername</label><input class="uk-input" id="mail_from_name" value="Kalkurama Demo"></div>
+                </div>
+
+                <div class="uk-margin">
+                  <label class="uk-form-label" for="mailer_dsn">Mailer DSN (optionale Workspace-Überschreibung)</label>
+                  <input class="uk-input" id="mailer_dsn" value="" placeholder="smtp://user:password@host:587">
+                </div>
+
+                <button class="uk-button uk-button-primary" type="button">Kommerzielle Einstellungen speichern</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@l uk-margin-top" uk-grid>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <h2 class="uk-card-title">Steuersätze</h2>
+              <p class="uk-text-meta">Allgemeine Steuersätze des Arbeitsbereichs.</p>
+              <table class="uk-table uk-table-divider uk-table-small">
+                <thead><tr><th>Name</th><th class="uk-text-right">Satz</th></tr></thead>
+                <tbody><tr><td>Standard</td><td class="uk-text-right">20,00 %</td></tr><tr><td>Ermäßigt</td><td class="uk-text-right">10,00 %</td></tr></tbody>
+              </table>
+
+              <form class="uk-form-stacked uk-margin-top">
+                <div class="uk-grid-small uk-child-width-1-2@s" uk-grid>
+                  <div><label class="uk-form-label" for="tax_rate_name">Name</label><input class="uk-input" id="tax_rate_name" placeholder="Standard"></div>
+                  <div><label class="uk-form-label" for="rate_percent">Satz (%)</label><input class="uk-input" id="rate_percent" placeholder="20.00"></div>
+                </div>
+                <button class="uk-button uk-button-default uk-margin-top" type="button">Steuersatz hinzufügen</button>
+              </form>
+            </div>
+          </div>
+
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <h2 class="uk-card-title">Dokumentnummerierung</h2>
+              <p class="uk-text-meta">Diese Einstellungen definieren die nächste endgültige Nummer. Vorschauen und Entwürfe verbrauchen keine Nummer.</p>
+
+              <form class="uk-form-stacked">
+                <h3 class="uk-heading-bullet">Rechnung</h3>
+                <div class="uk-grid-small uk-child-width-1-3@s" uk-grid>
+                  <div><label class="uk-form-label" for="invoice_prefix">Präfix</label><input class="uk-input" id="invoice_prefix" value="INV-"></div>
+                  <div><label class="uk-form-label" for="invoice_next_number">Nächste Nummer</label><input class="uk-input" type="number" id="invoice_next_number" value="105"></div>
+                  <div><label class="uk-form-label" for="invoice_padding">Stellen</label><input class="uk-input" type="number" id="invoice_padding" value="4"></div>
+                </div>
+                <p class="uk-text-meta uk-margin-small-top">Nächste endgültige Nummer: <strong>INV-0105</strong></p>
+                <button class="uk-button uk-button-default" type="button">Rechnungsnummerierung speichern</button>
+              </form>
+
+              <form class="uk-form-stacked uk-margin-large-top">
+                <h3 class="uk-heading-bullet">Angebot</h3>
+                <div class="uk-grid-small uk-child-width-1-3@s" uk-grid>
+                  <div><label class="uk-form-label" for="estimate_prefix">Präfix</label><input class="uk-input" id="estimate_prefix" value="EST-"></div>
+                  <div><label class="uk-form-label" for="estimate_next_number">Nächste Nummer</label><input class="uk-input" type="number" id="estimate_next_number" value="19"></div>
+                  <div><label class="uk-form-label" for="estimate_padding">Stellen</label><input class="uk-input" type="number" id="estimate_padding" value="4"></div>
+                </div>
+                <p class="uk-text-meta uk-margin-small-top">Nächste endgültige Nummer: <strong>EST-0019</strong></p>
+                <button class="uk-button uk-button-default" type="button">Angebotsnummerierung speichern</button>
+              </form>
+            </div>
           </div>
         </div>
       </main>
