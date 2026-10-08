@@ -1,8 +1,8 @@
 export const transferState = Object.freeze({
   schemaVersion: 1,
 
-  // Audited non-time Work corrections UI-lab baseline aligned with Kalkurama issue #86.
-  uiBaselineClickdummyCommit: "552f3215d4fe3b9119ddea84de74c77f55fef543",
+  // Productive Customer #81 / Project #82 UI baseline sync.
+  uiBaselineClickdummyCommit: "a30c339ec442a45a4b0fddd7f9bdcd5db0c68062",
 
   // Set only after a later clickdummy UI delta has been intentionally ported
   // to productive Kalkurama and the resulting Kalkurama commit is known.
