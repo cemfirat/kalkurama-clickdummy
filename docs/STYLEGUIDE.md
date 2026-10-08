@@ -136,14 +136,14 @@ that same source. The Work Correction example therefore uses
 7. Do not put product behavior or fake product requirements into the Styleguide.
 8. Run the full static/build verification before branch CI.
 
-## Theme Studio
+## Kalkurama Studio
 
-When the Styleguide runs through the local Vite development server, Theme Studio
+When the Styleguide runs through the local Vite development server, Kalkurama Studio
 can open approved Kalkurama/customer LESS files directly.
 
 Entry points include:
 
-- **Theme Studio**
+- **Kalkurama Studio**
 - **Theme bearbeiten**
 - **variables.less bearbeiten**.
 
@@ -151,7 +151,7 @@ The public GitHub Pages version remains read-only.
 
 See:
 
-`docs/THEME-STUDIO.md`
+`docs/STUDIO.md`
 
 ## Transfer scope
 
@@ -160,7 +160,7 @@ The Styleguide is prototype-only:
 - `styleguide.html`
 - `partials/styleguide/**`
 - `src/styles/prototype.less`
-- Theme Studio UI/client.
+- Kalkurama Studio UI/client.
 
 These files are never promoted blindly into productive Kalkurama.
 
