@@ -8,7 +8,9 @@ Append-only record of clickdummy baselines and intentionally promoted UI decisio
 
 | 2026-10-08 | `362574766419b8f88bfe4fa05ddce65f4ab768a1` | `2bd658c65020984fe2583161ae8cceeae583f618` | Refined foundation: issue-alignment guard + explicit mobile customer sidebar variant | Superseded by expanded Styleguide baseline |
 
-| 2026-10-08 | `120b85fd986e1b961f437aecf954b239f96405a2` | `2bd658c65020984fe2583161ae8cceeae583f618` | Expanded UIkit-oriented Styleguide with synchronized Preview/Markup and Kalkurama-specific documentation priorities | Active baseline; no production promotion |
+| 2026-10-08 | `120b85fd986e1b961f437aecf954b239f96405a2` | `2bd658c65020984fe2583161ae8cceeae583f618` | Expanded UIkit-oriented Styleguide with synchronized Preview/Markup and Kalkurama-specific documentation priorities | Superseded by Estimate Sections baseline |
+
+| 2026-10-08 | `a4d7ae3f915b1022cda9ab86e9da8516f6853be4` | `2bd658c65020984fe2583161ae8cceeae583f618` | Estimate Sections #84: explicit ordered optional sections, ungrouped items and issued-snapshot semantics | Active baseline; no production promotion |
 
 ## Logging rule
 
