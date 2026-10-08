@@ -36,6 +36,7 @@ Billings Pro is an interaction-architecture reference, not a visual template.
 - `overview.html`
 - `project.html`
 - `estimates.html`
+- `estimate.html` — Estimate draft/detail with explicit sections
 - `invoices.html`
 - `payments.html`
 - `credit-notes.html`
