@@ -105,6 +105,25 @@ inventing it at invoice time.
 The clickdummy therefore keeps Work central to Project and does not model an
 independent invoice-first data-entry architecture.
 
+
+### #84 — explicit Estimate sections
+
+Issue #84 is **Class A — documented v1 baseline** and defines optional ordered
+sections for Estimate drafts and issued snapshots.
+
+Clickdummy consequence:
+
+- sections group Estimate Items without becoming a free-form document designer;
+- section title/description and order stay explicit;
+- items may remain ungrouped because sections are optional;
+- issued/revised presentation must preserve section labels and ordering;
+- commercial calculations remain item-based and exact.
+
+The clickdummy therefore prototypes explicit ordered sections using normal UIkit
+controls and visible item tables rather than inventing drag-and-drop or arbitrary
+layout semantics.
+
+
 ## Scope guard
 
 Until the productive source explicitly changes, the clickdummy must not add
