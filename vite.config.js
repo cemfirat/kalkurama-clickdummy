@@ -285,16 +285,22 @@ function fetchAndAssertCurrentMain(branch) {
   }
 }
 
+function runNpmScript(script) {
+  return execFileSync("npm", ["run", script], {
+    cwd: rootDirectory,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+    timeout: 120000,
+    maxBuffer: 8 * 1024 * 1024,
+    env: { ...process.env, CI: "1" }
+  });
+}
+
 function runLocalVerification() {
   try {
-    const output = execFileSync("npm", ["run", "verify"], {
-      cwd: rootDirectory,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"],
-      timeout: 120000,
-      maxBuffer: 8 * 1024 * 1024,
-      env: { ...process.env, CI: "1" }
-    });
+    const verifyOutput = runNpmScript("verify");
+    const transferOutput = runNpmScript("transfer:status");
+    const output = [verifyOutput, transferOutput].join("\n");
 
     return {
       ok: true,
@@ -457,8 +463,11 @@ function publishStudioChanges(commitMessage) {
   pushGitRef(["-u", "origin", branch]);
 
   const remoteVerify = gitRemoteOptional(["ls-remote", "--heads", "origin", "refs/heads/" + verifyBranch]);
+  let verifyCreated = false;
+
   if (remoteVerify === "") {
     pushGitRef(["origin", commitSha + ":refs/heads/" + verifyBranch]);
+    verifyCreated = true;
   } else if (!remoteVerify.startsWith(commitSha)) {
     throw new Error("Verify branch already exists with a different commit: " + verifyBranch);
   }
@@ -468,6 +477,7 @@ function publishStudioChanges(commitMessage) {
     branch,
     commitSha,
     verifyBranch,
+    verifyCreated,
     verification
   };
 }
