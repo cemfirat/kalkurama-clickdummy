@@ -329,7 +329,7 @@ assert(studioSource.includes('const endpoint = "/__studio"'), "Kalkurama Studio 
 assert(!studioSource.includes("api.github.com"), "Kalkurama Studio client must not talk to GitHub directly.");
 assert(studioSource.includes('api("/git/verify"'), "Kalkurama Studio client must expose local verification.");
 assert(studioSource.includes('api("/git/publish"'), "Kalkurama Studio client must expose controlled publish.");
-assert(studioSource.includes("Ungespeicherte LESS-Änderungen vorhanden"), "Git Sync must block unsaved editor changes.");
+assert(studioSource.includes("Ungespeicherte Studio-Änderungen vorhanden"), "Git Sync must block unsaved editor changes.");
 assert(studioPartial.includes("data-studio-commit-message"), "Kalkurama Studio Git Sync commit field missing.");
 assert(studioPartial.includes("data-studio-git-verify"), "Kalkurama Studio local verification control missing.");
 assert(studioPartial.includes("data-studio-git-publish"), "Kalkurama Studio controlled publish control missing.");
