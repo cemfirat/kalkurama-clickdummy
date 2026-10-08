@@ -59,8 +59,8 @@ function renderGitStatus(git) {
   if (gitNotice && git.syncError) {
     gitNotice.textContent = git.syncError;
   } else if (gitNotice) {
-    gitNotice.innerHTML = "Es werden ausschließlich freigegebene Theme-Dateien synchronisiert. " +
-      "Das Studio erstellt keinen Pull Request. Nach dem Push wird ein identischer <code>verify/**</code>-Branch " +
+    gitNotice.textContent = "Es werden ausschließlich freigegebene Theme-Dateien synchronisiert. " +
+      "Das Studio erstellt keinen Pull Request. Nach dem Push wird ein identischer verify/**-Branch " +
       "erzeugt und damit genau ein Branch-CI-Run gestartet.";
   }
 }
