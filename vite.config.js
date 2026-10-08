@@ -324,6 +324,31 @@ function sanitizeCommitMessage(value) {
   return message;
 }
 
+function assertGitIdentity() {
+  const name = gitOptional(["config", "user.name"]);
+  const email = gitOptional(["config", "user.email"]);
+
+  if (name === "" || email === "") {
+    throw new Error("Git user.name and user.email must be configured before Git Sync.");
+  }
+
+  return { name, email };
+}
+
+function gitRemoteOptional(args) {
+  try {
+    return execFileSync("git", args, {
+      cwd: rootDirectory,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+      timeout: 60000,
+      env: { ...process.env, GIT_TERMINAL_PROMPT: "0" }
+    }).trim();
+  } catch {
+    return "";
+  }
+}
+
 function createStudioBranchName() {
   const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "");
   return "studio/theme-" + stamp;
@@ -349,24 +374,42 @@ function pushGitRef(args) {
 }
 
 function studioGitStatus() {
-  const state = assertStudioGitState();
+  const branch = gitOptional(["branch", "--show-current"]);
+  const changes = parseGitStatus();
+  const origin = gitOptional(["remote", "get-url", "origin"]);
   let mainSynchronized = false;
-  let origin = "";
+  let syncError = "";
 
   try {
-    origin = assertGitHubOrigin();
-    fetchAndAssertCurrentMain(state.branch);
-    mainSynchronized = true;
-  } catch {
-    mainSynchronized = false;
+    const state = assertStudioGitState();
+    assertGitHubOrigin();
+
+    if (state.branch === "main") {
+      const originMain = gitOptional(["rev-parse", "origin/main"]);
+      mainSynchronized = originMain !== "" && git(["rev-parse", "main"]) === originMain;
+    } else {
+      try {
+        execFileSync("git", ["merge-base", "--is-ancestor", "origin/main", "HEAD"], {
+          cwd: rootDirectory,
+          stdio: ["ignore", "ignore", "ignore"],
+          timeout: 10000
+        });
+        mainSynchronized = true;
+      } catch {
+        mainSynchronized = false;
+      }
+    }
+  } catch (error) {
+    syncError = error instanceof Error ? error.message : String(error);
   }
 
   return {
-    branch: state.branch,
+    branch,
     head: gitOptional(["rev-parse", "--short", "HEAD"]),
     origin,
     mainSynchronized,
-    changes: state.changes
+    syncError,
+    changes
   };
 }
 
@@ -377,6 +420,7 @@ function publishStudioChanges(commitMessage) {
   fetchAndAssertCurrentMain(state.branch);
 
   const hasWorkingChanges = state.changes.length > 0;
+  assertGitIdentity();
   const verification = runLocalVerification();
   let branch = state.branch;
 
@@ -392,10 +436,16 @@ function publishStudioChanges(commitMessage) {
 
     const allowed = new Set(listThemeStudioFiles());
     if (staged.length === 0 || staged.some((path) => !allowed.has(path))) {
+      gitRawOptional(["reset", "--", ...paths]);
       throw new Error("Git Sync staging did not produce an allowed Theme Studio candidate.");
     }
 
-    gitRaw(["commit", "-m", message]);
+    try {
+      gitRaw(["commit", "-m", message]);
+    } catch (error) {
+      gitRawOptional(["reset", "--", ...paths]);
+      throw error;
+    }
   } else if (!branch.startsWith("studio/") || git(["rev-parse", "HEAD"]) === git(["rev-parse", "origin/main"])) {
     throw new Error("There are no Theme Studio changes to publish.");
   }
@@ -406,7 +456,7 @@ function publishStudioChanges(commitMessage) {
 
   pushGitRef(["-u", "origin", branch]);
 
-  const remoteVerify = gitOptional(["ls-remote", "--heads", "origin", "refs/heads/" + verifyBranch]);
+  const remoteVerify = gitRemoteOptional(["ls-remote", "--heads", "origin", "refs/heads/" + verifyBranch]);
   if (remoteVerify === "") {
     pushGitRef(["origin", commitSha + ":refs/heads/" + verifyBranch]);
   } else if (!remoteVerify.startsWith(commitSha)) {
