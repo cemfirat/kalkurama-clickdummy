@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Übersicht · Kalkurama Clickdummy</title>
+  <title>Dashboard · Kalkurama</title>
   <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
 </head>
 <body data-page="overview">
@@ -12,41 +12,134 @@
     <div class="kalkurama-body kalkurama-body--with-sidebar">
       <!-- @include partials/sidebar.html -->
       <main class="kalkurama-main" id="main-content">
-        <!-- @include partials/page-heading.html {"eyebrow":"Allgemein","title":"Übersicht","description":"Sekundärer Überblick – die tägliche Arbeit bleibt im Kunden-/Projektkontext."} -->
-
-        <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l" data-uk-grid>
-          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Laufender Timer</span><strong class="uk-display-block uk-text-large">01:24:18</strong><a href="./index.html">Website Relaunch</a></div></div>
-          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Unverrechnete Arbeit</span><strong class="uk-display-block uk-text-large">3.482,50 EUR</strong><a href="./work.html">Arbeit öffnen</a></div></div>
-          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Offene Rechnungen</span><strong class="uk-display-block uk-text-large">8.920,00 EUR</strong><a href="./invoices.html">Rechnungen öffnen</a></div></div>
-          <div><div class="uk-card uk-card-default uk-card-body"><span class="uk-text-meta">Überfällig</span><strong class="uk-display-block uk-text-large">1.240,00 EUR</strong><a href="./invoices.html">1 Rechnung</a></div></div>
+        <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+          <div>
+            <div class="uk-text-meta">Demo Workspace</div>
+            <h1 class="uk-heading-small uk-margin-remove-top">Dashboard</h1>
+          </div>
+          <a class="uk-button uk-button-primary" href="./time.html">Laufenden Timer öffnen</a>
         </div>
 
-        <div class="uk-grid-medium uk-margin-top" data-uk-grid>
-          <div class="uk-width-2-3@l">
-            <section class="uk-card uk-card-default">
-              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Zuletzt bearbeitet</h2></div>
+        <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l" uk-grid data-dashboard-metrics>
+          <div>
+            <a class="uk-card uk-card-default uk-card-body kalkurama-stat" href="./work.html" data-metric="unbilled">
+              <div class="uk-text-meta">Unverrechnete Arbeit</div><strong>8</strong>
+              <div class="uk-text-meta uk-margin-small-top">2.735,00 EUR</div>
+            </a>
+          </div>
+          <div>
+            <a class="uk-card uk-card-default uk-card-body kalkurama-stat" href="./invoices.html" data-metric="draft-invoices">
+              <div class="uk-text-meta">Rechnungsentwürfe</div><strong>2</strong>
+            </a>
+          </div>
+          <div>
+            <a class="uk-card uk-card-default uk-card-body kalkurama-stat" href="./invoices.html" data-metric="open-invoices">
+              <div class="uk-text-meta">Offene Rechnungen</div><strong>4</strong>
+            </a>
+          </div>
+          <div>
+            <a class="uk-card uk-card-default uk-card-body kalkurama-stat" href="./invoices.html" data-metric="overdue-invoices">
+              <div class="uk-text-meta">Überfällige Rechnungen</div><strong>1</strong>
+            </a>
+          </div>
+        </div>
+
+        <div class="uk-grid-large uk-margin-large-top" uk-grid>
+          <div class="uk-width-2-3@m">
+            <div class="uk-card uk-card-default uk-card-body" data-dashboard-workflow>
+              <h2 class="uk-card-title">Kommerzieller Ablauf</h2>
+              <p class="uk-text-lead kalkurama-workflow">Kunde → Projekt → Angebot → Arbeit → Rechnung → Zahlung</p>
+              <p>Dieselben Projekt- und Arbeitsdaten werden durch den gesamten Ablauf verwendet.</p>
+            </div>
+
+            <div class="uk-card uk-card-default uk-margin-top" data-dashboard-billed-paid>
+              <div class="uk-card-header">
+                <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+                  <h2 class="uk-card-title uk-margin-remove">Verrechnet vs. bezahlt</h2>
+                  <form class="uk-grid-small uk-flex-middle" uk-grid data-dashboard-period-form>
+                    <div>
+                      <label class="uk-form-label uk-text-meta" for="dashboard-period-from">Von</label>
+                      <input class="uk-input uk-form-small" id="dashboard-period-from" type="date" value="2026-09-08">
+                    </div>
+                    <div>
+                      <label class="uk-form-label uk-text-meta" for="dashboard-period-to">Bis</label>
+                      <input class="uk-input uk-form-small" id="dashboard-period-to" type="date" value="2026-10-08">
+                    </div>
+                    <div><button class="uk-button uk-button-default uk-button-small" type="button">Aktualisieren</button></div>
+                  </form>
+                </div>
+              </div>
+              <div class="uk-card-body">
+                <p class="uk-text-meta uk-margin-remove-top" data-dashboard-period-label>2026-09-08 – 2026-10-08</p>
+                <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l" uk-grid>
+                  <div data-metric="period-billed"><div class="uk-text-meta">Verrechnet</div><strong>7 Rechnungen</strong><div class="uk-text-meta uk-margin-small-top">8.740,00 EUR</div></div>
+                  <div data-metric="period-paid"><div class="uk-text-meta">Bezahlt (brutto)</div><strong>6 Zahlungen</strong><div class="uk-text-meta uk-margin-small-top">6.980,00 EUR</div></div>
+                  <div data-metric="period-refunded"><div class="uk-text-meta">Erstattet</div><strong>1 Erstattung</strong><div class="uk-text-meta uk-margin-small-top">180,00 EUR</div></div>
+                  <div data-metric="period-net-cash"><div class="uk-text-meta">Netto-Cash</div><strong>Erhalten minus Erstattungen</strong><div class="uk-text-meta uk-margin-small-top">6.800,00 EUR</div></div>
+                </div>
+                <p class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom" data-dashboard-cashflow-note>Netto-Cash berücksichtigt effektive Zahlungseingänge abzüglich erfasster Erstattungen.</p>
+              </div>
+            </div>
+
+            <div class="uk-card uk-card-default uk-margin-top" data-dashboard-time-by>
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Zeit nach Kunde / Projekt</h2></div>
+              <div class="uk-card-body">
+                <p class="uk-text-meta uk-margin-remove-top" data-dashboard-time-period-label>Gleicher Zeitraum: 2026-09-08 – 2026-10-08</p>
+                <p class="uk-margin-small-bottom" data-metric="period-time-total"><strong>23</strong> Zeiteinträge · gemessen 42:15 · verrechenbar 43:00</p>
+                <div class="uk-grid-small uk-child-width-1-2@m" uk-grid>
+                  <div data-dashboard-time-customers>
+                    <h3 class="uk-heading-bullet uk-margin-small-bottom">Kunden</h3>
+                    <div class="uk-overflow-auto">
+                      <table class="uk-table uk-table-divider uk-table-small uk-margin-remove">
+                        <thead><tr><th>Kunde</th><th class="uk-text-right">Gemessen</th><th class="uk-text-right">Verrechenbar</th></tr></thead>
+                        <tbody><tr><td>Atelier Morgen</td><td class="uk-text-right">25:45</td><td class="uk-text-right"><strong>26:15</strong></td></tr><tr><td>Nordlicht GmbH</td><td class="uk-text-right">16:30</td><td class="uk-text-right"><strong>16:45</strong></td></tr></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div data-dashboard-time-projects>
+                    <h3 class="uk-heading-bullet uk-margin-small-bottom">Projekte</h3>
+                    <div class="uk-overflow-auto">
+                      <table class="uk-table uk-table-divider uk-table-small uk-margin-remove">
+                        <thead><tr><th>Projekt</th><th class="uk-text-right">Gemessen</th><th class="uk-text-right">Verrechenbar</th></tr></thead>
+                        <tbody><tr><td>Website Relaunch<div class="uk-text-meta">Atelier Morgen</div></td><td class="uk-text-right">18:40</td><td class="uk-text-right"><strong>19:00</strong></td></tr><tr><td>Brand Refresh<div class="uk-text-meta">Atelier Morgen</div></td><td class="uk-text-right">07:05</td><td class="uk-text-right"><strong>07:15</strong></td></tr></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="uk-card uk-card-default uk-margin-top" data-dashboard-estimate-actual>
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Angebot vs. Ist</h2></div>
+              <div class="uk-card-body">
+                <p class="uk-text-meta uk-margin-remove-top" data-dashboard-estimate-period-label>Angenommen im Zeitraum: 2026-09-08 – 2026-10-08</p>
+                <div class="uk-overflow-auto">
+                  <table class="uk-table uk-table-divider uk-table-small uk-margin-remove" data-dashboard-estimate-rows>
+                    <thead><tr><th>Angebot</th><th>Kunde</th><th class="uk-text-right">Geplant</th><th class="uk-text-right">Ist</th><th class="uk-text-right">Abweichung</th></tr></thead>
+                    <tbody><tr><td><a href="./estimate.html">AN-2026-018</a><div class="uk-text-meta">Website Relaunch</div></td><td>Atelier Morgen</td><td class="uk-text-right">4.620,00 EUR</td><td class="uk-text-right">3.860,00 EUR<div class="uk-text-meta">8 Ist-Positionen</div></td><td class="uk-text-right"><strong>-760,00 EUR</strong></td></tr></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="uk-card uk-card-default uk-margin-top" data-dashboard-recent-payments>
+              <div class="uk-card-header"><h2 class="uk-card-title uk-margin-remove">Letzte Zahlungen</h2></div>
               <div class="uk-overflow-auto">
-                <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
-                  <thead><tr><th>Kunde</th><th>Projekt</th><th>Letzte Aktivität</th><th>Status</th></tr></thead>
-                  <tbody>
-                    <tr><td>Atelier Morgen</td><td><a href="./index.html">Website Relaunch</a></td><td>heute, 16:42</td><td><span class="uk-label uk-label-success">aktiv</span></td></tr>
-                    <tr><td>Nordlicht GmbH</td><td>Jahreskampagne</td><td>heute, 11:18</td><td><span class="uk-label">aktiv</span></td></tr>
-                    <tr><td>Praxis Feld</td><td>Webpflege</td><td>02.10.2026</td><td><span class="uk-label uk-label-warning">ruhig</span></td></tr>
-                  </tbody>
+                <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+                  <thead><tr><th>Erhalten</th><th>Kunde</th><th>Methode</th><th class="uk-text-right">Betrag</th></tr></thead>
+                  <tbody><tr><td><a href="./payments.html">2026-10-08</a></td><td>Atelier Morgen</td><td>Banküberweisung<br><span class="uk-text-meta">RE-2026-104</span></td><td class="uk-text-right"><strong>1.000,00 EUR</strong></td></tr></tbody>
                 </table>
               </div>
-            </section>
+            </div>
           </div>
-          <div class="uk-width-1-3@l">
-            <section class="uk-card uk-card-default uk-card-body">
-              <h2 class="uk-card-title">Workflow</h2>
-              <ul class="uk-list uk-list-divider">
-                <li>Kunde → Projekt</li>
-                <li>Leistung / Arbeit</li>
-                <li>Angebot → Ist-Arbeit</li>
-                <li>Rechnung → Zahlung</li>
-              </ul>
-            </section>
+
+          <div class="uk-width-1-3@m">
+            <div class="uk-card uk-card-default uk-card-body" data-dashboard-next-action>
+              <h2 class="uk-card-title">Nächster Schritt</h2>
+              <p><strong>Offene Arbeit prüfen</strong></p>
+              <p>Prüfe unverrechnete Positionen und erstelle die nächste Rechnung.</p>
+              <a class="uk-button uk-button-primary" href="./work.html">Arbeit öffnen</a>
+            </div>
           </div>
         </div>
       </main>
