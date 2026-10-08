@@ -58,7 +58,7 @@ const projectEditModal = await readFile(new URL("../partials/project-edit-modal.
 const workCorrectionAudit = await readFile(new URL("../partials/work-correction-audit.html", import.meta.url), "utf8");
 const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
 const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
-const themeStudioPartial = await readFile(new URL("../partials/studio.html", import.meta.url), "utf8");
+const studioPartial = await readFile(new URL("../partials/studio.html", import.meta.url), "utf8");
 const sharedPartials = [
   await readFile(new URL("../partials/header.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8"),
@@ -324,18 +324,17 @@ assert(html["styleguide.html"].includes("styleguide-example-tabs"), "Styleguide 
 assert(html["styleguide.html"].includes("data-studio-open"), "Styleguide must expose local Kalkurama Studio entry points.");
 assert(html["styleguide.html"].includes("@include partials/studio.html"), "Styleguide must include Kalkurama Studio.");
 assert(studioSource.includes('file.type === "markup" ? "Markup" : "Theme"'), "Studio client must expose the active file type.");
-assert(html["styleguide.html"].includes("@include partials/theme-studio.html"), "Styleguide must include Kalkurama Studio.");
 assert(html["styleguide.html"].includes('src="/src/studio.js"'), "Styleguide must load Kalkurama Studio client.");
 assert(studioSource.includes('const endpoint = "/__studio"'), "Kalkurama Studio client must use only local Studio endpoints.");
 assert(!studioSource.includes("api.github.com"), "Kalkurama Studio client must not talk to GitHub directly.");
 assert(studioSource.includes('api("/git/verify"'), "Kalkurama Studio client must expose local verification.");
 assert(studioSource.includes('api("/git/publish"'), "Kalkurama Studio client must expose controlled publish.");
 assert(studioSource.includes("Ungespeicherte LESS-Änderungen vorhanden"), "Git Sync must block unsaved editor changes.");
-assert(themeStudioPartial.includes("data-studio-commit-message"), "Kalkurama Studio Git Sync commit field missing.");
-assert(themeStudioPartial.includes("data-studio-git-verify"), "Kalkurama Studio local verification control missing.");
-assert(themeStudioPartial.includes("data-studio-git-publish"), "Kalkurama Studio controlled publish control missing.");
-assert(themeStudioPartial.includes("Das Studio erstellt keinen Pull Request"), "Kalkurama Studio must state that it does not create PRs.");
-assert(themeStudioPartial.includes("Pull Request erst nach grüner Branch-CI"), "Kalkurama Studio must expose the CI-before-PR rule.");
+assert(studioPartial.includes("data-studio-commit-message"), "Kalkurama Studio Git Sync commit field missing.");
+assert(studioPartial.includes("data-studio-git-verify"), "Kalkurama Studio local verification control missing.");
+assert(studioPartial.includes("data-studio-git-publish"), "Kalkurama Studio controlled publish control missing.");
+assert(studioPartial.includes("Das Studio erstellt keinen Pull Request"), "Kalkurama Studio must state that it does not create PRs.");
+assert(studioPartial.includes("Pull Request erst nach grüner Branch-CI"), "Kalkurama Studio must expose the CI-before-PR rule.");
 
 assert(productSourceGuide.includes("Billings-like daily interaction architecture"), "Product source guide must preserve UX target.");
 assert(productSourceGuide.includes("3.25.25"), "Product source guide must record productive UIkit version.");
