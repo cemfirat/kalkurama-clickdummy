@@ -36,6 +36,8 @@ const standardTheme = await readFile(new URL("../src/themes/standard.less", impo
 const kalkuramaTheme = await readFile(new URL("../src/themes/kalkurama.less", import.meta.url), "utf8");
 const kalkuramaImports = await readFile(new URL("../src/themes/kalkurama/_import.less", import.meta.url), "utf8");
 const offcanvasTheme = await readFile(new URL("../src/themes/kalkurama/offcanvas.less", import.meta.url), "utf8");
+const logoSvg = await readFile(new URL("../src/themes/kalkurama/images/logo.svg", import.meta.url), "utf8");
+const faviconSvg = await readFile(new URL("../src/themes/kalkurama/images/favicon.svg", import.meta.url), "utf8");
 const systemMirror = await readFile(new URL("../src/styles/system.less", import.meta.url), "utf8");
 const brandTheme = await readFile(new URL("../src/themes/kalkurama/brand.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
@@ -204,6 +206,8 @@ assert(kalkuramaImports.includes('@import "variables.less";'), "Kalkurama theme 
 assert(kalkuramaImports.includes('@import "offcanvas.less";'), "Kalkurama Offcanvas theme import missing.");
 assert(standardTheme.includes('@import "../styles/system.less";'), "UIkit Standard must load the productive structural CSS mirror.");
 assert(kalkuramaImports.includes('@import "brand.less";'), "Kalkurama branding import missing.");
+assert(logoSvg.trimStart().startsWith("<?xml") && logoSvg.includes("<svg"), "Kalkurama logo must be valid SVG text.");
+assert(faviconSvg.trimStart().startsWith("<?xml") && faviconSvg.includes("<svg"), "Kalkurama favicon must be valid SVG text.");
 assert(systemMirror.includes("Exact structural CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
 assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
 assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
