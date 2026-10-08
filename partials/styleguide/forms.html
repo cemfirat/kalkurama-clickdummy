@@ -1,8 +1,39 @@
 <form class="uk-form-stacked">
-  <div class="uk-grid-small uk-child-width-1-2@m" data-uk-grid>
-    <div><label class="uk-form-label" for="sg-customer">Kunde</label><input id="sg-customer" class="uk-input" value="Atelier Morgen"></div>
-    <div><label class="uk-form-label" for="sg-project">Projekt</label><select id="sg-project" class="uk-select"><option>Website Relaunch</option><option>Brand Refresh</option></select></div>
+  <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
+    <div>
+      <label class="uk-form-label" for="sg-customer">Kunde</label>
+      <div class="uk-form-controls"><input id="sg-customer" class="uk-input" value="Atelier Morgen"></div>
+    </div>
+    <div>
+      <label class="uk-form-label" for="sg-project">Projekt</label>
+      <div class="uk-form-controls">
+        <select id="sg-project" class="uk-select">
+          <option>Website Relaunch</option>
+          <option>Brand Refresh</option>
+        </select>
+      </div>
+    </div>
   </div>
-  <div class="uk-margin"><label class="uk-form-label" for="sg-description">Beschreibung</label><textarea id="sg-description" class="uk-textarea" rows="3">Frontend-Umsetzung</textarea></div>
-  <label><input class="uk-checkbox" type="checkbox" checked> Verrechenbar</label>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="sg-description">Beschreibung</label>
+    <div class="uk-form-controls"><textarea id="sg-description" class="uk-textarea" rows="3">Frontend-Umsetzung</textarea></div>
+  </div>
+
+  <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
+    <div>
+      <label class="uk-form-label" for="sg-success">Gültiger Wert</label>
+      <input id="sg-success" class="uk-input uk-form-success" value="130,00 EUR">
+    </div>
+    <div>
+      <label class="uk-form-label" for="sg-danger">Fehlerhafter Wert</label>
+      <input id="sg-danger" class="uk-input uk-form-danger" value="-">
+    </div>
+  </div>
+
+  <div class="uk-margin">
+    <label><input class="uk-checkbox" type="checkbox" checked> Verrechenbar</label>
+    <label class="uk-margin-left"><input class="uk-radio" type="radio" name="sg-billing" checked> Standardpreis</label>
+    <label class="uk-margin-left"><input class="uk-radio" type="radio" name="sg-billing"> Individueller Preis</label>
+  </div>
 </form>

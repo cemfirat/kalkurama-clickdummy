@@ -1,26 +1,117 @@
+.styleguide-doc-layout {
+  margin-top: 2rem;
+}
+
+.styleguide-doc-nav {
+  min-width: 0;
+}
+
+.styleguide-doc-nav > div {
+  padding-right: 1.25rem;
+}
+
 .styleguide-section {
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
   scroll-margin-top: 2rem;
+}
+
+.styleguide-section-header {
+  margin-bottom: 1.25rem;
+}
+
+.styleguide-section-description {
+  max-width: 52rem;
+}
+
+.styleguide-swatches {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .75rem;
+  margin-top: 1.5rem;
+}
+
+.styleguide-swatch {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  align-items: center;
+  gap: .65rem;
+  min-width: 0;
+  padding: .65rem;
+  border: 1px solid @kalkurama-border;
+  border-radius: 4px;
+  background: @kalkurama-surface;
+}
+
+.styleguide-swatch-color {
+  display: block;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid @kalkurama-border;
+  border-radius: 4px;
+  background: var(--sample-color);
+}
+
+.styleguide-swatch > div {
+  min-width: 0;
+}
+
+.styleguide-swatch strong,
+.styleguide-swatch code,
+.styleguide-swatch small {
+  display: block;
+}
+
+.styleguide-swatch code,
+.styleguide-swatch small {
+  overflow: hidden;
+  color: @kalkurama-muted;
+  font-size: .7rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.styleguide-example-tabs {
+  margin-bottom: 0;
+}
+
+.styleguide-example-switcher {
+  margin-top: 0;
 }
 
 .styleguide-preview,
 .styleguide-markup {
   border: 1px solid @kalkurama-border;
+  border-top: 0;
   background: @kalkurama-surface;
 }
 
 .styleguide-preview {
+  min-height: 7rem;
   padding: 1.5rem;
 }
 
 .styleguide-markup pre {
-  max-height: 28rem;
+  max-height: 32rem;
   margin: 0;
   padding: 1rem;
   overflow: auto;
   border: 0;
   background: @global-muted-background;
   font-size: .8rem;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.styleguide-grid-demo > div > div,
+.styleguide-flex-demo {
+  min-height: 3.25rem;
+  padding: .75rem;
+  border: 1px solid @kalkurama-border;
+  background: @global-muted-background;
+}
+
+.styleguide-flex-demo {
+  gap: .75rem;
 }
 
 .theme-studio-panel {
@@ -50,4 +141,45 @@
   color: #fff;
   font-size: .76rem;
   line-height: 1.55;
+}
+
+@media (max-width: 1200px) {
+  .styleguide-swatches {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .styleguide-doc-nav {
+    margin-bottom: 2rem;
+  }
+
+  .styleguide-doc-nav > div {
+    padding-right: 0;
+  }
+
+  .styleguide-section {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .styleguide-swatches {
+    grid-template-columns: 1fr;
+  }
+
+  .styleguide-preview {
+    padding: 1rem;
+  }
+
+  .theme-studio-panel {
+    width: 100vw;
+    max-width: 100vw;
+    padding: 1.25rem;
+  }
+
+  .theme-studio-editor {
+    min-height: 26rem;
+    font-size: .75rem;
+  }
 }
