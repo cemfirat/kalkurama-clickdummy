@@ -70,3 +70,43 @@ Before substantial clickdummy UI work:
 3. compare productive Twig/CSS behavior
 4. record intentional deviations
 5. update the clickdummy baseline only after the new source state is understood.
+
+## Issue alignment
+
+The Foundation was cross-checked against Kalkurama's scoped product issues.
+
+### #79 — v0.1.0-alpha.3 baseline reconciliation
+
+Issue #79 explicitly protects the existing product backbone and blocks unrelated
+Class C expansion while remaining v1 gaps are reconciled.
+
+Clickdummy consequence:
+
+- do not invent new primary modules
+- keep the complete commercial workflow visible
+- use the clickdummy to improve existing v1 interaction architecture, not to
+  silently expand product scope.
+
+### #82 — project lifecycle and contextual project view
+
+Issue #82 classifies Project detail/lifecycle as **Class A** and requires Project
+to be a usable commercial context.
+
+The inspected productive baseline already contains
+`templates/project/show.html.twig` and lifecycle controls. The clickdummy keeps
+this surface and may explore its UI while preserving the domain transitions.
+
+### #5 — structured billable work
+
+Issue #5 establishes Time / Fixed / Quantity / Expense as the structured work
+foundation and requires invoices to consume existing commercial work instead of
+inventing it at invoice time.
+
+The clickdummy therefore keeps Work central to Project and does not model an
+independent invoice-first data-entry architecture.
+
+## Scope guard
+
+Until the productive source explicitly changes, the clickdummy must not add
+unrelated accounting/ERP modules, provider integrations, team approvals or
+other beyond-baseline concepts merely as UI experiments.
