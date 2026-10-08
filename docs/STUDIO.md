@@ -16,7 +16,7 @@ Open:
 
 ## Editing modes
 
-Kalkurama Studio edits two controlled file classes.
+Kalkurama Studio edits two controlled text file classes. Controlled Git Sync additionally recognizes approved Kalkurama theme assets.
 
 ### Theme
 
@@ -100,12 +100,15 @@ user saves.
 
 ## Local Git Sync
 
-Git Sync uses the same combined Studio allowlist.
+Git Sync uses a controlled superset of the text-editor allowlist.
 
 It may stage and commit only:
 
-- approved Theme files
-- approved Markup files.
+- approved Theme files;
+- approved Markup files;
+- approved theme assets below `src/themes/kalkurama/images/` with image extensions such as SVG, PNG, WebP, JPEG or ICO.
+
+Theme assets are Git-controlled files, not arbitrary filesystem access. Binary assets are not opened in the text editor.
 
 It never stages unrelated repository changes.
 
@@ -147,7 +150,7 @@ Git Sync proceeds only when:
   contains current `origin/main`;
 - Git `user.name` and `user.email` are configured;
 - there are no staged changes;
-- every working-tree change belongs to the Studio allowlist;
+- every working-tree change belongs to the controlled Studio Git allowlist, including approved theme assets;
 - no renamed files are part of the candidate;
 - the commit message is one line with 5–120 characters;
 - local full verification passes.
