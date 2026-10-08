@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angebotsentwurf · Kalkurama Clickdummy</title>
+</head>
+<body data-page="estimates">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+
+      <main class="kalkurama-main" id="main-content">
+        <div class="kalkurama-page-heading">
+          <div>
+            <div class="uk-text-meta">
+              <a href="./index.html">Atelier Morgen</a>
+              · <a href="./project.html">Website Relaunch</a>
+              · Angebot · Entwurf
+            </div>
+            <h1>Website Relaunch · Zusatzumfang</h1>
+            <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
+              <div><span class="uk-label uk-label-warning">Entwurf</span></div>
+              <div><span class="uk-text-meta">Revision 1 · noch keine Angebotsnummer</span></div>
+            </div>
+          </div>
+
+          <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" data-uk-grid>
+            <div><a class="uk-button uk-button-default uk-button-small" href="./estimates.html">Alle Angebote</a></div>
+            <div><button class="uk-button uk-button-default uk-button-small" type="button">Entwurf speichern</button></div>
+            <div><button class="uk-button uk-button-primary uk-button-small" type="button">Angebot ausstellen</button></div>
+          </div>
+        </div>
+
+        <div class="kalkurama-detail-grid kalkurama-estimate-editor">
+          <div>
+            <section class="kalkurama-panel">
+              <div class="kalkurama-panel-header">
+                <div>
+                  <h2>Vorschlagstext</h2>
+                  <span class="uk-text-meta">Titel und Einleitung werden beim Ausstellen historisch gesichert.</span>
+                </div>
+              </div>
+
+              <form class="uk-form-stacked">
+                <div class="uk-margin-small">
+                  <label class="uk-form-label" for="estimate-title">Titel</label>
+                  <input id="estimate-title" class="uk-input uk-form-small" value="Website Relaunch · Zusatzumfang">
+                </div>
+                <div class="uk-margin-small">
+                  <label class="uk-form-label" for="estimate-intro">Einleitung</label>
+                  <textarea id="estimate-intro" class="uk-textarea uk-form-small" rows="3">Ergänzend zum bestehenden Projekt bieten wir die folgenden Leistungen für die nächste Umsetzungsphase an.</textarea>
+                </div>
+              </form>
+            </section>
+
+            <div class="kalkurama-estimate-toolbar">
+              <div>
+                <strong>Leistungsstruktur</strong>
+                <span class="uk-text-meta">Sections sind optional und bestimmen nur Gruppierung und Reihenfolge.</span>
+              </div>
+              <button class="uk-button uk-button-default uk-button-small" type="button">+ Section</button>
+            </div>
+
+            <section class="kalkurama-estimate-section" data-estimate-section="concept">
+              <header class="kalkurama-estimate-section-header">
+                <div class="kalkurama-estimate-section-order" aria-label="Section Reihenfolge">
+                  <button class="uk-icon-button uk-button-small" type="button" data-uk-icon="icon: chevron-up" aria-label="Section nach oben"></button>
+                  <button class="uk-icon-button uk-button-small" type="button" data-uk-icon="icon: chevron-down" aria-label="Section nach unten"></button>
+                </div>
+                <div class="kalkurama-estimate-section-title">
+                  <span class="uk-text-meta">Section 1</span>
+                  <h2>Konzeption &amp; Vorbereitung</h2>
+                  <p>Strategische und gestalterische Vorbereitung für den zusätzlichen Projektumfang.</p>
+                </div>
+                <div class="kalkurama-estimate-section-actions">
+                  <button class="uk-button uk-button-text uk-button-small" type="button">Bearbeiten</button>
+                  <button class="uk-button uk-button-text uk-button-small" type="button">Position hinzufügen</button>
+                </div>
+              </header>
+
+              <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                  <thead>
+                    <tr>
+                      <th>Position</th>
+                      <th>Typ</th>
+                      <th class="uk-text-right">Menge</th>
+                      <th class="uk-text-right">Einzelpreis</th>
+                      <th class="uk-text-right">Rabatt</th>
+                      <th class="uk-text-right">Netto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>UX-Konzept Zusatzseiten</strong><br><span class="uk-text-meta">Service snapshot</span></td>
+                      <td>Fix</td>
+                      <td class="uk-text-right">1</td>
+                      <td class="uk-text-right">1.450,00 EUR</td>
+                      <td class="uk-text-right">0 %</td>
+                      <td class="uk-text-right"><strong>1.450,00 EUR</strong></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Content-Struktur Workshop</strong><br><span class="uk-text-meta">Manual item</span></td>
+                      <td>Zeit</td>
+                      <td class="uk-text-right">4,000 h</td>
+                      <td class="uk-text-right">130,00 EUR</td>
+                      <td class="uk-text-right">0 %</td>
+                      <td class="uk-text-right"><strong>520,00 EUR</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <footer class="kalkurama-estimate-section-footer">
+                <span class="uk-text-meta">2 Positionen</span>
+                <strong>1.970,00 EUR netto</strong>
+              </footer>
+            </section>
+
+            <section class="kalkurama-estimate-section" data-estimate-section="implementation">
+              <header class="kalkurama-estimate-section-header">
+                <div class="kalkurama-estimate-section-order" aria-label="Section Reihenfolge">
+                  <button class="uk-icon-button uk-button-small" type="button" data-uk-icon="icon: chevron-up" aria-label="Section nach oben"></button>
+                  <button class="uk-icon-button uk-button-small" type="button" data-uk-icon="icon: chevron-down" aria-label="Section nach unten"></button>
+                </div>
+                <div class="kalkurama-estimate-section-title">
+                  <span class="uk-text-meta">Section 2</span>
+                  <h2>Umsetzung</h2>
+                  <p>Technische Umsetzung und Qualitätssicherung.</p>
+                </div>
+                <div class="kalkurama-estimate-section-actions">
+                  <button class="uk-button uk-button-text uk-button-small" type="button">Bearbeiten</button>
+                  <button class="uk-button uk-button-text uk-button-small" type="button">Position hinzufügen</button>
+                </div>
+              </header>
+
+              <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                  <thead>
+                    <tr>
+                      <th>Position</th>
+                      <th>Typ</th>
+                      <th class="uk-text-right">Menge</th>
+                      <th class="uk-text-right">Einzelpreis</th>
+                      <th class="uk-text-right">Rabatt</th>
+                      <th class="uk-text-right">Netto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Frontend Development</strong><br><span class="uk-text-meta">Service snapshot</span></td>
+                      <td>Zeit</td>
+                      <td class="uk-text-right">24,000 h</td>
+                      <td class="uk-text-right">130,00 EUR</td>
+                      <td class="uk-text-right">5 %<br><span class="uk-text-meta">−156,00 EUR</span></td>
+                      <td class="uk-text-right"><strong>2.964,00 EUR</strong></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Responsive QA</strong><br><span class="uk-text-meta">Manual item</span></td>
+                      <td>Fix</td>
+                      <td class="uk-text-right">1</td>
+                      <td class="uk-text-right">680,00 EUR</td>
+                      <td class="uk-text-right">0 %</td>
+                      <td class="uk-text-right"><strong>680,00 EUR</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <footer class="kalkurama-estimate-section-footer">
+                <span class="uk-text-meta">2 Positionen</span>
+                <strong>3.644,00 EUR netto</strong>
+              </footer>
+            </section>
+
+            <section class="kalkurama-estimate-section kalkurama-estimate-section--ungrouped" data-estimate-ungrouped>
+              <header class="kalkurama-estimate-section-header">
+                <div class="kalkurama-estimate-section-title">
+                  <span class="uk-text-meta">Optional</span>
+                  <h2>Ohne Section</h2>
+                  <p>Positionen dürfen ungegliedert bleiben; Sections sind kein Pflichtfeld.</p>
+                </div>
+                <div class="kalkurama-estimate-section-actions">
+                  <button class="uk-button uk-button-text uk-button-small" type="button">Position hinzufügen</button>
+                </div>
+              </header>
+
+              <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                  <tbody>
+                    <tr>
+                      <td><strong>Stockmaterial Budget</strong><br><span class="uk-text-meta">Expense allowance</span></td>
+                      <td class="uk-text-right">250,00 EUR</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="kalkurama-panel">
+              <div class="kalkurama-panel-header">
+                <div>
+                  <h2>Terms / Notizen</h2>
+                  <span class="uk-text-meta">Gilt für das gesamte Angebot, nicht für eine einzelne Section.</span>
+                </div>
+              </div>
+              <textarea class="uk-textarea uk-form-small" rows="4">Umsetzung nach schriftlicher Freigabe. Fremdkosten werden nur nach vorheriger Abstimmung beauftragt.</textarea>
+            </section>
+          </div>
+
+          <aside class="kalkurama-estimate-summary">
+            <section class="kalkurama-panel">
+              <div class="kalkurama-panel-header">
+                <h2>Angebot</h2>
+                <span class="uk-label uk-label-warning">Entwurf</span>
+              </div>
+
+              <dl class="uk-description-list">
+                <dt>Kunde</dt><dd>Atelier Morgen</dd>
+                <dt>Projekt</dt><dd>Website Relaunch</dd>
+                <dt>Währung</dt><dd>EUR</dd>
+                <dt>Revision</dt><dd>1</dd>
+                <dt>Gültig bis</dt><dd>31.10.2026</dd>
+              </dl>
+
+              <div class="uk-alert uk-alert-primary">
+                Ein Entwurf hat noch keine finale Angebotsnummer. Die Nummer wird erst beim Ausstellen vergeben.
+              </div>
+            </section>
+
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header"><h2>Summen</h2></div>
+              <dl class="kalkurama-estimate-totals">
+                <div><dt>Netto</dt><dd>5.864,00 EUR</dd></div>
+                <div><dt>USt. 20 %</dt><dd>1.172,80 EUR</dd></div>
+                <div class="kalkurama-estimate-total"><dt>Gesamt</dt><dd>7.036,80 EUR</dd></div>
+              </dl>
+            </section>
+
+            <section class="kalkurama-panel uk-margin-top">
+              <div class="kalkurama-panel-header"><h2>Ausstellen</h2></div>
+              <label class="uk-form-label" for="estimate-valid-until">Gültig bis</label>
+              <input id="estimate-valid-until" class="uk-input" type="date" value="2026-10-31">
+              <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-top" type="button">Angebot ausstellen</button>
+              <p class="uk-text-meta uk-margin-small-top">Sections, Reihenfolge, Texte und Positionen werden Teil des historischen Snapshots.</p>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
