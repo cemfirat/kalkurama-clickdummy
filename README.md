@@ -1,6 +1,6 @@
 # Kalkurama Clickdummy
 
-UIkit-first, HTML-first UI/UX laboratory for Kalkurama.
+UIkit-first, HTML-first static mirror and UI/UX laboratory for the productive Kalkurama application.
 
 Product source of truth:
 
@@ -17,7 +17,7 @@ Public preview:
 - [Kalkurama Clickdummy](https://cemfirat.github.io/kalkurama-clickdummy/)
 - [Kalkurama Styleguide](https://cemfirat.github.io/kalkurama-clickdummy/styleguide.html)
 
-The public GitHub Pages build is read-only. Local Theme/Markup editing remains available only through Kalkurama Studio.
+The public GitHub Pages build is read-only. Product-facing shell/layout/classes mirror the recorded productive Kalkurama baseline; only mock values, static links and prototype-only tooling may differ. Local Theme/Markup editing remains available only through Kalkurama Studio.
 
 ## Product direction
 
@@ -84,6 +84,7 @@ npm run transfer:status
 - Shared shell belongs in `partials/`.
 - UIkit Standard → Kalkurama → optional Customer theme.
 - Customer/project context remains visible in daily work.
+- Product-facing structure and visual shell mirror the recorded productive Kalkurama baseline; deliberate deviations must be documented.
 - Mock content is never product authority.
 - No production credentials/APIs/writes.
 - **No PR before green branch CI.**
