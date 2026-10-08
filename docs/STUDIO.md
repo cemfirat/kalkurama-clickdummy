@@ -29,7 +29,7 @@ src/themes/customers/*.less
 src/themes/customers/*/*.less
 ```
 
-`src/themes/standard.less` remains read-only.
+`src/themes/standard.less` and `src/themes/standard-reset.less` remain read-only reference files. The reset exists only to keep the independent UIkit Standard preview neutral while product-facing Kalkurama/Pages modes mirror production.
 
 Theme saves are validated with Less before they are accepted. If compilation
 fails, the previous file contents are restored automatically.
