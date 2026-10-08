@@ -1,6 +1,55 @@
 // Kalkurama-owned visual identity overrides.
-// Structural product CSS stays in src/styles/system.less.
+// Product structure and the production identity baseline live in src/styles/system.less.
+// These rules re-apply the owned identity after Standard-reference normalization.
 
 :root {
   --kalkurama-accent: @magenta;
+  --kalkurama-accent-hover: darken(@magenta, 5%);
+  --kalkurama-accent-active: darken(@magenta, 10%);
+}
+
+a:hover,
+.uk-link:hover,
+.uk-link-toggle:hover .uk-link {
+  color: var(--kalkurama-accent-active);
+}
+
+.kalkurama-source-customer.is-active > .kalkurama-source-customer-link {
+  background: rgba(255, 0, 255, .12);
+}
+
+.kalkurama-source-project-link.is-active {
+  background: rgba(255, 0, 255, .16);
+}
+
+.kalkurama-project-row:focus {
+  outline-color: rgba(255, 0, 255, .55);
+}
+
+.kalkurama-row-selected .kalkurama-status-chip {
+  background: rgba(255, 0, 255, .14);
+  color: var(--kalkurama-accent-active);
+}
+
+a.kalkurama-customer-actions-tab:hover {
+  color: var(--kalkurama-accent-active);
+}
+
+.kalkurama-customer-actions-tab.is-active {
+  background: rgba(255, 0, 255, .12);
+  color: var(--kalkurama-accent-active);
+}
+
+.kalkurama-customer-timer {
+  border-color: rgba(255, 0, 255, .28);
+  background: rgba(255, 0, 255, .08);
+}
+
+.kalkurama-row-selected > td {
+  background: rgba(255, 0, 255, .1);
+}
+
+.uk-alert-primary {
+  background: #ffccff;
+  color: var(--kalkurama-accent);
 }
