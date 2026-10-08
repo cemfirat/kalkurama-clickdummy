@@ -330,6 +330,10 @@ assert(!studioSource.includes("api.github.com"), "Kalkurama Studio client must n
 assert(studioSource.includes('api("/git/verify"'), "Kalkurama Studio client must expose local verification.");
 assert(studioSource.includes('api("/git/publish"'), "Kalkurama Studio client must expose controlled publish.");
 assert(studioSource.includes("Ungespeicherte Studio-Änderungen vorhanden"), "Git Sync must block unsaved editor changes.");
+assert(studioSource.includes("function confirmDiscardUnsavedChanges"), "Studio navigation must guard unsaved editor changes.");
+assert(studioSource.includes('window.addEventListener("beforeunload"'), "Studio must guard browser unload with unsaved editor changes.");
+assert(studioSource.includes("freigegebene Studio-Dateien"), "Studio Git notice must cover Theme and Markup files.");
+assert(studioPartial.includes('value="Update Kalkurama UI"'), "Studio commit default must stay generic across Theme and Markup.");
 assert(studioPartial.includes("data-studio-commit-message"), "Kalkurama Studio Git Sync commit field missing.");
 assert(studioPartial.includes("data-studio-git-verify"), "Kalkurama Studio local verification control missing.");
 assert(studioPartial.includes("data-studio-git-publish"), "Kalkurama Studio controlled publish control missing.");

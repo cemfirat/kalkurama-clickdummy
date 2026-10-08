@@ -61,7 +61,7 @@ function renderGitStatus(git) {
   if (gitNotice && git.syncError) {
     gitNotice.textContent = git.syncError;
   } else if (gitNotice) {
-    gitNotice.textContent = "Es werden ausschließlich freigegebene Theme-Dateien synchronisiert. " +
+    gitNotice.textContent = "Es werden ausschließlich freigegebene Studio-Dateien synchronisiert. " +
       "Das Studio erstellt keinen Pull Request. Nach dem Push wird ein identischer verify/**-Branch " +
       "erzeugt und damit genau ein Branch-CI-Run gestartet.";
   }
@@ -75,6 +75,11 @@ function assertSavedEditor() {
   if (hasUnsavedEditorChanges()) {
     throw new Error("Ungespeicherte Studio-Änderungen vorhanden. Zuerst speichern.");
   }
+}
+
+function confirmDiscardUnsavedChanges(message) {
+  if (!hasUnsavedEditorChanges()) return true;
+  return window.confirm(message);
 }
 
 function setGitBusy(busy) {
@@ -106,11 +111,11 @@ async function api(path, options = {}) {
 
   const payload = await response.json().catch(() => ({
     ok: false,
-    error: "Ungültige Theme-Studio-Antwort."
+    error: "Ungültige Kalkurama-Studio-Antwort."
   }));
 
   if (!response.ok) {
-    const error = new Error(payload.error || "Theme Studio request failed.");
+    const error = new Error(payload.error || "Kalkurama Studio request failed.");
     error.payload = payload;
     throw error;
   }
@@ -159,7 +164,7 @@ async function saveCurrentFile() {
   if (!studioAvailable || !currentFile) return;
 
   saveButton.disabled = true;
-  setState("Kompiliere …");
+  setState(currentFile.type === "markup" ? "Prüfe Markup …" : "Kompiliere Theme …");
   setError("");
 
   try {
@@ -179,7 +184,9 @@ async function saveCurrentFile() {
       timeout: 2200
     });
   } catch (error) {
-    setState(error.payload?.rolledBack ? "Compile-Fehler · zurückgesetzt" : "Fehler");
+    setState(error.payload?.rolledBack
+      ? (currentFile?.type === "markup" ? "Markup-Fehler · zurückgesetzt" : "Compile-Fehler · zurückgesetzt")
+      : "Fehler");
     setError(error.message);
   } finally {
     saveButton.disabled = false;
@@ -268,11 +275,23 @@ async function publishGitCandidate() {
   }
 }
 
-fileSelect?.addEventListener("change", () => loadFile(fileSelect.value));
+fileSelect?.addEventListener("change", async () => {
+  const nextPath = fileSelect.value;
+  if (!confirmDiscardUnsavedChanges("Ungespeicherte Studio-Änderungen verwerfen und Datei wechseln?")) {
+    if (currentFile) fileSelect.value = currentFile.path;
+    return;
+  }
+  await loadFile(nextPath);
+});
 saveButton?.addEventListener("click", saveCurrentFile);
-reloadButton?.addEventListener("click", () => currentFile && loadFile(currentFile.path));
+reloadButton?.addEventListener("click", async () => {
+  if (!currentFile) return;
+  if (!confirmDiscardUnsavedChanges("Ungespeicherte Studio-Änderungen verwerfen und Datei neu laden?")) return;
+  await loadFile(currentFile.path);
+});
 resetButton?.addEventListener("click", () => {
   if (!currentFile) return;
+  if (!confirmDiscardUnsavedChanges("Ungespeicherte Studio-Änderungen verwerfen und HEAD übernehmen?")) return;
   editor.value = currentFile.headContent;
   setState("HEAD im Editor · noch nicht gespeichert");
 });
@@ -299,11 +318,20 @@ editor?.addEventListener("keydown", (event) => {
   }
 });
 
+window.addEventListener("beforeunload", (event) => {
+  if (!hasUnsavedEditorChanges()) return;
+  event.preventDefault();
+  event.returnValue = "";
+});
+
 document.querySelectorAll("[data-studio-open]").forEach((button) => {
   button.addEventListener("click", async () => {
     if (!studioAvailable) return;
     const path = button.dataset.studioOpen;
-    if (path) await loadFile(path);
+    if (path && path !== currentFile?.path) {
+      if (!confirmDiscardUnsavedChanges("Ungespeicherte Studio-Änderungen verwerfen und andere Datei öffnen?")) return;
+      await loadFile(path);
+    }
     UIkit.offcanvas(studioElement)?.show();
   });
 });

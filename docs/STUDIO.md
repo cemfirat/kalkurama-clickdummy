@@ -81,6 +81,12 @@ Keyboard shortcuts:
 - `Tab` inserts two spaces
 - `Cmd+S` / `Ctrl+S` saves and validates
 
+Unsaved-change protection:
+
+- switching Studio files asks before discarding the current editor buffer;
+- reloading a file or replacing the buffer with `HEAD` asks before discarding unsaved edits;
+- browser reload or tab/window close triggers the native unload warning while edits are unsaved.
+
 ## Git comparison
 
 For the selected file the Studio exposes:
