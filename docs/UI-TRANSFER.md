@@ -28,7 +28,7 @@ Never promote automatically:
 
 - mock content
 - Styleguide-only files
-- Theme Studio
+- Kalkurama Studio
 - transfer metadata/docs
 - fake customers/projects/totals.
 
