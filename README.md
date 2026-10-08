@@ -43,16 +43,16 @@ Billings Pro is an interaction-architecture reference, not a visual template.
 - `overview.html`
 - `project.html`
 - `estimates.html`
-- `estimate.html` — Estimate draft/detail with explicit sections
+- `estimate.html` — current productive Estimate detail mirror
 - `invoices.html`
-- `invoice.html` — Invoice draft/detail with explicit line discounts
+- `invoice.html` — current productive Invoice detail mirror
 - `payments.html`
 - `credit-notes.html`
 - `services.html`
 - `work.html`
 - `time.html`
 - `settings.html`
-- `styleguide.html` — UIkit reference plus clearly separated future/prototype patterns that are not product pages
+- `styleguide.html` — UIkit reference plus clearly separated future/prototype patterns such as #84/#85/#86 that are not product pages
 
 ## Local development
 
