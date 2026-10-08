@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Gutschriften · Kalkurama Clickdummy</title></head>
+<body data-page="credit-notes">
+  <div class="kalkurama-shell">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <!-- @include partials/page-heading.html {"eyebrow":"Dokumente","title":"Gutschriften","description":"Korrekturen und Gutschriften bleiben mit der ursprünglichen Rechnung verknüpft."} -->
+        <div class="uk-card uk-card-default">
+          <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
+              <thead><tr><th>Gutschrift</th><th>Kunde</th><th>Bezug</th><th>Status</th><th class="uk-text-right">Betrag</th></tr></thead>
+              <tbody>
+                <tr><td><strong>GS-2026-004</strong></td><td>Nordlicht GmbH</td><td>RE-2026-024</td><td><span class="uk-label uk-label-success">ausgestellt</span></td><td class="uk-text-right"><strong>240,00 EUR</strong></td></tr>
+                <tr><td><strong>Entwurf</strong></td><td>Atelier Morgen</td><td>RE-2026-031</td><td><span class="uk-label uk-label-warning">Entwurf</span></td><td class="uk-text-right"><strong>180,00 EUR</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
