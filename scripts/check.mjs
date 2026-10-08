@@ -75,6 +75,13 @@ for (const [page, pageId] of allPages) {
   assert(html[page].includes('<script type="module" src="/src/app.js"></script>'), page + " must load behavior-only app.js.");
 }
 
+assert(html["index.html"].includes('data-project="website-relaunch"'), "Daily landing must expose the selected project context.");
+assert(html["project.html"].includes('data-project="brand-refresh"'), "Project page must expose its selected project context.");
+assert(sharedPartials.includes('data-project-context="website-relaunch"'), "Sidebar must expose Website Relaunch project metadata.");
+assert(sharedPartials.includes('data-project-context="brand-refresh"'), "Sidebar must expose Brand Refresh project metadata.");
+assert(appSource.includes('document.body.dataset.project'), "Product app.js must activate project context from body metadata.");
+assert(appSource.includes("[data-project-context]"), "Product app.js must target semantic project links.");
+
 assert(html["index.html"].includes("kalkurama-customer-workspace"), "Daily landing must be customer/project-first.");
 assert(html["index.html"].includes("kalkurama-project-list"), "Daily landing must keep the project list visible.");
 assert(html["index.html"].includes("kalkurama-running-timer"), "Daily landing must keep timer state in project context.");
