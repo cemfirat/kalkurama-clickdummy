@@ -1,6 +1,6 @@
 # Kalkurama Studio
 
-Kalkurama Studio is the local LESS editing and controlled Git handoff surface embedded
+Kalkurama Studio is the local editing and controlled Git handoff surface embedded
 in the Kalkurama Styleguide.
 
 Start:
@@ -14,21 +14,13 @@ Open:
 
 `http://127.0.0.1:5173/styleguide.html`
 
-## Editing boundary
+## Editing modes
 
-Kalkurama Studio:
+Kalkurama Studio edits two controlled file classes.
 
-- exists only in the Vite development server;
-- binds explicitly to `127.0.0.1`;
-- accepts loopback requests only;
-- writes only allowlisted Kalkurama/customer `.less` files;
-- keeps `src/themes/standard.less` read-only;
-- validates affected themes with Less before accepting a save;
-- rolls invalid writes back;
-- exposes the exact Git status and diff against `HEAD`;
-- contains no GitHub token, PAT or GitHub API write credential.
+### Theme
 
-Editable files come from:
+Editable theme files:
 
 ```text
 src/themes/kalkurama.less
@@ -37,35 +29,84 @@ src/themes/customers/*.less
 src/themes/customers/*/*.less
 ```
 
+`src/themes/standard.less` remains read-only.
+
+Theme saves are validated with Less before they are accepted. If compilation
+fails, the previous file contents are restored automatically.
+
+### Markup
+
+Editable markup comes from:
+
+- all known root HTML entry points from `vite.config.js`
+- HTML partials below `partials/`
+
+The Studio UI itself is excluded:
+
+`partials/studio.html`
+
+Every markup save validates all root HTML pages by expanding:
+
+- `@include`
+- `@include-code`
+
+This catches broken include paths, malformed include JSON and missing variables
+before the save is accepted as a valid Studio change.
+
+## Local-only boundary
+
+Kalkurama Studio:
+
+- exists only in the Vite development server;
+- binds explicitly to `127.0.0.1`;
+- accepts loopback requests only;
+- writes only files from the Studio allowlist;
+- contains no GitHub token, PAT or GitHub API write credential;
+- exposes no arbitrary shell or filesystem endpoint.
+
+The public GitHub Pages build is read-only because the `/__studio/*` endpoints
+do not exist there.
+
+## Editor
+
+The same editor is used for Theme and Markup files.
+
+The active type is shown as:
+
+- `Theme`
+- `Markup`
+
+Keyboard shortcuts:
+
+- `Tab` inserts two spaces
+- `Cmd+S` / `Ctrl+S` saves and validates
+
+## Git comparison
+
+For the selected file the Studio exposes:
+
+- current Git status
+- exact diff against `HEAD`
+- exact `HEAD` file contents for the reset action.
+
+The reset action only replaces the editor contents. Nothing is written until the
+user saves.
+
 ## Local Git Sync
 
-Git Sync is intentionally narrower than a terminal or general Git client.
+Git Sync uses the same combined Studio allowlist.
 
-The browser can request only two fixed operations:
+It may stage and commit only:
 
-- local final verification;
-- publish the current Kalkurama Studio candidate.
+- approved Theme files
+- approved Markup files.
 
-There is no arbitrary command endpoint.
-
-### Local verification
-
-**Lokal prüfen** runs:
-
-```bash
-npm run verify
-```
-
-against the exact working tree.
-
-The check must pass before a candidate can be committed and pushed.
-
-### Commit & Push + CI
+It never stages unrelated repository changes.
 
 The publish flow is:
 
 ```text
-saved LESS changes
+saved Studio changes
       ↓
 validate Git state
       ↓
@@ -73,7 +114,7 @@ fetch origin/main
       ↓
 npm run verify
       ↓
-studio/theme-<timestamp>
+studio/ui-<timestamp>
       ↓
 stage allowlisted Studio files only
       ↓
@@ -81,63 +122,31 @@ commit
       ↓
 push studio branch
       ↓
-push identical commit to verify/studio-theme-<sha>
+push identical commit to verify/studio-ui-<sha>
       ↓
 GitHub branch CI
       ↓
 PR only after green CI
 ```
 
-The Studio does **not** create a pull request.
+The browser Studio does **not** create a pull request.
 
 ## Git safety rules
 
-Git Sync proceeds only when all of these conditions are true:
+Git Sync proceeds only when:
 
 - `origin` is exactly `cemfirat/kalkurama-clickdummy`;
 - current branch is `main` or an existing `studio/*` branch;
-- local `main` is synchronized with `origin/main`, or an existing Studio branch
-  already contains current `origin/main`;
+- local main is synchronized with `origin/main`, or the Studio branch already
+  contains current `origin/main`;
 - Git `user.name` and `user.email` are configured;
 - there are no staged changes;
-- every working-tree change belongs to the Kalkurama Studio allowlist;
+- every working-tree change belongs to the Studio allowlist;
 - no renamed files are part of the candidate;
 - the commit message is one line with 5–120 characters;
 - local full verification passes.
 
-The service never stages unrelated files.
-
-If a commit hook or commit itself fails, the controlled Kalkurama Studio paths are
-unstaged again; working-tree content is not discarded.
-
-## GitHub authentication
-
-The browser receives no GitHub credentials.
-
-Push authentication is handled by the user's normal local Git configuration,
-for example macOS Keychain/credential helper or SSH.
-
-Git commands run with interactive terminal prompting disabled so the Vite server
-cannot hang on an authentication prompt. Authentication failures are returned to
-the Studio as errors.
-
-## Branch CI
-
-Publishing creates a unique verify branch:
-
-```text
-verify/studio-theme-<first 12 chars of commit SHA>
-```
-
-The existing `Branch Verify` workflow runs because the branch matches
-`verify/**`.
-
-Pushing the normal `studio/*` branch itself does not trigger that workflow.
-
-If the verify branch for the same commit already exists, it is reused rather than
-creating an additional CI run.
-
-## What Git Sync does not do
+## What Kalkurama Studio does not do
 
 Kalkurama Studio does not:
 
@@ -147,23 +156,26 @@ Kalkurama Studio does not:
 - delete branches;
 - modify GitHub repository settings;
 - run arbitrary shell commands;
-- stage non-Studio files;
+- write files outside the Studio allowlist;
 - bypass local verification or branch CI.
 
 Permanent rule:
 
 **No PR before green branch CI.**
 
-## Clean local working tree
+## MAMP Pro
 
-The repository ignores local/install output that must never become a Studio
-candidate:
+A friendly local domain may proxy to the Vite development server:
 
-- `node_modules/`
-- `dist/`
-- `package-lock.json`
-- `.DS_Store`
-- `*.log`
+```text
+local domain
+    ↓
+MAMP Pro / local reverse proxy
+    ↓
+127.0.0.1:Vite
+    ↓
+Kalkurama Studio + HMR
+```
 
-The clickdummy intentionally continues using the existing no-lockfile
-`npm install` workflow.
+Do not point the Studio domain at the static `dist/` build. Writable Studio
+endpoints exist only in the Vite development server.
