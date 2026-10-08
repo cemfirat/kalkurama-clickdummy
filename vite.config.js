@@ -158,6 +158,21 @@ function listStudioFiles() {
   ])].sort();
 }
 
+function listStudioAssetFiles() {
+  const imagesDirectory = resolve(rootDirectory, "src/themes/kalkurama/images");
+  return readdirSync(imagesDirectory, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && /\.(?:svg|png|webp|jpe?g|ico)$/i.test(entry.name))
+    .map((entry) => "src/themes/kalkurama/images/" + entry.name)
+    .sort();
+}
+
+function listStudioGitFiles() {
+  return [...new Set([
+    ...listStudioFiles(),
+    ...listStudioAssetFiles()
+  ])].sort();
+}
+
 function assertStudioFile(value) {
   const relativePath = normalizeStudioPath(value);
   if (!listStudioFiles().includes(relativePath)) {
@@ -275,7 +290,7 @@ function assertStudioGitState() {
     throw new Error("Git Sync must start from main or an existing studio/* branch.");
   }
 
-  const allowedFiles = new Set(listStudioFiles());
+  const allowedFiles = new Set(listStudioGitFiles());
   const changes = parseGitStatus();
 
   for (const change of changes) {
@@ -483,7 +498,7 @@ function publishStudioChanges(commitMessage) {
       .split("\n")
       .filter(Boolean);
 
-    const allowed = new Set(listStudioFiles());
+    const allowed = new Set(listStudioGitFiles());
     if (staged.length === 0 || staged.some((path) => !allowed.has(path))) {
       gitRawOptional(["reset", "--", ...paths]);
       throw new Error("Git Sync staging did not produce an allowed Kalkurama Studio candidate.");
