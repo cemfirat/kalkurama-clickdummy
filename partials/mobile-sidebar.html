@@ -1,7 +1,12 @@
-<div id="kalkurama-mobile-sidebar" data-uk-offcanvas="overlay: true; mode: slide">
-  <div class="uk-offcanvas-bar">
-    <button class="uk-offcanvas-close" type="button" data-uk-close aria-label="Schließen"></button>
-    <aside class="kalkurama-sidebar kalkurama-sidebar--mobile" aria-label="Mobile Kundenansicht">
+<div id="kalkurama-shell-offcanvas"
+     uk-offcanvas="overlay: true; mode: slide"
+     data-shell-offcanvas>
+  <div class="uk-offcanvas-bar kalkurama-shell-offcanvas-bar">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+    <aside class="kalkurama-sidebar kalkurama-sidebar--offcanvas"
+           data-shell-sidebar
+           data-shell-sidebar-offcanvas
+           aria-label="Kundenansicht">
       <!-- @include partials/sidebar-inner.html -->
     </aside>
   </div>
