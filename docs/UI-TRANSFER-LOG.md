@@ -16,7 +16,9 @@ Append-only record of clickdummy baselines and intentionally promoted UI decisio
 
 | 2026-10-08 | `552f3215d4fe3b9119ddea84de74c77f55fef543` | `2bd658c65020984fe2583161ae8cceeae583f618` | Work corrections #86: audited Fixed/Quantity/Expense correction forms, immutable original values and billing-state boundaries | Superseded by productive Customer/Project baseline sync |
 
-| 2026-10-08 | `a30c339ec442a45a4b0fddd7f9bdcd5db0c68062` | `2bd658c65020984fe2583161ae8cceeae583f618` | Productive #81/#82 sync: Customer commercial editor + selected Project lifecycle/rename/actions | Active baseline; no production promotion |
+| 2026-10-08 | `a30c339ec442a45a4b0fddd7f9bdcd5db0c68062` | `2bd658c65020984fe2583161ae8cceeae583f618` | Productive #81/#82 sync: Customer commercial editor + selected Project lifecycle/rename/actions | Superseded by Kalkurama Studio theme+markup baseline |
+
+| 2026-10-08 | `09f477c34c497ebd3402ea9dab5ca4956069f196` | `2bd658c65020984fe2583161ae8cceeae583f618` | Kalkurama Studio: controlled Theme + Markup editing, validation and Git Sync | Active baseline; no production promotion |
 
 ## Logging rule
 
