@@ -39,6 +39,7 @@ const standardTheme = await readFile(new URL("../src/themes/standard.less", impo
 const kalkuramaTheme = await readFile(new URL("../src/themes/kalkurama.less", import.meta.url), "utf8");
 const kalkuramaImports = await readFile(new URL("../src/themes/kalkurama/_import.less", import.meta.url), "utf8");
 const offcanvasTheme = await readFile(new URL("../src/themes/kalkurama/offcanvas.less", import.meta.url), "utf8");
+const systemMirror = await readFile(new URL("../src/themes/kalkurama/system.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
 const productLess = await readFile(new URL("../src/styles/product.less", import.meta.url), "utf8");
 const prototypeLess = await readFile(new URL("../src/styles/prototype.less", import.meta.url), "utf8");
@@ -84,25 +85,31 @@ for (const [page, pageId] of allPages) {
   assert(html[page].includes("<!-- @include partials/sidebar.html -->"), page + " must use the shared desktop sidebar.");
   assert(html[page].includes("<!-- @include partials/mobile-sidebar.html -->"), page + " must use the shared mobile sidebar.");
   assert(html[page].includes('<script type="module" src="/src/app.js"></script>'), page + " must load behavior-only app.js.");
+  assert(html[page].includes('class="kalkurama-shell kalkurama-shell--app"'), page + " must mirror the productive authenticated shell.");
+  assert(html[page].includes('class="kalkurama-body kalkurama-body--with-sidebar"'), page + " must mirror the productive sidebar layout.");
+  assert(html[page].includes('rel="icon" href="/src/themes/kalkurama/images/favicon.svg"'), page + " must use the Kalkurama theme favicon.");
 }
 
 assert(html["index.html"].includes('data-project="website-relaunch"'), "Daily landing must expose the selected Website Relaunch project.");
 assert(html["project.html"].includes('data-project="brand-refresh"'), "Project page must expose the selected Brand Refresh project.");
-assert(sharedPartials.includes('data-project-context="website-relaunch"'), "Sidebar must expose Website Relaunch project metadata.");
-assert(sharedPartials.includes('data-project-context="brand-refresh"'), "Sidebar must expose Brand Refresh project metadata.");
-assert(appSource.includes("document.body.dataset.project"), "Product app.js must activate project context from body metadata.");
-assert(appSource.includes("[data-project-context]"), "Product app.js must target semantic project links.");
+assert(!sharedPartials.includes("kalkurama-source-projects"), "Product mirror sidebar must stay customer-only like productive Kalkurama.");
+assert(sharedPartials.includes("kalkurama-source-customer-link"), "Product mirror sidebar must use the productive customer-link structure.");
+assert(sharedPartials.includes("kalkurama-sidebar-inspector-name"), "Product mirror sidebar must use the productive inspector structure.");
+assert(sharedPartials.includes("kalkurama-sidebar-toolbar-btn"), "Product mirror sidebar must use the productive toolbar controls.");
 
 assert(html["index.html"].includes("kalkurama-customer-workspace"), "Daily landing must be customer/project-first.");
+assert(html["index.html"].includes("kalkurama-customer-projects"), "Daily landing must mirror the productive project surface.");
 assert(html["index.html"].includes("kalkurama-project-list"), "Daily landing must keep the project list visible.");
-assert(html["index.html"].includes("kalkurama-running-timer"), "Daily landing must keep timer state in project context.");
-assert(html["index.html"].includes("uk-subnav uk-subnav-pill"), "Customer workspace must expose project-scoped document tabs.");
+assert(html["index.html"].includes("kalkurama-customer-actions"), "Daily landing must mirror productive workspace actions.");
+assert(html["index.html"].includes("kalkurama-customer-timer"), "Daily landing must keep productive timer state in customer context.");
+assert(html["index.html"].includes("kalkurama-customer-positions"), "Daily landing must mirror productive positions surface.");
+assert(html["index.html"].includes('data-workspace-tab="work"'), "Customer workspace must expose productive workspace tabs.");
 assert(html["project.html"].includes("Unverrechnete Arbeit"), "Project view must keep work as a central surface.");
 
 assert(sidebarPartial.includes("@include partials/customer-edit-modal.html"), "Shared sidebar must include the selected Customer editor.");
 assert(sidebarInnerPartial.includes('href="#customer-edit-modal"'), "Selected-Customer sidebar settings must open the Customer editor.");
 assert(sidebarInnerPartial.includes('aria-label="Kunde bearbeiten"'), "Selected-Customer settings action must remain explicit.");
-assert(html["index.html"].includes('data-uk-toggle="target: #customer-edit-modal"'), "Customer workspace edit action must open the shared Customer editor.");
+assert(html["index.html"].includes('href="#customer-edit-modal"') && html["index.html"].includes("uk-toggle"), "Customer workspace edit action must open the shared Customer editor.");
 
 for (const field of [
   'id="customer-name"',
@@ -228,6 +235,10 @@ assert(kalkuramaTheme.includes('@import "standard.less";'), "Kalkurama theme mus
 assert(kalkuramaTheme.includes('@import "kalkurama/_import.less";'), "Kalkurama theme must load component customizations.");
 assert(kalkuramaImports.includes('@import "variables.less";'), "Kalkurama theme variables import missing.");
 assert(kalkuramaImports.includes('@import "offcanvas.less";'), "Kalkurama Offcanvas theme import missing.");
+assert(kalkuramaImports.includes('@import "system.less";'), "Productive Kalkurama style mirror import missing.");
+assert(systemMirror.includes("Mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
+assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
+assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
 assert(offcanvasTheme.includes("@offcanvas-bar-background"), "Light customer drawer must use UIkit Offcanvas variable.");
 assert(offcanvasTheme.includes(".hook-offcanvas-bar()"), "Offcanvas custom declaration must use UIkit hook.");
 
@@ -242,6 +253,9 @@ assert(viteConfig.includes('apply: "serve"'), "Kalkurama Studio must be dev-serv
 assert(viteConfig.includes('address === "127.0.0.1" || address === "::1"'), "Kalkurama Studio must enforce loopback.");
 assert(viteConfig.includes('const files = ["src/themes/kalkurama.less"]'), "Kalkurama Studio allowlist must start at Kalkurama.");
 assert(viteConfig.includes("function listMarkupStudioFiles()"), "Kalkurama Studio must expose a markup allowlist.");
+assert(viteConfig.includes("function listStudioAssetFiles()"), "Kalkurama Studio Git Sync must expose a controlled theme-asset allowlist.");
+assert(viteConfig.includes("function listStudioGitFiles()"), "Kalkurama Studio Git Sync must combine editable files and approved assets.");
+assert(viteConfig.includes("src/themes/kalkurama/images/"), "Kalkurama theme assets must remain scoped to the theme images directory.");
 assert(viteConfig.includes("Object.values(htmlEntries)"), "Markup allowlist must start from known HTML entry points.");
 assert(viteConfig.includes('relativePath === "partials/studio.html"'), "Studio UI partial must remain outside the editable markup allowlist.");
 assert(viteConfig.includes("function validateMarkupSources()"), "Markup saves must validate all HTML entry points.");
