@@ -5,7 +5,7 @@ UIkit-first, HTML-first static mirror and UI/UX laboratory for the productive Ka
 Product source of truth:
 
 - `cemfirat/kalkurama`
-- inspected baseline: `2bd658c65020984fe2583161ae8cceeae583f618`
+- inspected baseline: `ed273d6c38464a000751cd8ed0ca54e8266dfc27`
 - product source: [docs/PRODUCT-SOURCE.md](docs/PRODUCT-SOURCE.md)
 - themes: [docs/THEMES.md](docs/THEMES.md)
 - styleguide: [docs/STYLEGUIDE.md](docs/STYLEGUIDE.md)
@@ -17,7 +17,7 @@ Public preview:
 - [Kalkurama Clickdummy](https://cemfirat.github.io/kalkurama-clickdummy/)
 - [Kalkurama Styleguide](https://cemfirat.github.io/kalkurama-clickdummy/styleguide.html)
 
-The public GitHub Pages build is read-only. Product-facing shell/layout/classes mirror the recorded productive Kalkurama baseline; only mock values, static links and prototype-only tooling may differ. Local Theme/Markup editing remains available only through Kalkurama Studio.
+The public GitHub Pages build is read-only. Product-facing shell/layout/classes mirror the recorded productive Kalkurama baseline; only mock values, static links and prototype-only tooling may differ. Productive visual identity is part of the mirror baseline; the separate UIkit Standard mode stays a read-only framework reference. Local Theme/Markup editing remains available only through Kalkurama Studio.
 
 ## Product direction
 
