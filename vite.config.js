@@ -196,6 +196,232 @@ function readHeadFile(relativePath) {
   return gitRawOptional(["show", "HEAD:" + relativePath]);
 }
 
+function parseGitStatus() {
+  const output = gitRawOptional(["status", "--porcelain=v1", "--untracked-files=all"]);
+  if (!output.trim()) return [];
+
+  return output
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => ({
+      index: line[0],
+      worktree: line[1],
+      path: line.slice(3).trim()
+    }));
+}
+
+function assertGitHubOrigin() {
+  const origin = gitOptional(["remote", "get-url", "origin"]);
+  const allowed = new Set([
+    "https://github.com/cemfirat/kalkurama-clickdummy.git",
+    "https://github.com/cemfirat/kalkurama-clickdummy",
+    "git@github.com:cemfirat/kalkurama-clickdummy.git"
+  ]);
+
+  if (!allowed.has(origin)) {
+    throw new Error("Git Sync requires origin to be cemfirat/kalkurama-clickdummy.");
+  }
+
+  return origin;
+}
+
+function assertStudioGitState() {
+  const branch = gitOptional(["branch", "--show-current"]);
+  if (branch === "") throw new Error("Git Sync does not support detached HEAD.");
+  if (branch !== "main" && !branch.startsWith("studio/")) {
+    throw new Error("Git Sync must start from main or an existing studio/* branch.");
+  }
+
+  const allowedFiles = new Set(listThemeStudioFiles());
+  const changes = parseGitStatus();
+
+  for (const change of changes) {
+    if (change.index !== " " && change.index !== "?") {
+      throw new Error("Git Sync found staged changes. Unstage them before using Theme Studio Git Sync.");
+    }
+
+    if (change.path.includes(" -> ")) {
+      throw new Error("Git Sync does not support renamed files.");
+    }
+
+    if (!allowedFiles.has(change.path)) {
+      throw new Error("Git Sync found a non-Theme-Studio change: " + change.path);
+    }
+  }
+
+  return { branch, changes };
+}
+
+function fetchAndAssertCurrentMain(branch) {
+  assertGitHubOrigin();
+
+  execFileSync("git", ["fetch", "--quiet", "origin", "main"], {
+    cwd: rootDirectory,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+    timeout: 60000,
+    env: { ...process.env, GIT_TERMINAL_PROMPT: "0" }
+  });
+
+  if (branch === "main") {
+    const localMain = git(["rev-parse", "main"]);
+    const originMain = git(["rev-parse", "origin/main"]);
+
+    if (localMain !== originMain) {
+      throw new Error("Local main is not synchronized with origin/main. Update main before Git Sync.");
+    }
+
+    return;
+  }
+
+  try {
+    execFileSync("git", ["merge-base", "--is-ancestor", "origin/main", "HEAD"], {
+      cwd: rootDirectory,
+      stdio: ["ignore", "ignore", "ignore"],
+      timeout: 10000
+    });
+  } catch {
+    throw new Error("This studio branch does not contain the current origin/main. Rebase/update it before Git Sync.");
+  }
+}
+
+function runLocalVerification() {
+  try {
+    const output = execFileSync("npm", ["run", "verify"], {
+      cwd: rootDirectory,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+      timeout: 120000,
+      maxBuffer: 8 * 1024 * 1024,
+      env: { ...process.env, CI: "1" }
+    });
+
+    return {
+      ok: true,
+      output: output.slice(-12000)
+    };
+  } catch (error) {
+    const stdout = typeof error?.stdout === "string" ? error.stdout : "";
+    const stderr = typeof error?.stderr === "string" ? error.stderr : "";
+    const message = [stdout, stderr, error instanceof Error ? error.message : String(error)]
+      .filter(Boolean)
+      .join("\n")
+      .slice(-12000);
+
+    const verificationError = new Error("Local verification failed.\n" + message);
+    verificationError.code = "VERIFY_FAILED";
+    throw verificationError;
+  }
+}
+
+function sanitizeCommitMessage(value) {
+  const message = String(value ?? "").trim();
+
+  if (message.length < 5 || message.length > 120 || /[\r\n]/.test(message)) {
+    throw new Error("Commit message must contain 5–120 characters on one line.");
+  }
+
+  return message;
+}
+
+function createStudioBranchName() {
+  const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "");
+  return "studio/theme-" + stamp;
+}
+
+function ensureStudioBranch(currentBranch) {
+  if (currentBranch.startsWith("studio/")) return currentBranch;
+
+  const branch = createStudioBranchName();
+  git(["switch", "-c", branch]);
+  return branch;
+}
+
+function pushGitRef(args) {
+  return execFileSync("git", ["push", ...args], {
+    cwd: rootDirectory,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+    timeout: 60000,
+    maxBuffer: 4 * 1024 * 1024,
+    env: { ...process.env, GIT_TERMINAL_PROMPT: "0" }
+  }).trim();
+}
+
+function studioGitStatus() {
+  const state = assertStudioGitState();
+  let mainSynchronized = false;
+  let origin = "";
+
+  try {
+    origin = assertGitHubOrigin();
+    fetchAndAssertCurrentMain(state.branch);
+    mainSynchronized = true;
+  } catch {
+    mainSynchronized = false;
+  }
+
+  return {
+    branch: state.branch,
+    head: gitOptional(["rev-parse", "--short", "HEAD"]),
+    origin,
+    mainSynchronized,
+    changes: state.changes
+  };
+}
+
+function publishStudioChanges(commitMessage) {
+  const message = sanitizeCommitMessage(commitMessage);
+  const state = assertStudioGitState();
+
+  fetchAndAssertCurrentMain(state.branch);
+
+  const hasWorkingChanges = state.changes.length > 0;
+  const verification = runLocalVerification();
+  let branch = state.branch;
+
+  if (hasWorkingChanges) {
+    branch = ensureStudioBranch(branch);
+    const paths = state.changes.map((change) => change.path);
+
+    gitRaw(["add", "--", ...paths]);
+
+    const staged = git(["diff", "--cached", "--name-only"])
+      .split("\n")
+      .filter(Boolean);
+
+    const allowed = new Set(listThemeStudioFiles());
+    if (staged.length === 0 || staged.some((path) => !allowed.has(path))) {
+      throw new Error("Git Sync staging did not produce an allowed Theme Studio candidate.");
+    }
+
+    gitRaw(["commit", "-m", message]);
+  } else if (!branch.startsWith("studio/") || git(["rev-parse", "HEAD"]) === git(["rev-parse", "origin/main"])) {
+    throw new Error("There are no Theme Studio changes to publish.");
+  }
+
+  const commitSha = git(["rev-parse", "HEAD"]);
+  const shortSha = commitSha.slice(0, 12);
+  const verifyBranch = "verify/studio-theme-" + shortSha;
+
+  pushGitRef(["-u", "origin", branch]);
+
+  const remoteVerify = gitOptional(["ls-remote", "--heads", "origin", "refs/heads/" + verifyBranch]);
+  if (remoteVerify === "") {
+    pushGitRef(["origin", commitSha + ":refs/heads/" + verifyBranch]);
+  } else if (!remoteVerify.startsWith(commitSha)) {
+    throw new Error("Verify branch already exists with a different commit: " + verifyBranch);
+  }
+
+  return {
+    ok: true,
+    branch,
+    commitSha,
+    verifyBranch,
+    verification
+  };
+}
+
 function studioFilePayload(relativePath) {
   const absolutePath = resolve(rootDirectory, relativePath);
   const content = readFileSync(absolutePath, "utf8");
@@ -273,7 +499,8 @@ function themeStudioPlugin(mode) {
               branch: gitOptional(["branch", "--show-current"]),
               head: gitOptional(["rev-parse", "--short", "HEAD"]),
               files,
-              modifiedFiles: files.filter((path) => Boolean(gitOptional(["status", "--short", "--", path])))
+              modifiedFiles: files.filter((path) => Boolean(gitOptional(["status", "--short", "--", path]))),
+              git: studioGitStatus()
             });
             return;
           }
@@ -314,6 +541,25 @@ function themeStudioPlugin(mode) {
                 file: studioFilePayload(relativePath)
               });
             }
+            return;
+          }
+
+          if (req.method === "POST" && requestUrl.pathname === "/__studio/git/verify") {
+            const state = assertStudioGitState();
+            fetchAndAssertCurrentMain(state.branch);
+            const verification = runLocalVerification();
+            sendJson(res, 200, {
+              ok: true,
+              verification,
+              git: studioGitStatus()
+            });
+            return;
+          }
+
+          if (req.method === "POST" && requestUrl.pathname === "/__studio/git/publish") {
+            const body = await readJsonBody(req);
+            const result = publishStudioChanges(body.message);
+            sendJson(res, 200, result);
             return;
           }
 
