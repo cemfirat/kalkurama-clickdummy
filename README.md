@@ -9,7 +9,7 @@ Product source of truth:
 - product source: [docs/PRODUCT-SOURCE.md](docs/PRODUCT-SOURCE.md)
 - themes: [docs/THEMES.md](docs/THEMES.md)
 - styleguide: [docs/STYLEGUIDE.md](docs/STYLEGUIDE.md)
-- local Theme Studio: [docs/THEME-STUDIO.md](docs/THEME-STUDIO.md)
+- local Kalkurama Studio: [docs/STUDIO.md](docs/STUDIO.md)
 - transfer rules: [docs/UI-TRANSFER.md](docs/UI-TRANSFER.md)
 
 ## Product direction
@@ -57,7 +57,7 @@ npm install
 npm run dev
 ```
 
-Theme Studio:
+Kalkurama Studio:
 
 ```bash
 npm run studio

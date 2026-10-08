@@ -1,13 +1,14 @@
 import UIkit from "uikit";
 
 const endpoint = "/__studio";
-const studioElement = document.querySelector("#theme-studio");
+const studioElement = document.querySelector("#kalkurama-studio");
 const unavailable = document.querySelector("[data-studio-unavailable]");
 const workspace = document.querySelector("[data-studio-workspace]");
 const errorBox = document.querySelector("[data-studio-error]");
 const fileSelect = document.querySelector("[data-studio-file]");
 const editor = document.querySelector("[data-studio-editor]");
 const modeLabel = document.querySelector("[data-studio-mode]");
+const typeLabel = document.querySelector("[data-studio-type]");
 const branchLabel = document.querySelector("[data-studio-branch]");
 const stateLabel = document.querySelector("[data-studio-state]");
 const gitStatusLabel = document.querySelector("[data-studio-git-status]");
@@ -72,7 +73,7 @@ function hasUnsavedEditorChanges() {
 
 function assertSavedEditor() {
   if (hasUnsavedEditorChanges()) {
-    throw new Error("Ungespeicherte LESS-Änderungen vorhanden. Zuerst Speichern & kompilieren.");
+    throw new Error("Ungespeicherte Studio-Änderungen vorhanden. Zuerst speichern.");
   }
 }
 
@@ -84,6 +85,7 @@ function setGitBusy(busy) {
 function renderFile(file) {
   currentFile = file;
   loadedContent = file.content;
+  if (typeLabel) typeLabel.textContent = file.type === "markup" ? "Markup" : "Theme";
   editor.value = file.content;
   diffOutput.textContent = file.diff || "Keine Änderungen.";
   gitStatusLabel.textContent = file.gitStatus || "clean";
@@ -167,10 +169,11 @@ async function saveCurrentFile() {
     });
 
     renderFile(payload.file);
-    setState(payload.compiled?.length ? "Gespeichert & kompiliert" : "Keine Änderung");
+    const changed = Boolean(payload.compiled?.length || payload.validated?.length);
+    setState(changed ? (payload.type === "markup" ? "Markup gespeichert & geprüft" : "Theme gespeichert & kompiliert") : "Keine Änderung");
 
     UIkit.notification({
-      message: payload.compiled?.length ? "Theme gespeichert und kompiliert." : "Keine Änderung.",
+      message: changed ? (payload.type === "markup" ? "Markup gespeichert und geprüft." : "Theme gespeichert und kompiliert.") : "Keine Änderung.",
       status: "success",
       pos: "bottom-right",
       timeout: 2200
@@ -246,7 +249,7 @@ async function publishGitCandidate() {
     ].join("\n");
 
     UIkit.notification({
-      message: "Theme gepusht · Branch-CI gestartet.",
+      message: "Studio-Änderung gepusht · Branch-CI gestartet.",
       status: "success",
       pos: "bottom-right",
       timeout: 3000
