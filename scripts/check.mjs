@@ -48,6 +48,14 @@ const branchWorkflow = await readFile(new URL("../.github/workflows/branch-verif
 const pagesWorkflow = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
 const styleguideExampleFiles = await readdir(new URL("../partials/styleguide/", import.meta.url));
 const themeEntries = await readdir(new URL("../src/themes/", import.meta.url));
+const sharedPartials = [
+  await readFile(new URL("../partials/header.html", import.meta.url), "utf8"),
+  await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8"),
+  await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8"),
+  await readFile(new URL("../partials/sidebar-content.html", import.meta.url), "utf8"),
+  await readFile(new URL("../partials/mobile-sidebar.html", import.meta.url), "utf8"),
+  await readFile(new URL("../partials/theme-studio.html", import.meta.url), "utf8")
+].join("\n");
 
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
 assert(kalkuramaSource.commit === "2bd658c65020984fe2583161ae8cceeae583f618", "Unexpected Kalkurama source baseline.");
@@ -81,7 +89,7 @@ for (const marker of [
   "uk-label",
   "uk-offcanvas"
 ]) {
-  assert(Object.values(html).join("\n").includes(marker), "Expected UIkit marker missing: " + marker);
+  assert((Object.values(html).join("\n") + "\n" + sharedPartials).includes(marker), "Expected UIkit marker missing: " + marker);
 }
 
 assert(!/\bfetch\s*\(/.test(appSource), "Product app.js must not call remote APIs.");
