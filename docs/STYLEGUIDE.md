@@ -39,6 +39,11 @@ The current sections are:
 - Form
 - Table
 - Navigation
+- Accordion
+- Tabs & Switcher
+- Dropdown & Drop
+- Offcanvas
+- Icon, Close & Tooltip
 - Status & Alert
 - Feedback & Modal
 - Kalkurama Project / Work Context
@@ -78,6 +83,11 @@ Examples:
 - `uk-table`
 - `uk-nav`
 - `uk-subnav`
+- `uk-accordion`
+- `uk-tab` + `uk-switcher`
+- `uk-dropdown` / `uk-drop`
+- `uk-offcanvas`
+- `uk-icon` / `uk-close` / `uk-tooltip`
 - `uk-alert`
 - `uk-modal`.
 
@@ -92,6 +102,21 @@ as:
 - dense commercial panels and document context.
 
 Do not restyle standard UIkit components in `prototype.less`.
+
+## Interaction reference
+
+The Styleguide also covers the native UIkit interaction primitives used to keep
+dense business interfaces compact:
+
+- Accordion / disclosure;
+- Tabs + Switcher;
+- Dropdown / Drop;
+- Offcanvas;
+- Icon / Close / Tooltip utilities.
+
+These are framework references, not new Kalkurama product requirements. Generic
+utility icons may use UIkit; branded shell controls continue to use Kalkurama's
+owned icon assets.
 
 ## Product emphasis
 
