@@ -50,6 +50,7 @@ Billings Pro is an interaction-architecture reference, not a visual template.
 - `credit-notes.html`
 - `services.html`
 - `work.html`
+- `work-correction-fixed.html` / `work-correction-quantity.html` / `work-correction-expense.html` — productive audited non-time correction mirrors
 - `time.html`
 - `settings.html`
 - `styleguide.html` — UIkit reference plus documented Kalkurama product patterns and clearly separated future-only experiments
