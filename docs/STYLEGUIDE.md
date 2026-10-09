@@ -121,6 +121,10 @@ generic showcase:
 - **Invoice Line Discounts** — explicit pre-discount/rate/amount snapshot from v1 issue #85
 - **Audited Work Corrections** — actor/time/reason/original-value semantics from v1 issue #86
 
+The #84/#85/#86 patterns are now productive on Kalkurama `main`. Their
+Styleguide examples document shipped product semantics; they are no longer
+future-only authorization for product UI.
+
 Where a reusable product partial already exists, the Styleguide should render
 that same source. The Work Correction example therefore uses
 `partials/work-correction-audit.html` directly for both Preview and Markup.
