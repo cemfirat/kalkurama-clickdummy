@@ -1,7 +1,7 @@
 export const kalkuramaSource = Object.freeze({
   repository: "cemfirat/kalkurama",
-  commit: "ed273d6c38464a000751cd8ed0ca54e8266dfc27",
-  inspectedAt: "2026-10-08",
+  commit: "3c0c2eb77ef8164770586f5b34c78db6f4127762",
+  inspectedAt: "2026-10-09",
   inspectedPaths: [
     "docs/product/product-definition.md",
     "docs/product/billings-like-ux.md",
@@ -12,12 +12,14 @@ export const kalkuramaSource = Object.freeze({
     "templates/base.html.twig",
     "templates/shell/_sidebar.html.twig",
     "templates/shell/_sidebar_customer_group.html.twig",
+    "templates/shell/_icon.html.twig",
     "templates/customer/show.html.twig",
     "templates/customer/_running_timer.html.twig",
     "templates/home/index.html.twig",
     "templates/project/show.html.twig",
     "templates/estimate/index.html.twig",
     "templates/estimate/show.html.twig",
+    "templates/estimate/_item_rows.html.twig",
     "templates/invoice/index.html.twig",
     "templates/invoice/show.html.twig",
     "templates/payment/index.html.twig",
@@ -32,6 +34,9 @@ export const kalkuramaSource = Object.freeze({
     "assets/images/kalkurama/logo.svg",
     "assets/images/kalkurama/favicon.svg",
     "assets/images/kalkurama/favicon.ico",
+    "assets/images/kalkurama/icons/plus.svg",
+    "assets/images/kalkurama/icons/cog.svg",
+    "assets/images/kalkurama/icons/menu.svg",
     "config/packages/asset_mapper.yaml",
     "importmap.php"
   ]
