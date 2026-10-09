@@ -20,6 +20,9 @@ const productPages = [
   ["credit-notes.html", "credit-notes"],
   ["services.html", "services"],
   ["work.html", "work"],
+  ["work-correction-fixed.html", "work"],
+  ["work-correction-quantity.html", "work"],
+  ["work-correction-expense.html", "work"],
   ["time.html", "time"],
   ["settings.html", "settings"]
 ];
@@ -157,8 +160,11 @@ assert(html["work.html"].includes('data-work-list="quantity"'), "Work mirror mus
 assert(html["work.html"].includes('data-work-list="expense"'), "Work mirror must expose productive Expense list.");
 assert(html["work.html"].includes("data-billing-history"), "Work mirror must expose productive billing history.");
 assert(html["work.html"].includes("data-correction-history"), "Work mirror must expose productive time-correction history.");
-for (const type of ["fixed", "quantity", "expense"]) {
-  assert(html["work.html"].includes("correct=" + type), "Product Work mirror must expose the productive " + type + " correction affordance.");
+for (const [type, page] of [["fixed", "work-correction-fixed.html"], ["quantity", "work-correction-quantity.html"], ["expense", "work-correction-expense.html"]]) {
+  assert(html["work.html"].includes('href="./' + page + '"'), "Product Work mirror must link the productive " + type + " correction page.");
+  assert(html[page].includes("data-work-correct"), "Product " + type + " correction page must mirror the productive correction form.");
+  assert(html[page].includes("Nur unverrechnete Arbeit kann korrigiert werden."), "Product " + type + " correction page must preserve the unbilled-only boundary.");
+  assert(html[page].includes("Korrekturgrund"), "Product " + type + " correction page must require the correction reason.");
 }
 assert(html["work.html"].includes("data-work-correction-history"), "Product Work mirror must expose productive non-time correction audit history.");
 
@@ -287,6 +293,9 @@ assert(!viteConfig.includes('pushGitRef(["-u", "origin", "main"'), "Kalkurama St
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
 assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
+assert(viteConfig.includes('workCorrectionFixed: "work-correction-fixed.html"'), "Vite build must include Fixed correction mirror.");
+assert(viteConfig.includes('workCorrectionQuantity: "work-correction-quantity.html"'), "Vite build must include Quantity correction mirror.");
+assert(viteConfig.includes('workCorrectionExpense: "work-correction-expense.html"'), "Vite build must include Expense correction mirror.");
 assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfig), "Standard Vite mode missing.");
 assert(/\bkalkurama:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Kalkurama Vite mode missing.");
 assert(/\bpages:\s*"src\/themes\/kalkurama\.less"/.test(viteConfig), "Pages must compile the Kalkurama theme.");
