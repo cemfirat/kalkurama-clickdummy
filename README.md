@@ -5,7 +5,7 @@ UIkit-first, HTML-first static mirror and UI/UX laboratory for the productive Ka
 Product source of truth:
 
 - `cemfirat/kalkurama`
-- inspected baseline: `3c0c2eb77ef8164770586f5b34c78db6f4127762`
+- inspected baseline: `c4de7766c689484d5fc612d167d08078d9ed2607`
 - product source: [docs/PRODUCT-SOURCE.md](docs/PRODUCT-SOURCE.md)
 - themes: [docs/THEMES.md](docs/THEMES.md)
 - styleguide: [docs/STYLEGUIDE.md](docs/STYLEGUIDE.md)
