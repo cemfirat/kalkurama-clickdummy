@@ -229,7 +229,7 @@ Only `unbilled` Fixed, Quantity and Expense entries may be corrected directly. T
 
 Clickdummy consequence:
 
-- `work.html` exposes Correct actions for the three productive non-time work types;
+- `work.html` exposes Correct actions for the three productive non-time work types and links to the matching static correction-form mirrors;
 - recent non-time correction history is represented through `data-work-correction-history`;
 - original and corrected commercial values, actor and reason remain visible;
 - correction does not mutate issued documents or bypass billing-state rules;
