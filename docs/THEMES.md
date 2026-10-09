@@ -38,7 +38,11 @@ src/
     │   └── images/
     │       ├── logo.svg
     │       ├── favicon.svg
-    │       └── favicon.ico
+    │       ├── favicon.ico
+    │       └── icons/
+    │           ├── plus.svg
+    │           ├── cog.svg
+    │           └── menu.svg
     └── customers/
         └── README.md
 ```
@@ -53,7 +57,7 @@ src/
 
 `kalkurama/brand.less` re-applies the exact productive identity after that Standard-only normalization. `kalkurama/variables.less` and UIkit hooks remain the normal editable theme customization layer.
 
-`kalkurama/images/` is the canonical clickdummy location for Kalkurama-owned theme assets such as logo and favicon.
+`kalkurama/images/` is the canonical clickdummy location for Kalkurama-owned theme assets such as logo, favicon and the owned shell icon set. Studio Git Sync recognizes approved image assets recursively below this directory.
 
 Customer themes inherit Kalkurama only when real customer branding is needed.
 
