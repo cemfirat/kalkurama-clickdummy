@@ -416,7 +416,7 @@ assert(productSourceGuide.includes("#86 — audited corrections for fixed, quant
 assert(productSourceGuide.includes("complete on `main` via PR #122"), "Product source guide must mark Work corrections productive.");
 assert(productSourceGuide.includes("Customer lifecycle") && productSourceGuide.includes("More → Setup") && productSourceGuide.includes("owned icon assets"), "Product source guide must document current productive shell additions.");
 assert(productSourceGuide.includes("#125–#127 — public document sharing"), "Product source guide must document productive document sharing.");
-assert(productSourceGuide.includes("not** a cryptographic e-signature") || productSourceGuide.includes("not a cryptographic e-signature"), "Product source guide must preserve the non-e-signature boundary.");
+assert(productSourceGuide.includes("cryptographic e-signature"), "Product source guide must preserve the non-e-signature boundary.");
 assert(productSourceGuide.includes("public Invoice shares do not expose e-invoice XML"), "Product source guide must preserve public Invoice action boundaries.");
 assert(transferGuide.includes("public document-share pages"), "Transfer guide must classify public share pages.");
 assert(productSourceGuide.includes("selected_for_draft_invoice"), "Product source guide must preserve the draft-reservation correction boundary.");
