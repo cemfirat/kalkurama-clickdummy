@@ -74,7 +74,7 @@ const sharedPartials = [
 ].join("\n");
 
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
-assert(kalkuramaSource.commit === "3c0c2eb77ef8164770586f5b34c78db6f4127762", "Unexpected Kalkurama source baseline.");
+assert(kalkuramaSource.commit === "c4de7766c689484d5fc612d167d08078d9ed2607", "Unexpected Kalkurama source baseline.");
 assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy baseline must be a full SHA.");
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must match productive UIkit 3.25.25.");
 assert(packageJson.scripts?.dev === "vite --mode kalkurama", "Kalkurama must be the default dev theme.");
@@ -227,7 +227,7 @@ for (const [name, svg] of [["plus", plusIconSvg], ["cog", cogIconSvg], ["menu", 
   assert(svg.includes("<svg") && svg.includes("</svg>"), "Owned " + name + " shell icon must be valid SVG text.");
 }
 assert(systemMirror.includes("Exact structural/visual CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
-assert(systemMirror.includes("Product baseline: 3c0c2eb77ef8164770586f5b34c78db6f4127762"), "System mirror must record the exact productive baseline.");
+assert(systemMirror.includes("Product baseline: c4de7766c689484d5fc612d167d08078d9ed2607"), "System mirror must record the exact productive baseline.");
 assert(systemMirror.includes("--kalkurama-accent: #ff00ff;"), "System mirror must include the productive Kalkurama accent.");
 assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
 assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
