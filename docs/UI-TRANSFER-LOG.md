@@ -18,10 +18,12 @@ Append-only record of clickdummy baselines and intentionally promoted UI decisio
 
 | 2026-10-08 | `a30c339ec442a45a4b0fddd7f9bdcd5db0c68062` | `2bd658c65020984fe2583161ae8cceeae583f618` | Productive #81/#82 sync: Customer commercial editor + selected Project lifecycle/rename/actions | Superseded by Kalkurama Studio theme+markup baseline |
 
-| 2026-10-08 | `b9b7a2b07d8a28214a77fce729156f4c84e089b7` | `2bd658c65020984fe2583161ae8cceeae583f618` | Kalkurama Studio: controlled Theme + Markup editing, validation and Git Sync | Active baseline; no production promotion |
+| 2026-10-08 | `b9b7a2b07d8a28214a77fce729156f4c84e089b7` | `2bd658c65020984fe2583161ae8cceeae583f618` | Kalkurama Studio: controlled Theme + Markup editing, validation and Git Sync | Superseded by productive mirror re-anchor |
+
+| 2026-10-09 | `e0ca4ad7075a85671dc8919d3805cd044f537de2` | `27c717fbdbc23866297ff32cd57ef181290340f3` | Productive mirror synchronized through visual identity, stable-v1 #84–#86, Customer lifecycle/Setup/owned shell icons and public document sharing #125–#127 | Active audited baseline; product → clickdummy re-anchor, not a promotion |
 
 ## Logging rule
 
-- Baseline rows record an audited re-anchoring of the UI lab.
+- Baseline rows record an audited re-anchoring of the UI lab after productive Kalkurama has been mirrored and verified.
 - Promotion rows are added only after a clickdummy decision is successfully ported to productive Kalkurama.
 - Every row uses exact source/target SHAs.
