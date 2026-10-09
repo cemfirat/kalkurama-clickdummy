@@ -20,7 +20,7 @@ For the recorded baseline, product-facing shell/layout/classes are mirrored one-
 
 Potentially transferable:
 
-- root product HTML structure as UI/interaction decisions, including product-facing correction forms that already exist in productive Kalkurama
+- root product HTML structure as UI/interaction decisions, including product-facing correction forms and public document-share pages that already exist in productive Kalkurama
 - shared shell partials
 - Kalkurama theme variables/hooks and owned theme assets
 - shell/product LESS compositions
@@ -32,7 +32,8 @@ Never promote automatically:
 - Styleguide-only files
 - Kalkurama Studio
 - transfer metadata/docs
-- fake customers/projects/totals.
+- fake customers/projects/totals;
+- static share URLs/tokens as if they were production authorization state.
 
 ## Required sequence
 
