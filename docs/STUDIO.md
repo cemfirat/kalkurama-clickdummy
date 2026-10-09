@@ -106,7 +106,7 @@ It may stage and commit only:
 
 - approved Theme files;
 - approved Markup files;
-- approved theme assets below `src/themes/kalkurama/images/` with image extensions such as SVG, PNG, WebP, JPEG or ICO.
+- approved theme assets recursively below `src/themes/kalkurama/images/` with image extensions such as SVG, PNG, WebP, JPEG or ICO, including owned shell icons under `images/icons/`.
 
 Theme assets are Git-controlled files, not arbitrary filesystem access. Binary assets are not opened in the text editor.
 

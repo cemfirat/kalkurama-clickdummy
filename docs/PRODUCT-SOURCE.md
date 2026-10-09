@@ -6,7 +6,7 @@ The productive source of truth is:
 
 Inspected baseline:
 
-`ed273d6c38464a000751cd8ed0ca54e8266dfc27`
+`c4de7766c689484d5fc612d167d08078d9ed2607`
 
 ## Authority order
 
@@ -76,6 +76,10 @@ assets.
 - `templates/estimate/index.html.twig`
 - `templates/invoice/index.html.twig`
 - `templates/payment/index.html.twig`
+- `templates/work/index.html.twig`
+- `templates/work/correct.html.twig`
+- `templates/service/index.html.twig`
+- `templates/shell/_icon.html.twig`
 - `assets/styles/app.css`
 - `importmap.php`
 
@@ -191,8 +195,7 @@ independent invoice-first data-entry architecture.
 
 ### #84 — explicit Estimate sections
 
-Issue #84 is **Class A — documented v1 baseline** and defines optional ordered
-sections for Estimate drafts and issued snapshots.
+Issue #84 is **Class A — productive baseline** and is complete on `main` via PR #119. It defines optional ordered sections for Estimate drafts and issued snapshots.
 
 Clickdummy consequence:
 
@@ -202,19 +205,13 @@ Clickdummy consequence:
 - issued/revised presentation must preserve section labels and ordering;
 - commercial calculations remain item-based and exact.
 
-The clickdummy therefore prototypes explicit ordered sections using normal UIkit
-controls and visible item tables rather than inventing drag-and-drop or arbitrary
-layout semantics.
+The product-facing `estimate.html` now mirrors the productive issued section presentation: ordered section headers, descriptions, section totals and item assignment. The Styleguide example remains documentation of that productive pattern, not a separate product proposal.
 
 
 
 ### #85 — explicit Invoice line discounts
 
-Issue #85 is **Class A — documented v1 baseline** and closes the commercial
-snapshot gap between Estimate Items and Invoice Lines.
-
-The productive baseline currently snapshots quantity, unit price, net, tax and
-gross on Invoice Lines but does not yet persist an explicit discount snapshot.
+Issue #85 is **Class A — productive baseline** and is complete on `main` via PR #121. Invoice Lines persist explicit pre-discount, discount-rate and discount-amount snapshot values alongside net, tax and gross.
 
 Clickdummy consequence:
 
@@ -225,19 +222,13 @@ Clickdummy consequence:
 - HTML, PDF, e-invoice and full credit-note presentation must remain consistent;
 - calculations remain exact and integer-backed in the productive domain.
 
-The clickdummy models this as a commercial line field, not as a visual-only
-adjustment or promotional coupon system.
+The product-facing `invoice.html` mirrors the issued discount snapshot as a dedicated Discount column. Draft-only edit controls remain absent from the issued static example, matching the productive status boundary.
 
 
 
 ### #86 — audited corrections for fixed, quantity and expense work
 
-Issue #86 is **Class A — documented v1 baseline** and addresses the remaining
-manual-correction gap for non-time Work entries.
-
-The productive baseline already has audited Time corrections. Fixed, Quantity and
-Expense entries currently have only the safe fallback: mark the incorrect entry
-non-billable/written-off with a required reason and create a replacement.
+Issue #86 is **Class A — productive baseline** and is complete on `main` via PR #122. Fixed, Quantity and Expense entries now have audited direct correction while they are still `unbilled`, alongside the existing audited Time correction flow.
 
 Clickdummy consequence:
 
@@ -255,13 +246,17 @@ Clickdummy consequence:
 - correction does not automatically mutate or repair invoices, credit notes or
   external accounting state.
 
-Because #86 is still a documented stable-v1 gap rather than current productive UI,
-those non-time correction concepts live only in the Styleguide/prototype layer.
-They are not exposed as product pages until productive Kalkurama implements them.
+The product-facing `work.html` exposes the productive correction affordances and both time/work correction history surfaces. `work-correction-fixed.html`, `work-correction-quantity.html` and `work-correction-expense.html` mirror the productive correction form shape with static data.
 
-The same mirror rule applies to other documented future gaps such as #84 Estimate
-sections and #85 Invoice line discounts: Styleguide examples may explore them, but
-the product-facing clickdummy pages mirror the current productive implementation.
+### Current shell additions — productive baseline
+
+The recorded source also includes the completed Billings-shell follow-ups:
+
+- Customer lifecycle is persisted as Active / Quiet / Inactive and controls sidebar grouping (#114);
+- Services and commercial Settings live under **More → Setup** (#117);
+- plus, cog and mobile-menu shell icons are Kalkurama-owned assets rather than borrowed UIkit shell icons (#123).
+
+The clickdummy mirrors those shell details and keeps the owned icon assets under `src/themes/kalkurama/images/icons/`.
 
 ## Scope guard
 

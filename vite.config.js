@@ -18,6 +18,9 @@ const htmlEntries = {
   creditNotes: "credit-notes.html",
   services: "services.html",
   work: "work.html",
+  workCorrectionFixed: "work-correction-fixed.html",
+  workCorrectionQuantity: "work-correction-quantity.html",
+  workCorrectionExpense: "work-correction-expense.html",
   time: "time.html",
   settings: "settings.html",
   styleguide: "styleguide.html"
@@ -156,11 +159,27 @@ function listStudioFiles() {
 }
 
 function listStudioAssetFiles() {
+  const files = [];
   const imagesDirectory = resolve(rootDirectory, "src/themes/kalkurama/images");
-  return readdirSync(imagesDirectory, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && /\.(?:svg|png|webp|jpe?g|ico)$/i.test(entry.name))
-    .map((entry) => "src/themes/kalkurama/images/" + entry.name)
-    .sort();
+
+  function collectImageFiles(directory, prefix) {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const relativePath = prefix + "/" + entry.name;
+      const absolutePath = resolve(rootDirectory, relativePath);
+
+      if (entry.isDirectory()) {
+        collectImageFiles(absolutePath, relativePath);
+        continue;
+      }
+
+      if (entry.isFile() && /\.(?:svg|png|webp|jpe?g|ico)$/i.test(entry.name)) {
+        files.push(relativePath);
+      }
+    }
+  }
+
+  collectImageFiles(imagesDirectory, "src/themes/kalkurama/images");
+  return files.sort();
 }
 
 function listStudioGitFiles() {

@@ -7,9 +7,8 @@
     <button class="kalkurama-shell-sidebar-toggle uk-hidden@m"
             type="button"
             uk-toggle="target: #kalkurama-shell-offcanvas"
-            uk-icon="icon: menu"
             aria-label="Kundenansicht öffnen"
-            data-shell-sidebar-toggle></button>
+            data-shell-sidebar-toggle><span class="kalkurama-icon kalkurama-icon--menu" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.75" stroke-linecap="round" d="M4 6h12M4 10h12M4 14h12"/></svg></span></button>
 
     <nav class="kalkurama-topnav" aria-label="Sekundäre Navigation" data-shell-topnav>
       <a href="./overview.html" data-nav-page="overview">Übersicht</a>
@@ -30,11 +29,12 @@
         <button class="kalkurama-topnav-trigger" type="button">Mehr <span uk-icon="icon: triangle-down; ratio: 0.7"></span></button>
         <div uk-dropdown="mode: click; pos: bottom-left">
           <ul class="uk-nav uk-dropdown-nav" data-shell-more-menu>
-            <li data-nav-page="services"><a href="./services.html">Leistungen</a></li>
             <li data-nav-page="work"><a href="./work.html">Arbeit</a></li>
             <li data-nav-page="time"><a href="./time.html">Zeit</a></li>
             <li class="uk-nav-divider"></li>
-            <li data-nav-page="settings"><a href="./settings.html">Einstellungen</a></li>
+            <li class="uk-nav-header">Einrichtung</li>
+            <li data-nav-page="services"><a href="./services.html" data-shell-setup-services>Leistungen</a></li>
+            <li data-nav-page="settings"><a href="./settings.html" data-shell-setup-settings>Einstellungen</a></li>
           </ul>
         </div>
       </div>

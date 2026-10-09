@@ -1,6 +1,6 @@
 export const kalkuramaSource = Object.freeze({
   repository: "cemfirat/kalkurama",
-  commit: "ed273d6c38464a000751cd8ed0ca54e8266dfc27",
+  commit: "c4de7766c689484d5fc612d167d08078d9ed2607",
   inspectedAt: "2026-10-08",
   inspectedPaths: [
     "docs/product/product-definition.md",
@@ -29,6 +29,11 @@ export const kalkuramaSource = Object.freeze({
     "assets/controllers/project_list_controller.js",
     "assets/controllers/timer_controller.js",
     "assets/styles/app.css",
+    "templates/work/correct.html.twig",
+    "templates/shell/_icon.html.twig",
+    "assets/images/kalkurama/icons/menu.svg",
+    "assets/images/kalkurama/icons/cog.svg",
+    "assets/images/kalkurama/icons/plus.svg",
     "assets/images/kalkurama/logo.svg",
     "assets/images/kalkurama/favicon.svg",
     "assets/images/kalkurama/favicon.ico",

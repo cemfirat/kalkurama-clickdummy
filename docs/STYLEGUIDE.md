@@ -117,13 +117,11 @@ The product section is split by commercial responsibility instead of using one
 generic showcase:
 
 - **Project / Work Context** — persistent project context, Timer and unbilled Work
-- **Estimate Sections** — optional ordered grouping from v1 issue #84
-- **Invoice Line Discounts** — explicit pre-discount/rate/amount snapshot from v1 issue #85
-- **Audited Work Corrections** — actor/time/reason/original-value semantics from v1 issue #86
+- **Estimate Sections** — productive optional ordered grouping from #84 / PR #119
+- **Invoice Line Discounts** — productive explicit pre-discount/rate/amount snapshot from #85 / PR #121
+- **Audited Work Corrections** — productive actor/time/reason/original-value semantics from #86 / PR #122
 
-Where a reusable product partial already exists, the Styleguide should render
-that same source. The Work Correction example therefore uses
-`partials/work-correction-audit.html` directly for both Preview and Markup.
+These three examples now document patterns already shipped in productive Kalkurama. Product-facing pages mirror production directly; Styleguide examples remain reusable documentation/laboratory samples and never override productive Twig behavior. The Work Correction example uses `partials/work-correction-audit.html` directly for both Preview and Markup.
 
 ## Add a component example
 

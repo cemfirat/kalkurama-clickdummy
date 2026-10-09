@@ -30,17 +30,17 @@
 
               <div class="uk-overflow-auto">
                 <table class="uk-table uk-table-divider uk-table-middle uk-margin-remove">
-                  <thead><tr><th>Beschreibung</th><th>Projekt</th><th class="uk-text-right">Menge</th><th>Einheit</th><th class="uk-text-right">Einzelpreis</th><th class="uk-text-right">Steuer</th><th class="uk-text-right">Gesamt</th></tr></thead>
+                  <thead><tr><th>Beschreibung</th><th>Projekt</th><th class="uk-text-right">Menge</th><th>Einheit</th><th class="uk-text-right">Einzelpreis</th><th class="uk-text-right">Rabatt</th><th class="uk-text-right">Steuer</th><th class="uk-text-right">Gesamt</th></tr></thead>
                   <tbody>
-                    <tr><td>Frontend-Umsetzung</td><td>Website Relaunch</td><td class="uk-text-right">10</td><td>h</td><td class="uk-text-right">145,00 EUR</td><td class="uk-text-right">20,00 %<br><span class="uk-text-meta">290,00 EUR</span></td><td class="uk-text-right"><strong>1.740,00 EUR</strong></td></tr>
-                    <tr><td>Responsive Prototyp</td><td>Website Relaunch</td><td class="uk-text-right">1</td><td>item</td><td class="uk-text-right">420,00 EUR</td><td class="uk-text-right">20,00 %<br><span class="uk-text-meta">84,00 EUR</span></td><td class="uk-text-right"><strong>504,00 EUR</strong></td></tr>
+                    <tr data-invoice-line><td>Frontend-Umsetzung</td><td>Website Relaunch</td><td class="uk-text-right">10</td><td>h</td><td class="uk-text-right">145,00 EUR</td><td class="uk-text-right">5,00 %<br><span class="uk-text-meta">−72,50 EUR</span></td><td class="uk-text-right">20,00 %<br><span class="uk-text-meta">275,50 EUR</span></td><td class="uk-text-right"><strong>1.653,00 EUR</strong></td></tr>
+                    <tr data-invoice-line><td>Responsive Prototyp</td><td>Website Relaunch</td><td class="uk-text-right">1</td><td>item</td><td class="uk-text-right">420,00 EUR</td><td class="uk-text-right">0,00 %</td><td class="uk-text-right">20,00 %<br><span class="uk-text-meta">84,00 EUR</span></td><td class="uk-text-right"><strong>504,00 EUR</strong></td></tr>
                   </tbody>
                   <tfoot>
-                    <tr><th colspan="6" class="uk-text-right">Netto</th><th class="uk-text-right">1.870,00 EUR</th></tr>
-                    <tr><th colspan="6" class="uk-text-right">Steuer</th><th class="uk-text-right">374,00 EUR</th></tr>
-                    <tr><th colspan="6" class="uk-text-right">Gesamt</th><th class="uk-text-right"><strong>2.244,00 EUR</strong></th></tr>
-                    <tr><th colspan="6" class="uk-text-right">Bezahlt</th><th class="uk-text-right" data-invoice-paid>1.000,00 EUR</th></tr>
-                    <tr><th colspan="6" class="uk-text-right">Offen</th><th class="uk-text-right" data-invoice-outstanding><strong>1.244,00 EUR</strong></th></tr>
+                    <tr><th colspan="7" class="uk-text-right">Netto</th><th class="uk-text-right">1.797,50 EUR</th></tr>
+                    <tr><th colspan="7" class="uk-text-right">Steuer</th><th class="uk-text-right">359,50 EUR</th></tr>
+                    <tr><th colspan="7" class="uk-text-right">Gesamt</th><th class="uk-text-right"><strong>2.157,00 EUR</strong></th></tr>
+                    <tr><th colspan="7" class="uk-text-right">Bezahlt</th><th class="uk-text-right" data-invoice-paid>1.000,00 EUR</th></tr>
+                    <tr><th colspan="7" class="uk-text-right">Offen</th><th class="uk-text-right" data-invoice-outstanding><strong>1.157,00 EUR</strong></th></tr>
                   </tfoot>
                 </table>
               </div>
@@ -90,7 +90,7 @@
               <hr>
               <h3 class="uk-h4">Zahlung erfassen</h3>
               <form class="uk-form-stacked">
-                <div class="uk-margin-small"><label class="uk-form-label" for="invoice-payment-amount">Betrag</label><input class="uk-input" id="invoice-payment-amount" value="1244.00"></div>
+                <div class="uk-margin-small"><label class="uk-form-label" for="invoice-payment-amount">Betrag</label><input class="uk-input" id="invoice-payment-amount" value="1157.00"></div>
                 <div class="uk-margin-small"><label class="uk-form-label" for="invoice-payment-received">Erhalten um (UTC)</label><input class="uk-input" id="invoice-payment-received" type="datetime-local" value="2026-10-08T19:30"></div>
                 <div class="uk-margin-small"><label class="uk-form-label" for="invoice-payment-method">Methode</label><select class="uk-select" id="invoice-payment-method"><option>Banküberweisung</option><option>Karte</option><option>Bar</option></select></div>
                 <button class="uk-button uk-button-primary uk-width-1-1" type="button">Zahlung erfassen</button>
