@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import less from "less";
@@ -273,7 +274,7 @@ function readHeadFile(relativePath) {
 }
 
 function parseGitStatus() {
-  const output = gitRawOptional(["status", "--porcelain=v1", "--untracked-files=all"]);
+  const output = gitRaw(["status", "--porcelain=v1", "--untracked-files=all"]);
   if (!output.trim()) return [];
 
   return output
@@ -287,17 +288,20 @@ function parseGitStatus() {
 }
 
 function assertGitHubOrigin() {
-  const origin = gitOptional(["remote", "get-url", "origin"]);
+  const origin = git(["remote", "get-url", "--all", "origin"]);
+  const pushOrigin = git(["remote", "get-url", "--push", "--all", "origin"]);
   const allowed = new Set([
     "https://github.com/cemfirat/kalkurama-clickdummy.git",
     "https://github.com/cemfirat/kalkurama-clickdummy",
     "git@github.com:cemfirat/kalkurama-clickdummy.git"
   ]);
 
-  if (!allowed.has(origin)) {
+  if (!allowed.has(origin) || !allowed.has(pushOrigin)) {
     throw new Error("Git Sync requires origin to be cemfirat/kalkurama-clickdummy.");
   }
 
+  const mirror = gitOptional(["config", "--get", "remote.origin.mirror"]);
+  if (mirror && mirror !== "false") throw new Error("Git Sync does not allow a mirror remote.");
   return origin;
 }
 
@@ -338,6 +342,10 @@ function fetchAndAssertCurrentMain(branch) {
     timeout: 60000,
     env: { ...process.env, GIT_TERMINAL_PROMPT: "0" }
   });
+
+  if (remoteBranchSha("main") !== git(["rev-parse", "origin/main"])) {
+    throw new Error("Fetched origin/main does not match the current remote main.");
+  }
 
   if (branch === "main") {
     const localMain = git(["rev-parse", "main"]);
@@ -417,17 +425,64 @@ function assertGitIdentity() {
   return { name, email };
 }
 
-function gitRemoteOptional(args) {
-  try {
-    return execFileSync("git", args, {
-      cwd: rootDirectory,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"],
-      timeout: 60000,
-      env: { ...process.env, GIT_TERMINAL_PROMPT: "0" }
-    }).trim();
-  } catch {
-    return "";
+// Remote lookup errors are NOT equivalent to an absent branch.
+function gitRemote(args) {
+  return execFileSync("git", args, {
+    cwd: rootDirectory,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+    timeout: 60000,
+    env: { ...process.env, GIT_TERMINAL_PROMPT: "0" }
+  }).trim();
+}
+
+function remoteBranchSha(branch) {
+  const ref = "refs/heads/" + branch;
+  const output = gitRemote(["ls-remote", "--heads", "origin", ref]);
+  if (output === "") return null;
+  const parts = output.split("\t");
+  if (parts.length !== 2 || parts[1] !== ref || !/^[0-9a-f]{40}$/.test(parts[0])) {
+    throw new Error("Git Sync received an ambiguous remote branch response.");
+  }
+  return parts[0];
+}
+
+// This deliberately pins the reviewed two-workflow policy, not a partial YAML
+// parser. New/changed workflows need a new review before action-free saving.
+function assertStudioWorkflowPolicy() {
+  const expected = [
+    "100644 blob 9b4ab79c1488d7a3cc891d93fad0da4d11b266d4\t.github/workflows/branch-verify.yml",
+    "100644 blob 92032f973e4d7d280761943814ccb2a945cf0350\t.github/workflows/pages-preview.yml"
+  ].join("\n");
+  for (const ref of ["HEAD", "origin/main"]) {
+    if (git(["ls-tree", "-r", ref, "--", ".github/workflows"]) !== expected) {
+      throw new Error("Workflow rules changed. Review them before using action-free Studio saving.");
+    }
+  }
+}
+
+function assertStudioCommittedPaths() {
+  const allowed = new Set(listStudioGitFiles());
+  const changed = gitRaw(["diff", "--name-only", "-z", "origin/main", "HEAD"]).split("\0").filter(Boolean);
+  if (changed.some(path => !allowed.has(path))) {
+    throw new Error("Studio branch contains committed non-Studio changes.");
+  }
+}
+
+function studioCandidateSnapshot() {
+  const state = assertStudioGitState();
+  return JSON.stringify({
+    ...state,
+    head: git(["rev-parse", "HEAD"]),
+    main: git(["rev-parse", "origin/main"]),
+    contents: state.changes.map(({ path }) => [path,
+      createHash("sha256").update(readFileSync(resolve(rootDirectory, path))).digest("hex")])
+  });
+}
+
+function assertUnchangedCandidate(snapshot) {
+  if (studioCandidateSnapshot() !== snapshot) {
+    throw new Error("Studio files or HEAD changed during verification. Check the current state again.");
   }
 }
 
@@ -445,7 +500,7 @@ function ensureStudioBranch(currentBranch) {
 }
 
 function pushGitRef(args) {
-  return execFileSync("git", ["push", ...args], {
+  return execFileSync("git", ["push", "--no-follow-tags", ...args], {
     cwd: rootDirectory,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -488,6 +543,7 @@ function studioGitStatus() {
   return {
     branch,
     head: gitOptional(["rev-parse", "--short", "HEAD"]),
+    commitSha: gitOptional(["rev-parse", "HEAD"]),
     origin,
     mainSynchronized,
     syncError,
@@ -495,66 +551,108 @@ function studioGitStatus() {
   };
 }
 
+// The legacy /git/publish endpoint now ONLY prepares and saves. It never
+// creates a verify ref, even if an older browser sends extra request fields.
 function publishStudioChanges(commitMessage) {
   const message = sanitizeCommitMessage(commitMessage);
   const state = assertStudioGitState();
-
-  fetchAndAssertCurrentMain(state.branch);
-
-  const hasWorkingChanges = state.changes.length > 0;
   assertGitIdentity();
+  fetchAndAssertCurrentMain(state.branch);
+  assertStudioWorkflowPolicy();
+  assertStudioCommittedPaths();
+  if (!state.changes.length && (state.branch === "main" || git(["rev-parse", "HEAD"]) === git(["rev-parse", "origin/main"]))) {
+    throw new Error("There are no Kalkurama Studio changes to prepare.");
+  }
+
+  const before = studioCandidateSnapshot();
   const verification = runLocalVerification();
+  // Refresh main after the potentially long build, before a commit is made.
+  fetchAndAssertCurrentMain(state.branch);
+  assertStudioWorkflowPolicy();
+  assertUnchangedCandidate(before);
   let branch = state.branch;
 
-  if (hasWorkingChanges) {
+  if (state.changes.length > 0) {
     branch = ensureStudioBranch(branch);
     const paths = state.changes.map((change) => change.path);
-
     gitRaw(["add", "--", ...paths]);
-
-    const staged = git(["diff", "--cached", "--name-only"])
-      .split("\n")
-      .filter(Boolean);
-
-    const allowed = new Set(listStudioGitFiles());
-    if (staged.length === 0 || staged.some((path) => !allowed.has(path))) {
-      gitRawOptional(["reset", "--", ...paths]);
-      throw new Error("Git Sync staging did not produce an allowed Kalkurama Studio candidate.");
-    }
-
     try {
+      const staged = gitRaw(["diff", "--cached", "--name-only", "-z"]).split("\0").filter(Boolean);
+      const allowed = new Set(listStudioGitFiles());
+      if (staged.length !== paths.length || staged.some(path => !allowed.has(path) || !paths.includes(path))) {
+        throw new Error("Git Sync staging did not produce an allowed Kalkurama Studio candidate.");
+      }
+      // No editor/hook changes may quietly become part of an untested commit.
+      const expectedContents = JSON.parse(before).contents;
+      for (const [path, expected] of expectedContents) {
+        const stagedBytes = execFileSync("git", ["show", ":" + path], { cwd: rootDirectory, maxBuffer: 16 * 1024 * 1024 });
+        if (createHash("sha256").update(stagedBytes).digest("hex") !== expected) {
+          throw new Error("Studio content changed before staging completed.");
+        }
+      }
+      const stagedTree = git(["write-tree"]);
       gitRaw(["commit", "-m", message]);
+      if (git(["show", "-s", "--format=%T", "HEAD"]) !== stagedTree) {
+        throw new Error("A commit hook changed the verified tree; nothing was pushed.");
+      }
     } catch (error) {
       gitRawOptional(["reset", "--", ...paths]);
       throw error;
     }
-  } else if (!branch.startsWith("studio/") || git(["rev-parse", "HEAD"]) === git(["rev-parse", "origin/main"])) {
-    throw new Error("There are no Kalkurama Studio changes to publish.");
   }
 
+  const clean = assertStudioGitState();
+  if (clean.branch !== branch || clean.changes.length) {
+    throw new Error("Studio changed after verification; nothing was pushed.");
+  }
   const commitSha = git(["rev-parse", "HEAD"]);
+  assertGitHubOrigin();
+  assertStudioWorkflowPolicy();
+  pushGitRef(["-u", "origin", commitSha + ":refs/heads/" + branch]);
+  if (remoteBranchSha(branch) !== commitSha) {
+    throw new Error("Studio push could not be verified. The local commit is retained; check remote status.");
+  }
+  return { ok: true, branch, commitSha, verification, remoteCi: "pending", verifyCreated: false };
+}
+
+function startStudioVerification(commitSha, confirmed) {
+  if (confirmed !== true || !/^[0-9a-f]{40}$/.test(commitSha ?? "")) {
+    throw new Error("Confirm remote verification for an exact saved commit SHA.");
+  }
+  const state = assertStudioGitState();
+  if (!state.branch.startsWith("studio/") || state.changes.length || git(["rev-parse", "HEAD"]) !== commitSha) {
+    throw new Error("Remote verification needs the unchanged, clean, saved studio/* commit.");
+  }
+  assertGitIdentity();
+  fetchAndAssertCurrentMain(state.branch);
+  assertStudioWorkflowPolicy();
+  assertStudioCommittedPaths();
+  if (git(["rev-parse", "origin/main"]) === commitSha || remoteBranchSha(state.branch) !== commitSha) {
+    throw new Error("Save this exact Studio commit on GitHub before requesting remote verification.");
+  }
+  const before = studioCandidateSnapshot();
+  const verification = runLocalVerification();
+  fetchAndAssertCurrentMain(state.branch);
+  assertStudioWorkflowPolicy();
+  assertUnchangedCandidate(before);
+  if (remoteBranchSha(state.branch) !== commitSha) throw new Error("Saved remote Studio branch changed during verification.");
+
   const shortSha = commitSha.slice(0, 12);
   const verifyBranch = "verify/studio-ui-" + shortSha;
-
-  pushGitRef(["-u", "origin", branch]);
-
-  const remoteVerify = gitRemoteOptional(["ls-remote", "--heads", "origin", "refs/heads/" + verifyBranch]);
+  const existing = remoteBranchSha(verifyBranch);
+  if (existing && existing !== commitSha) throw new Error("Verify branch already exists with a different commit: " + verifyBranch);
   let verifyCreated = false;
-
-  if (remoteVerify === "") {
-    pushGitRef(["origin", commitSha + ":refs/heads/" + verifyBranch]);
+  if (!existing) {
+    const ref = "refs/heads/" + verifyBranch;
+    // Empty expected value is CREATE-ONLY: a concurrent existing ref, even an
+    // ancestor, cannot be overwritten. No feature history is ever force-moved.
+    pushGitRef(["--force-with-lease=" + ref + ":", "origin", commitSha + ":" + ref]);
     verifyCreated = true;
-  } else if (!remoteVerify.startsWith(commitSha)) {
-    throw new Error("Verify branch already exists with a different commit: " + verifyBranch);
   }
-
+  if (remoteBranchSha(verifyBranch) !== commitSha) throw new Error("Remote verification ref could not be confirmed.");
   return {
-    ok: true,
-    branch,
-    commitSha,
-    verifyBranch,
-    verifyCreated,
-    verification
+    ok: true, branch: state.branch, commitSha, verifyBranch, verifyCreated, verification,
+    remoteCi: verifyCreated ? "requested" : "already-requested"
   };
 }
 
@@ -709,6 +807,13 @@ function themeStudioPlugin(mode) {
           if (req.method === "POST" && requestUrl.pathname === "/__studio/git/publish") {
             const body = await readJsonBody(req);
             const result = publishStudioChanges(body.message);
+            sendJson(res, 200, result);
+            return;
+          }
+
+          if (req.method === "POST" && requestUrl.pathname === "/__studio/git/remote-verify") {
+            const body = await readJsonBody(req);
+            const result = startStudioVerification(body.commitSha, body.confirmRemoteVerification);
             sendJson(res, 200, result);
             return;
           }

@@ -22,11 +22,15 @@ const gitNotice = document.querySelector("[data-studio-git-notice]");
 const commitMessageInput = document.querySelector("[data-studio-commit-message]");
 const gitVerifyButton = document.querySelector("[data-studio-git-verify]");
 const gitPublishButton = document.querySelector("[data-studio-git-publish]");
+const gitRemoteVerifyButton = document.querySelector("[data-studio-git-remote-verify]");
 const gitResult = document.querySelector("[data-studio-git-result]");
 
 let studioAvailable = false;
 let currentFile = null;
 let loadedContent = "";
+let gitBusy = false;
+let fileSaving = false;
+let candidate = null;
 
 function setError(message = "") {
   if (!errorBox) return;
@@ -40,6 +44,7 @@ function setState(message) {
 
 function setWorkspaceAvailable(available) {
   studioAvailable = available;
+  updateRemoteControl();
   unavailable?.classList.toggle("uk-hidden", available);
   workspace?.classList.toggle("uk-hidden", !available);
 
@@ -52,6 +57,10 @@ function setWorkspaceAvailable(available) {
 
 function renderGitStatus(git) {
   if (!git) return;
+  candidate = git.branch?.startsWith("studio/") && git.mainSynchronized && !git.syncError
+    && git.changes?.length === 0 && /^[0-9a-f]{40}$/.test(git.commitSha ?? "")
+    ? { branch: git.branch, commitSha: git.commitSha } : null;
+  updateRemoteControl();
 
   if (mainSyncLabel) {
     mainSyncLabel.textContent = git.mainSynchronized ? "main aktuell" : "main prüfen";
@@ -62,8 +71,8 @@ function renderGitStatus(git) {
     gitNotice.textContent = git.syncError;
   } else if (gitNotice) {
     gitNotice.textContent = "Es werden ausschließlich freigegebene Studio-Dateien synchronisiert. " +
-      "Das Studio erstellt keinen Pull Request. Nach dem Push wird ein identischer verify/**-Branch " +
-      "erzeugt und damit genau ein Branch-CI-Run gestartet.";
+      "Das Studio erstellt keinen Pull Request. Vorbereiten und sichern startet keine GitHub Actions. " +
+      "Die GitHub-Prüfung wird nur separat und nach ausdrücklicher Bestätigung angefordert.";
   }
 }
 
@@ -82,9 +91,20 @@ function confirmDiscardUnsavedChanges(message) {
   return window.confirm(message);
 }
 
+function updateRemoteControl() {
+  if (gitRemoteVerifyButton) {
+    gitRemoteVerifyButton.disabled = gitBusy || fileSaving || !studioAvailable || !candidate || hasUnsavedEditorChanges();
+  }
+}
+
 function setGitBusy(busy) {
-  if (gitVerifyButton) gitVerifyButton.disabled = busy;
-  if (gitPublishButton) gitPublishButton.disabled = busy;
+  gitBusy = busy;
+  if (gitVerifyButton) gitVerifyButton.disabled = busy || fileSaving;
+  if (gitPublishButton) gitPublishButton.disabled = busy || fileSaving;
+  for (const control of [saveButton, reloadButton, resetButton, fileSelect, editor, commitMessageInput]) {
+    if (control) control.disabled = busy || fileSaving;
+  }
+  updateRemoteControl();
 }
 
 function renderFile(file) {
@@ -97,6 +117,7 @@ function renderFile(file) {
   gitStatusLabel.className = "uk-label" + (file.modified ? " uk-label-warning" : " uk-label-success");
   setState(file.modified ? "Geändert" : "HEAD");
   setError("");
+  updateRemoteControl();
 }
 
 async function api(path, options = {}) {
@@ -161,9 +182,11 @@ async function loadStatus() {
 }
 
 async function saveCurrentFile() {
-  if (!studioAvailable || !currentFile) return;
+  if (!studioAvailable || !currentFile || gitBusy || fileSaving) return;
 
-  saveButton.disabled = true;
+  fileSaving = true;
+  candidate = null;
+  setGitBusy(false);
   setState(currentFile.type === "markup" ? "Prüfe Markup …" : "Kompiliere Theme …");
   setError("");
 
@@ -189,11 +212,13 @@ async function saveCurrentFile() {
       : "Fehler");
     setError(error.message);
   } finally {
-    saveButton.disabled = false;
+    fileSaving = false;
+    setGitBusy(false);
   }
 }
 
 async function verifyGitCandidate() {
+  if (gitBusy || fileSaving) return;
   try {
     assertSavedEditor();
     setGitBusy(true);
@@ -231,6 +256,8 @@ async function verifyGitCandidate() {
 }
 
 async function publishGitCandidate() {
+  if (gitBusy || fileSaving) return;
+  candidate = null;
   try {
     assertSavedEditor();
     setGitBusy(true);
@@ -245,18 +272,19 @@ async function publishGitCandidate() {
     });
 
     gitResult.textContent = [
-      "Lokal verifiziert, committed und gepusht.",
+      "Lokal geprüft und auf GitHub gesichert.",
+      "Remote-CI ausstehend. Mit dieser Aktion wurde keine GitHub-Prüfung gestartet.",
       "",
-      "Feature branch: " + payload.branch,
+      "Entwicklungsbranch: " + payload.branch,
       "Commit: " + payload.commitSha,
-      "Verify branch: " + payload.verifyBranch,
       "",
-      "GitHub Branch-CI wurde durch den verify/**-Push gestartet.",
+      payload.verification?.output || "",
+      "",
       "Kein Pull Request wurde erstellt."
     ].join("\n");
 
     UIkit.notification({
-      message: "Studio-Änderung gepusht · Branch-CI gestartet.",
+      message: "Auf GitHub gesichert. Remote-CI ausstehend.",
       status: "success",
       pos: "bottom-right",
       timeout: 3000
@@ -268,6 +296,39 @@ async function publishGitCandidate() {
       await loadFile(selectedPath);
     }
   } catch (error) {
+    setError(error.message);
+    gitResult.textContent = error.message;
+  } finally {
+    setGitBusy(false);
+  }
+}
+
+async function startRemoteGitVerification() {
+  if (gitBusy || fileSaving) return;
+  try {
+    assertSavedEditor();
+    if (!candidate) throw new Error("Zuerst einen unveränderten Studio-Stand vorbereiten und sichern.");
+    const requested = { ...candidate };
+    if (!window.confirm("GitHub Actions für diesen Commit anfordern?\n" + requested.commitSha +
+      "\nNur starten, wenn dein Actions-Kontingent verfügbar ist.")) return;
+    setGitBusy(true);
+    setError("");
+    gitResult.textContent = "Prüfe den gesicherten Stand vor der GitHub-Anforderung ...";
+    const payload = await api("/git/remote-verify", {
+      method: "POST",
+      body: JSON.stringify({ commitSha: requested.commitSha, confirmRemoteVerification: true })
+    });
+    const status = payload.verifyCreated
+      ? "GitHub-Prüfung angefordert. Das Ergebnis ist noch nicht geprüft."
+      : "Für diesen Commit existiert bereits ein Prüfbranch. Kein weiterer Lauf angefordert.";
+    gitResult.textContent = [
+      status, "", "Entwicklungsbranch: " + payload.branch, "Commit: " + payload.commitSha,
+      "Prüfbranch: " + payload.verifyBranch, "", payload.verification?.output || "",
+      "", "Ein Prüfbranch ist keine grüne CI. Kein Pull Request wurde erstellt."
+    ].join("\n");
+    UIkit.notification({ message: status, status: "primary", pos: "bottom-right", timeout: 4000 });
+  } catch (error) {
+    candidate = null;
     setError(error.message);
     gitResult.textContent = error.message;
   } finally {
@@ -293,14 +354,17 @@ resetButton?.addEventListener("click", () => {
   if (!currentFile) return;
   if (!confirmDiscardUnsavedChanges("Ungespeicherte Studio-Änderungen verwerfen und HEAD übernehmen?")) return;
   editor.value = currentFile.headContent;
+  updateRemoteControl();
   setState("HEAD im Editor · noch nicht gespeichert");
 });
 
 gitVerifyButton?.addEventListener("click", verifyGitCandidate);
 gitPublishButton?.addEventListener("click", publishGitCandidate);
+gitRemoteVerifyButton?.addEventListener("click", startRemoteGitVerification);
 
 editor?.addEventListener("input", () => {
   if (!currentFile) return;
+  updateRemoteControl();
   setState(editor.value === loadedContent ? (currentFile.modified ? "Geändert" : "HEAD") : "Ungespeichert");
 });
 

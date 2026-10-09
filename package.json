@@ -11,10 +11,11 @@
     "build": "vite build --mode kalkurama",
     "build:standard": "vite build --mode standard",
     "build:pages": "vite build --mode pages",
-    "verify": "npm run check && npm run build:standard && npm run build && npm run build:pages",
+    "verify": "npm run test:studio && npm run check && npm run build:standard && npm run build && npm run build:pages",
     "transfer:status": "node scripts/transfer-status.mjs",
     "preview": "vite preview",
-    "studio": "vite --mode kalkurama --host 127.0.0.1"
+    "studio": "vite --mode kalkurama --host 127.0.0.1",
+    "test:studio": "node --test scripts/studio-git.test.mjs scripts/studio-ui.test.mjs"
   },
   "dependencies": {
     "uikit": "3.25.25"
