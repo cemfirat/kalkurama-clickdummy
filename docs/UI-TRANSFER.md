@@ -16,6 +16,15 @@ Product truth flows from:
 
 For the recorded baseline, product-facing shell/layout/classes are mirrored one-to-one in intent and structure. Twig data/route expressions are replaced by mock values and static links only.
 
+## Transfer checkpoint semantics
+
+The transfer checkpoint has two distinct directions:
+
+- **Product → clickdummy baseline re-anchor:** after the clickdummy is deliberately resynchronized to an exact productive Kalkurama SHA and merged, `uiBaselineClickdummyCommit` advances to that audited clickdummy commit. This prevents already-productive mirror work from appearing as a pending clickdummy → product transfer.
+- **Clickdummy → product promotion:** `lastPromotion` is reserved only for a clickdummy-originated UI decision that has subsequently been implemented and verified in productive Kalkurama. A product-driven mirror sync does not set `lastPromotion`.
+
+Every re-anchor or promotion is append-only in `docs/UI-TRANSFER-LOG.md` with exact clickdummy and Kalkurama SHAs.
+
 ## Clickdummy → Kalkurama
 
 Potentially transferable:
@@ -40,7 +49,7 @@ Never promote automatically:
 1. freeze exact clickdummy SHA
 2. refresh current `kalkurama/main`
 3. inspect relevant docs/issues
-4. calculate delta from clickdummy transfer checkpoint
+4. calculate delta from the latest audited clickdummy transfer checkpoint
 5. classify accepted UI decisions
 6. create focused Kalkurama branch
 7. port into real Twig/UIkit while preserving domain/auth/data behavior

@@ -61,6 +61,7 @@ const themesGuide = await readFile(new URL("../docs/THEMES.md", import.meta.url)
 const styleguideGuide = await readFile(new URL("../docs/STYLEGUIDE.md", import.meta.url), "utf8");
 const themeStudioGuide = await readFile(new URL("../docs/STUDIO.md", import.meta.url), "utf8");
 const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.meta.url), "utf8");
+const transferLog = await readFile(new URL("../docs/UI-TRANSFER-LOG.md", import.meta.url), "utf8");
 const branchWorkflow = await readFile(new URL("../.github/workflows/branch-verify.yml", import.meta.url), "utf8");
 const pagesWorkflow = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
 const styleguideExampleFiles = await readdir(new URL("../partials/styleguide/", import.meta.url));
@@ -84,6 +85,9 @@ const sharedPartials = [
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
 assert(kalkuramaSource.commit === "27c717fbdbc23866297ff32cd57ef181290340f3", "Unexpected Kalkurama source baseline.");
 assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy baseline must be a full SHA.");
+assert(transferState.uiBaselineClickdummyCommit === "e0ca4ad7075a85671dc8919d3805cd044f537de2", "Transfer baseline must match the latest audited product mirror.");
+assert(transferState.lastPromotion === null, "Product-driven mirror re-anchor must not be recorded as a clickdummy promotion.");
+assert(transferLog.includes("e0ca4ad7075a85671dc8919d3805cd044f537de2") && transferLog.includes("27c717fbdbc23866297ff32cd57ef181290340f3"), "Transfer log must pair the active clickdummy baseline with its exact productive source.");
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must match productive UIkit 3.25.25.");
 assert(packageJson.scripts?.dev === "vite --mode kalkurama", "Kalkurama must be the default dev theme.");
 assert(packageJson.scripts?.build === "vite build --mode kalkurama", "Kalkurama must be the default build theme.");
@@ -432,6 +436,9 @@ assert(styleguideGuide.includes("partials/work-correction-audit.html"), "Stylegu
 assert(styleguideGuide.includes("UIkit-first rule"), "Styleguide guide must preserve the UIkit-first rule.");
 assert(themeStudioGuide.includes("No PR before green branch CI"), "Kalkurama Studio guide must preserve CI rule.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve CI rule.");
+assert(transferGuide.includes("Product → clickdummy baseline re-anchor"), "Transfer guide must distinguish product-driven re-anchoring.");
+assert(transferGuide.includes("Clickdummy → product promotion"), "Transfer guide must distinguish genuine UI promotion.");
+assert(transferLog.includes("Active audited baseline; product → clickdummy re-anchor, not a promotion"), "Transfer log must label the active baseline direction correctly.");
 
 assert(transferStatus.includes('"partials/studio.html"'), "Kalkurama Studio must remain prototype-only for transfer.");
 assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples must remain prototype-only for transfer.");
