@@ -18,6 +18,9 @@ const htmlEntries = {
   creditNotes: "credit-notes.html",
   services: "services.html",
   work: "work.html",
+  workCorrectionFixed: "work-correction-fixed.html",
+  workCorrectionQuantity: "work-correction-quantity.html",
+  workCorrectionExpense: "work-correction-expense.html",
   time: "time.html",
   settings: "settings.html",
   styleguide: "styleguide.html"
