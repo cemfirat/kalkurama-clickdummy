@@ -39,6 +39,9 @@ const kalkuramaImports = await readFile(new URL("../src/themes/kalkurama/_import
 const offcanvasTheme = await readFile(new URL("../src/themes/kalkurama/offcanvas.less", import.meta.url), "utf8");
 const logoSvg = await readFile(new URL("../src/themes/kalkurama/images/logo.svg", import.meta.url), "utf8");
 const faviconSvg = await readFile(new URL("../src/themes/kalkurama/images/favicon.svg", import.meta.url), "utf8");
+const plusIconSvg = await readFile(new URL("../src/themes/kalkurama/images/icons/plus.svg", import.meta.url), "utf8");
+const cogIconSvg = await readFile(new URL("../src/themes/kalkurama/images/icons/cog.svg", import.meta.url), "utf8");
+const menuIconSvg = await readFile(new URL("../src/themes/kalkurama/images/icons/menu.svg", import.meta.url), "utf8");
 const systemMirror = await readFile(new URL("../src/styles/system.less", import.meta.url), "utf8");
 const brandTheme = await readFile(new URL("../src/themes/kalkurama/brand.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
@@ -71,7 +74,7 @@ const sharedPartials = [
 ].join("\n");
 
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
-assert(kalkuramaSource.commit === "ed273d6c38464a000751cd8ed0ca54e8266dfc27", "Unexpected Kalkurama source baseline.");
+assert(kalkuramaSource.commit === "3c0c2eb77ef8164770586f5b34c78db6f4127762", "Unexpected Kalkurama source baseline.");
 assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy baseline must be a full SHA.");
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must match productive UIkit 3.25.25.");
 assert(packageJson.scripts?.dev === "vite --mode kalkurama", "Kalkurama must be the default dev theme.");
@@ -98,6 +101,10 @@ assert(!sharedPartials.includes("kalkurama-source-projects"), "Product mirror si
 assert(sharedPartials.includes("kalkurama-source-customer-link"), "Product mirror sidebar must use the productive customer-link structure.");
 assert(sharedPartials.includes("kalkurama-sidebar-inspector-name"), "Product mirror sidebar must use the productive inspector structure.");
 assert(sharedPartials.includes("kalkurama-sidebar-toolbar-btn"), "Product mirror sidebar must use the productive toolbar controls.");
+assert(sharedPartials.includes('data-shell-customer-lifecycle="active"'), "Product mirror sidebar inspector must expose Customer lifecycle.");
+assert(sharedPartials.includes("kalkurama-icon--plus") && sharedPartials.includes("kalkurama-icon--cog") && sharedPartials.includes("kalkurama-icon--menu"), "Product shell must use the owned plus/cog/menu icon set.");
+assert(sharedPartials.includes('class="uk-nav-header">Setup</li>'), "More menu must keep the productive Setup grouping.");
+assert(sharedPartials.includes("data-shell-setup-services") && sharedPartials.includes("data-shell-setup-settings"), "More menu must expose productive Setup destinations.");
 
 assert(html["index.html"].includes("kalkurama-customer-workspace"), "Daily landing must be customer/project-first.");
 assert(html["index.html"].includes("kalkurama-customer-projects"), "Daily landing must mirror the productive project surface.");
@@ -150,9 +157,10 @@ assert(html["work.html"].includes('data-work-list="quantity"'), "Work mirror mus
 assert(html["work.html"].includes('data-work-list="expense"'), "Work mirror must expose productive Expense list.");
 assert(html["work.html"].includes("data-billing-history"), "Work mirror must expose productive billing history.");
 assert(html["work.html"].includes("data-correction-history"), "Work mirror must expose productive time-correction history.");
-assert(!html["work.html"].includes("work-correction-fixed.html"), "Product mirror must not expose an unimplemented Fixed correction route.");
-assert(!html["work.html"].includes("work-correction-quantity.html"), "Product mirror must not expose an unimplemented Quantity correction route.");
-assert(!html["work.html"].includes("work-correction-expense.html"), "Product mirror must not expose an unimplemented Expense correction route.");
+for (const type of ["fixed", "quantity", "expense"]) {
+  assert(html["work.html"].includes("correct=" + type), "Product Work mirror must expose the productive " + type + " correction affordance.");
+}
+assert(html["work.html"].includes("data-work-correction-history"), "Product Work mirror must expose productive non-time correction audit history.");
 
 assert(workCorrectionAudit.includes("Bearbeiter"), "Styleguide correction prototype must expose the actor.");
 assert(workCorrectionAudit.includes("Serverzeit"), "Styleguide correction prototype must expose save-time semantics.");
@@ -167,7 +175,9 @@ assert(html["invoice.html"].includes("data-invoice-outstanding"), "Invoice detai
 assert(html["invoice.html"].includes("data-invoice-payments"), "Invoice detail must mirror productive payment history.");
 assert(html["invoice.html"].includes("data-invoice-email"), "Invoice detail must mirror productive email form.");
 assert(html["invoice.html"].includes("data-invoice-credit-note-form"), "Invoice detail must mirror productive credit-note action.");
-assert(!html["invoice.html"].includes("Rabatt %"), "Product invoice mirror must not expose unimplemented Invoice discounts.");
+assert(html["invoice.html"].includes("<th class=\"uk-text-right\">Rabatt</th>"), "Product Invoice mirror must expose the productive Discount column.");
+assert(html["invoice.html"].includes("data-invoice-line"), "Product Invoice mirror must expose productive line markers.");
+assert(html["invoice.html"].includes("−145,00 EUR"), "Product Invoice mirror must expose an explicit discount amount snapshot.");
 assert(html["credit-notes.html"].includes("uk-table uk-table-divider uk-table-middle"), "Credit Notes must mirror productive list structure.");
 
 assert(html["estimates.html"].includes('href="./estimate.html"'), "Estimate list must link to the productive detail mirror.");
@@ -175,7 +185,9 @@ assert(html["estimate.html"].includes("data-estimate-items"), "Estimate detail m
 assert(html["estimate.html"].includes("data-estimate-email"), "Estimate detail must mirror productive email form.");
 assert(html["estimate.html"].includes("data-estimate-planned-ready"), "Accepted Estimate mirror must expose productive planned-work state.");
 assert(html["estimate.html"].includes("data-estimate-actuals"), "Accepted Estimate mirror must expose productive estimate-vs-actual state.");
-assert(!html["estimate.html"].includes("data-estimate-section="), "Product estimate mirror must not expose unimplemented Estimate sections.");
+assert(html["estimate.html"].includes('data-estimate-section="concept"'), "Product Estimate mirror must expose productive ordered sections.");
+assert(html["estimate.html"].includes("data-estimate-section-item"), "Product Estimate mirror must expose section-item assignment.");
+assert(html["estimate.html"].includes("data-estimate-section-total"), "Product Estimate mirror must expose section totals.");
 
 for (const marker of [
   "uk-card uk-card-default",
@@ -211,8 +223,11 @@ assert(standardTheme.includes('@import "standard-reset.less";'), "UIkit Standard
 assert(kalkuramaImports.includes('@import "brand.less";'), "Kalkurama branding import missing.");
 assert(logoSvg.trimStart().startsWith("<?xml") && logoSvg.includes("<svg"), "Kalkurama logo must be valid SVG text.");
 assert(faviconSvg.trimStart().startsWith("<?xml") && faviconSvg.includes("<svg"), "Kalkurama favicon must be valid SVG text.");
+for (const [name, svg] of [["plus", plusIconSvg], ["cog", cogIconSvg], ["menu", menuIconSvg]]) {
+  assert(svg.includes("<svg") && svg.includes("</svg>"), "Owned " + name + " shell icon must be valid SVG text.");
+}
 assert(systemMirror.includes("Exact structural/visual CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
-assert(systemMirror.includes("Product baseline: ed273d6c38464a000751cd8ed0ca54e8266dfc27"), "System mirror must record the exact productive baseline.");
+assert(systemMirror.includes("Product baseline: 3c0c2eb77ef8164770586f5b34c78db6f4127762"), "System mirror must record the exact productive baseline.");
 assert(systemMirror.includes("--kalkurama-accent: #ff00ff;"), "System mirror must include the productive Kalkurama accent.");
 assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
 assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
@@ -242,6 +257,7 @@ assert(viteConfig.includes("function listMarkupStudioFiles()"), "Kalkurama Studi
 assert(viteConfig.includes("function listStudioAssetFiles()"), "Kalkurama Studio Git Sync must expose a controlled theme-asset allowlist.");
 assert(viteConfig.includes("function listStudioGitFiles()"), "Kalkurama Studio Git Sync must combine editable files and approved assets.");
 assert(viteConfig.includes("src/themes/kalkurama/images/"), "Kalkurama theme assets must remain scoped to the theme images directory.");
+assert(viteConfig.includes("files.push(...walk(resolve(directory, entry.name), relativePath))"), "Studio Git Sync must discover controlled nested theme assets.");
 assert(viteConfig.includes("Object.values(htmlEntries)"), "Markup allowlist must start from known HTML entry points.");
 assert(viteConfig.includes('relativePath === "partials/studio.html"'), "Studio UI partial must remain outside the editable markup allowlist.");
 assert(viteConfig.includes("function validateMarkupSources()"), "Markup saves must validate all HTML entry points.");
@@ -357,8 +373,10 @@ assert(styleguideGuide.includes("Preview") && styleguideGuide.includes("Markup")
 assert(styleguideGuide.includes("Single source for Preview + Markup"), "Styleguide guide must document synchronized example sources.");
 assert(styleguideGuide.includes("Product emphasis"), "Styleguide guide must explain Kalkurama-specific documentation priorities.");
 assert(styleguideGuide.includes("Kalkurama product patterns"), "Styleguide guide must document the v1 product-pattern split.");
+assert(styleguideGuide.includes("patterns are now productive"), "Styleguide guide must classify #84/#85/#86 as shipped product patterns.");
 assert(styleguideGuide.includes("partials/work-correction-audit.html"), "Styleguide guide must document reuse of the real Work correction audit partial.");
 assert(styleguideGuide.includes("UIkit-first rule"), "Styleguide guide must preserve the UIkit-first rule.");
+assert(themeStudioGuide.includes("images/icons/"), "Kalkurama Studio guide must document nested owned shell assets.");
 assert(themeStudioGuide.includes("No PR before green branch CI"), "Kalkurama Studio guide must preserve CI rule.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve CI rule.");
 
