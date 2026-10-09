@@ -225,13 +225,13 @@ Clickdummy consequence:
 
 Issue #86 is **Class A — implemented productive v1 baseline** and is present on current Kalkurama `main` (PR #122).
 
-Only `unbilled` Fixed, Quantity and Expense entries may be corrected directly. The productive flow requires a reason, preserves currency and commercial identity, and appends a `WorkEntryCorrectionEvent` with actor/time plus before/after values. Selected, invoiced, non-billable and written-off entries remain protected.
+Only `unbilled` Fixed, Quantity and Expense entries may be corrected directly. The productive flow requires a reason, preserves currency and commercial identity, and appends a `WorkEntryCorrectionEvent` with actor/time plus before/after values. `selected_for_draft_invoice`, invoiced, non-billable and written-off entries remain protected.
 
 Clickdummy consequence:
 
 - `work.html` exposes Correct actions for the three productive non-time work types;
 - recent non-time correction history is represented through `data-work-correction-history`;
-- original and corrected values, actor and reason remain visible;
+- original and corrected commercial values, actor and reason remain visible;
 - correction does not mutate issued documents or bypass billing-state rules;
 - Styleguide correction examples now document the shipped audit pattern.
 
