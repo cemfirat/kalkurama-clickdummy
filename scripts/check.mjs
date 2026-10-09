@@ -393,6 +393,9 @@ assert(transferStatus.includes('"partials/studio.html"'), "Kalkurama Studio must
 assert(transferStatus.includes('"partials/styleguide/"'), "Styleguide examples must remain prototype-only for transfer.");
 assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classified for transfer.");
 assert(transferStatus.includes('"src/themes/standard-reset.less"'), "Standard reference normalization must remain prototype-only for transfer.");
+for (const page of ["work-correction-fixed.html", "work-correction-quantity.html", "work-correction-expense.html"]) {
+  assert(transferStatus.includes('"' + page + '"'), "Productive correction page must be transferable: " + page);
+}
 assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
 assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
 
