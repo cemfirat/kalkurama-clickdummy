@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AN-2026-019 · Angebot · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+  <style>
+    .estimate-document { max-width: 960px; margin: 0 auto; }
+    .estimate-document-party { white-space: pre-line; }
+    @page { size: A4; margin: 15mm; }
+    @media print {
+      .kalkurama-header,
+      .estimate-document-toolbar { display: none !important; }
+      .kalkurama-main { padding: 0 !important; max-width: none !important; }
+      .estimate-document { max-width: none; box-shadow: none !important; padding: 0 !important; }
+      body { background: #fff !important; }
+    }
+  </style>
+</head>
+<body data-page="estimate-share">
+  <div class="kalkurama-shell">
+    <!-- @include partials/public-header.html -->
+    <div class="kalkurama-body">
+      <main class="kalkurama-main" id="main-content">
+        <div class="estimate-document-toolbar uk-flex uk-flex-right uk-flex-middle uk-grid-small uk-margin-bottom" uk-grid>
+          <div><a class="uk-button uk-button-default" href="./estimate-share.html" data-document-share-pdf>PDF herunterladen</a></div>
+          <div><button class="uk-button uk-button-primary" type="button" onclick="window.print()">Drucken</button></div>
+        </div>
+
+        <div class="uk-card uk-card-default uk-card-body uk-margin-bottom estimate-document" data-document-share-respond>
+          <h2 class="uk-card-title">Auf dieses Angebot antworten</h2>
+          <p class="uk-text-meta">Gib deinen Namen ein, um das Angebot anzunehmen oder abzulehnen. Damit wird eine kommerzielle Entscheidung protokolliert; dies ist keine kryptografische E-Signatur.</p>
+          <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-1-1 uk-width-1-2@m">
+              <form class="uk-form-stacked" data-document-share-accept>
+                <div class="uk-margin-small">
+                  <label class="uk-form-label" for="share-accept-name">Dein Name</label>
+                  <input class="uk-input" id="share-accept-name" name="signer_name" type="text" required maxlength="180">
+                </div>
+                <div class="uk-margin-small">
+                  <label class="uk-form-label" for="share-accept-note">Notiz (optional)</label>
+                  <textarea class="uk-textarea" id="share-accept-note" name="note" rows="2" maxlength="2000"></textarea>
+                </div>
+                <button class="uk-button uk-button-primary" type="button">Angebot annehmen</button>
+              </form>
+            </div>
+            <div class="uk-width-1-1 uk-width-1-2@m">
+              <form class="uk-form-stacked" data-document-share-reject>
+                <div class="uk-margin-small">
+                  <label class="uk-form-label" for="share-reject-name">Dein Name</label>
+                  <input class="uk-input" id="share-reject-name" name="signer_name" type="text" required maxlength="180">
+                </div>
+                <div class="uk-margin-small">
+                  <label class="uk-form-label" for="share-reject-note">Notiz (optional)</label>
+                  <textarea class="uk-textarea" id="share-reject-note" name="note" rows="2" maxlength="2000"></textarea>
+                </div>
+                <button class="uk-button uk-button-danger" type="button">Angebot ablehnen</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <article class="estimate-document uk-card uk-card-default uk-card-body" data-estimate-document>
+          <header class="uk-flex uk-flex-between uk-flex-top uk-flex-wrap">
+            <div>
+              <div class="uk-text-meta">Angebot · Revision 1</div>
+              <h1 class="uk-heading-medium uk-margin-remove-top">AN-2026-019</h1>
+              <span class="uk-label">Ausgestellt</span>
+            </div>
+            <dl class="uk-description-list uk-margin-remove-top">
+              <dt>Ausgestellt</dt><dd>2026-10-09</dd>
+              <dt>Gültig bis</dt><dd>2026-11-08</dd>
+              <dt>Währung</dt><dd>EUR</dd>
+              <dt>Revision</dt><dd>1</dd>
+            </dl>
+          </header>
+
+          <hr class="uk-divider-icon">
+
+          <div class="uk-grid-large uk-child-width-1-2@m" uk-grid>
+            <section>
+              <div class="uk-text-meta">Von</div>
+              <h2 class="uk-h4 uk-margin-small-top">Kalkurama Demo</h2>
+              <p class="estimate-document-party">Beispielstraße 1
+2540 Bad Vöslau
+AT</p>
+              <p class="uk-text-small">UID: ATU00000000</p>
+            </section>
+            <section>
+              <div class="uk-text-meta">Für</div>
+              <h2 class="uk-h4 uk-margin-small-top">Atelier Morgen</h2>
+              <p class="estimate-document-party">Hauptplatz 12
+2700 Wiener Neustadt
+AT</p>
+              <p class="uk-text-small">office@atelier-morgen.example</p>
+              <p class="uk-text-small"><strong>Projekt:</strong> Website Relaunch</p>
+            </section>
+          </div>
+
+          <section class="uk-section uk-section-xsmall uk-margin-top">
+            <h2 class="uk-h3">Website Relaunch</h2>
+            <p>Konzeption, Design und Umsetzung des neuen Webauftritts.</p>
+          </section>
+
+          <div class="uk-overflow-auto uk-margin-large-top">
+            <table class="uk-table uk-table-divider uk-table-small">
+              <thead><tr><th>Beschreibung</th><th class="uk-text-right">Menge</th><th>Einheit</th><th class="uk-text-right">Einzelpreis</th><th class="uk-text-right">Rabatt</th><th class="uk-text-right">Netto</th><th class="uk-text-right">Steuer</th><th class="uk-text-right">Gesamt</th></tr></thead>
+              <tbody>
+                <tr class="uk-background-muted" data-estimate-section="concept"><th colspan="8"><strong>Konzeption & Vorbereitung</strong><div class="uk-text-meta">Strategische und konzeptionelle Leistungen vor der Umsetzung.</div></th></tr>
+                <tr><td>Konzeption & UX</td><td class="uk-text-right">12</td><td>h</td><td class="uk-text-right">130,00 EUR</td><td class="uk-text-right">0,00 %</td><td class="uk-text-right">1.560,00 EUR</td><td class="uk-text-right">312,00 EUR</td><td class="uk-text-right"><strong>1.872,00 EUR</strong></td></tr>
+                <tr data-estimate-section-total="concept"><td colspan="7" class="uk-text-right uk-text-meta">Section-Summe</td><td class="uk-text-right"><strong>1.872,00 EUR</strong></td></tr>
+                <tr class="uk-background-muted" data-estimate-section="implementation"><th colspan="8"><strong>Umsetzung</strong><div class="uk-text-meta">Technische Umsetzung des freigegebenen Konzepts.</div></th></tr>
+                <tr><td>Frontend-Umsetzung</td><td class="uk-text-right">18</td><td>h</td><td class="uk-text-right">145,00 EUR</td><td class="uk-text-right">0,00 %</td><td class="uk-text-right">2.610,00 EUR</td><td class="uk-text-right">522,00 EUR</td><td class="uk-text-right"><strong>3.132,00 EUR</strong></td></tr>
+                <tr data-estimate-section-total="implementation"><td colspan="7" class="uk-text-right uk-text-meta">Section-Summe</td><td class="uk-text-right"><strong>3.132,00 EUR</strong></td></tr>
+              </tbody>
+              <tfoot>
+                <tr><th colspan="7" class="uk-text-right">Netto</th><th class="uk-text-right">4.170,00 EUR</th></tr>
+                <tr><th colspan="7" class="uk-text-right">Steuer</th><th class="uk-text-right">834,00 EUR</th></tr>
+                <tr><th colspan="7" class="uk-text-right">Gesamt</th><th class="uk-text-right"><strong>5.004,00 EUR</strong></th></tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <section class="uk-section uk-section-xsmall">
+            <h2 class="uk-h4">Bedingungen / Hinweise</h2>
+            <p>Zahlbar innerhalb von 14 Tagen nach Rechnungslegung. Das ausgestellte Angebot bleibt als kommerzieller Snapshot unverändert.</p>
+          </section>
+        </article>
+      </main>
+    </div>
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

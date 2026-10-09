@@ -5,7 +5,7 @@ UIkit-first, HTML-first static mirror and UI/UX laboratory for the productive Ka
 Product source of truth:
 
 - `cemfirat/kalkurama`
-- inspected baseline: `c4de7766c689484d5fc612d167d08078d9ed2607`
+- inspected baseline: `27c717fbdbc23866297ff32cd57ef181290340f3`
 - product source: [docs/PRODUCT-SOURCE.md](docs/PRODUCT-SOURCE.md)
 - themes: [docs/THEMES.md](docs/THEMES.md)
 - styleguide: [docs/STYLEGUIDE.md](docs/STYLEGUIDE.md)
@@ -44,8 +44,10 @@ Billings Pro is an interaction-architecture reference, not a visual template.
 - `project.html`
 - `estimates.html`
 - `estimate.html` — current productive Estimate detail mirror
+- `estimate-share.html` — public Estimate share/document mirror with PDF + accept/reject
 - `invoices.html`
 - `invoice.html` — current productive Invoice detail mirror
+- `invoice-share.html` — public Invoice share/document mirror with PDF
 - `payments.html`
 - `credit-notes.html`
 - `services.html`

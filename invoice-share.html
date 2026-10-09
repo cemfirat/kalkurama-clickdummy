@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RE-2026-104 · Rechnung · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+  <style>
+    .invoice-document { max-width: 960px; margin: 0 auto; }
+    .invoice-document-party { white-space: pre-line; }
+    @page { size: A4; margin: 15mm; }
+    @media print {
+      .kalkurama-header,
+      .invoice-document-toolbar { display: none !important; }
+      .kalkurama-main { padding: 0 !important; max-width: none !important; }
+      .invoice-document { max-width: none; box-shadow: none !important; padding: 0 !important; }
+      body { background: #fff !important; }
+    }
+  </style>
+</head>
+<body data-page="invoice-share">
+  <div class="kalkurama-shell">
+    <!-- @include partials/public-header.html -->
+    <div class="kalkurama-body">
+      <main class="kalkurama-main" id="main-content">
+        <div class="invoice-document-toolbar uk-flex uk-flex-right uk-flex-middle uk-grid-small uk-margin-bottom" uk-grid>
+          <div><a class="uk-button uk-button-default" href="./invoice-share.html" data-document-share-pdf>PDF herunterladen</a></div>
+          <div><button class="uk-button uk-button-primary" type="button" onclick="window.print()">Drucken</button></div>
+        </div>
+
+        <article class="invoice-document uk-card uk-card-default uk-card-body" data-invoice-document>
+          <header class="uk-flex uk-flex-between uk-flex-top uk-flex-wrap">
+            <div>
+              <div class="uk-text-meta">Rechnung</div>
+              <h1 class="uk-heading-medium uk-margin-remove-top">RE-2026-104</h1>
+              <span class="uk-label">Offen</span>
+            </div>
+            <dl class="uk-description-list uk-margin-remove-top">
+              <dt>Ausgestellt</dt><dd>2026-10-02</dd>
+              <dt>Fällig</dt><dd>2026-10-16</dd>
+              <dt>Währung</dt><dd>EUR</dd>
+            </dl>
+          </header>
+
+          <hr class="uk-divider-icon">
+
+          <div class="uk-grid-large uk-child-width-1-2@m" uk-grid>
+            <section>
+              <div class="uk-text-meta">Von</div>
+              <h2 class="uk-h4 uk-margin-small-top">Kalkurama Demo</h2>
+              <p class="invoice-document-party">Beispielstraße 1
+2540 Bad Vöslau
+AT</p>
+              <p class="uk-text-small">UID: ATU00000000</p>
+            </section>
+            <section>
+              <div class="uk-text-meta">Rechnung an</div>
+              <h2 class="uk-h4 uk-margin-small-top">Atelier Morgen</h2>
+              <p class="invoice-document-party">Hauptplatz 12
+2700 Wiener Neustadt
+AT</p>
+              <p class="uk-text-small">office@atelier-morgen.example</p>
+            </section>
+          </div>
+
+          <div class="uk-overflow-auto uk-margin-large-top">
+            <table class="uk-table uk-table-divider uk-table-small">
+              <thead><tr><th>Beschreibung</th><th class="uk-text-right">Menge</th><th>Einheit</th><th class="uk-text-right">Einzelpreis</th><th class="uk-text-right">Rabatt</th><th class="uk-text-right">Netto</th><th class="uk-text-right">Steuer</th><th class="uk-text-right">Gesamt</th></tr></thead>
+              <tbody>
+                <tr><td>Frontend-Umsetzung<div class="uk-text-meta">Website Relaunch</div></td><td class="uk-text-right">10</td><td>h</td><td class="uk-text-right">145,00 EUR</td><td class="uk-text-right">5,00 %<br><span class="uk-text-meta">−72,50 EUR</span></td><td class="uk-text-right">1.377,50 EUR</td><td class="uk-text-right">275,50 EUR</td><td class="uk-text-right"><strong>1.653,00 EUR</strong></td></tr>
+                <tr><td>Responsive Prototyp<div class="uk-text-meta">Website Relaunch</div></td><td class="uk-text-right">1</td><td>item</td><td class="uk-text-right">420,00 EUR</td><td class="uk-text-right">0,00 %</td><td class="uk-text-right">420,00 EUR</td><td class="uk-text-right">84,00 EUR</td><td class="uk-text-right"><strong>504,00 EUR</strong></td></tr>
+              </tbody>
+              <tfoot>
+                <tr><th colspan="7" class="uk-text-right">Netto</th><th class="uk-text-right">1.797,50 EUR</th></tr>
+                <tr><th colspan="7" class="uk-text-right">Steuer</th><th class="uk-text-right">359,50 EUR</th></tr>
+                <tr><th colspan="7" class="uk-text-right">Gesamt</th><th class="uk-text-right"><strong>2.157,00 EUR</strong></th></tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <section class="uk-section uk-section-xsmall">
+            <h2 class="uk-h4">Zahlung</h2>
+            <p>Bitte überweisen Sie unter Angabe der Rechnungsnummer.</p>
+            <dl class="uk-description-list">
+              <dt>IBAN</dt><dd>AT61 1904 3002 3457 3201</dd>
+              <dt>BIC</dt><dd>BKAUATWW</dd>
+            </dl>
+          </section>
+        </article>
+      </main>
+    </div>
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

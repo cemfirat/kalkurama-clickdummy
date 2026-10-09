@@ -6,7 +6,7 @@ The productive source of truth is:
 
 Inspected baseline:
 
-`c4de7766c689484d5fc612d167d08078d9ed2607`
+`27c717fbdbc23866297ff32cd57ef181290340f3`
 
 ## Authority order
 
@@ -247,6 +247,26 @@ Clickdummy consequence:
   external accounting state.
 
 The product-facing `work.html` exposes the productive correction affordances and both time/work correction history surfaces. `work-correction-fixed.html`, `work-correction-quantity.html` and `work-correction-expense.html` mirror the productive correction form shape with static data.
+
+### #125–#127 — public document sharing
+
+The recorded productive baseline now includes the first customer-facing document-share slice:
+
+- issued Estimates and issued/credited Invoices can create one opaque public share link (#125);
+- an active share renders the existing commercial HTML document without requiring a customer login;
+- Estimate shares in current Issued state can accept or reject with a required typed signer name and optional note (#126);
+- that decision reuses the existing commercial decision snapshot and is explicitly **not** a cryptographic e-signature;
+- active Estimate and Invoice shares expose PDF download using the same document snapshot (#127);
+- public Invoice shares do not expose e-invoice XML, payment actions or invoice acceptance;
+- public shared documents do not expose authenticated back-links.
+
+Clickdummy consequence:
+
+- `estimate.html` mirrors an active Estimate share-link state with public URL + revoke;
+- `invoice.html` mirrors the alternative no-active-link state with the Create share link action;
+- `estimate-share.html` mirrors the public document with PDF, Print and accept/reject forms;
+- `invoice-share.html` mirrors the public document with PDF + Print only;
+- share-token persistence, authorization, CSRF and route behavior remain productive server concerns and are not faked as working APIs in the static clickdummy.
 
 ### Current shell additions — productive baseline
 
