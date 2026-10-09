@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengenposition korrigieren · Kalkurama</title>
+  <link rel="icon" href="/src/themes/kalkurama/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico" sizes="any">
+</head>
+<body data-page="work">
+  <div class="kalkurama-shell kalkurama-shell--app">
+    <!-- @include partials/header.html -->
+    <div class="kalkurama-body kalkurama-body--with-sidebar">
+      <!-- @include partials/sidebar.html -->
+      <main class="kalkurama-main" id="main-content">
+        <div class="uk-width-1-1 uk-width-2-3@l">
+          <div class="uk-text-meta">Historische Korrektur</div>
+          <h1>Mengenposition korrigieren</h1>
+          <div class="uk-alert-primary" uk-alert><p>Nur unverrechnete Arbeit kann korrigiert werden. Die Währung bleibt unverändert. Frühere kommerzielle Werte bleiben in der Audit-Historie erhalten.</p></div>
+          <form class="uk-card uk-card-default uk-card-body uk-form-stacked" data-work-correct>
+            <div class="uk-margin"><div class="uk-text-meta">Projekt</div><strong>Atelier Morgen · Website Relaunch</strong></div>
+            <div class="uk-margin"><label class="uk-form-label" for="quantity-description">Beschreibung</label><input class="uk-input" id="quantity-description" name="description" required value="Bildbearbeitung"></div>
+            <div class="uk-margin"><label class="uk-form-label" for="quantity-occurred-on">Arbeitsdatum</label><input class="uk-input" type="date" id="quantity-occurred-on" name="occurred_on" required value="2026-10-05"></div>
+            <div class="uk-grid-small uk-child-width-1-2@s" uk-grid>
+              <div><label class="uk-form-label" for="quantity-value">Menge</label><input class="uk-input" id="quantity-value" name="quantity" inputmode="decimal" required value="12"></div>
+              <div><label class="uk-form-label" for="quantity-unit-price">Einzelpreis (EUR)</label><input class="uk-input" id="quantity-unit-price" name="unit_price" inputmode="decimal" required value="35.00"></div>
+            </div>
+            <div class="uk-margin"><label class="uk-form-label" for="quantity-reason">Korrekturgrund</label><textarea class="uk-textarea" id="quantity-reason" name="reason" rows="3" maxlength="1000" required>12 statt 10 Bilder.</textarea></div>
+            <div class="uk-flex uk-flex-between uk-flex-middle"><a href="./work.html">Abbrechen</a><button class="uk-button uk-button-primary" type="button">Korrektur speichern</button></div>
+          </form>
+        </div>
+      </main>
+    </div>
+    <!-- @include partials/mobile-sidebar.html -->
+  </div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
