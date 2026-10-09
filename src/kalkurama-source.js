@@ -1,7 +1,7 @@
 export const kalkuramaSource = Object.freeze({
   repository: "cemfirat/kalkurama",
   commit: "27c717fbdbc23866297ff32cd57ef181290340f3",
-  inspectedAt: "2026-10-08",
+  inspectedAt: "2026-10-09",
   inspectedPaths: [
     "docs/product/product-definition.md",
     "docs/product/billings-like-ux.md",
