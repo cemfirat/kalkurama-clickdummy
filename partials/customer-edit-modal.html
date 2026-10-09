@@ -44,6 +44,16 @@ AT</textarea>
       </p>
 
       <div class="uk-margin">
+        <label class="uk-form-label" for="customer-lifecycle">Lebenszyklus</label>
+        <select id="customer-lifecycle" class="uk-select" required>
+          <option value="active" selected>Aktiv</option>
+          <option value="quiet">Ruhig</option>
+          <option value="inactive">Inaktiv</option>
+        </select>
+        <div class="uk-text-meta uk-margin-small-top">Steuert die Gruppierung Aktiv / Ruhig / Inaktiv in der Seitenleiste. Unabhängig vom Projektstatus.</div>
+      </div>
+
+      <div class="uk-margin">
         <label class="uk-form-label" for="customer-notes">Interne Notizen <span class="uk-text-muted">(optional)</span></label>
         <textarea id="customer-notes" class="uk-textarea" rows="5" maxlength="10000">Bevorzugt kompakte Freigaberunden. Rechnungsversand an die zentrale Office-Adresse.</textarea>
         <div class="uk-text-meta uk-margin-small-top">Nur interner Kontext; bestehende kommerzielle Dokumente bleiben unverändert.</div>
