@@ -26,6 +26,10 @@ const productPages = [
   ["time.html", "time"],
   ["settings.html", "settings"]
 ];
+const publicPages = [
+  ["estimate-share.html", "estimate-share"],
+  ["invoice-share.html", "invoice-share"]
+];
 const allPages = [...productPages, ["styleguide.html", "styleguide"]];
 
 function assert(condition, message) {
@@ -67,6 +71,7 @@ const workCorrectionAudit = await readFile(new URL("../partials/work-correction-
 const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
 const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
 const studioPartial = await readFile(new URL("../partials/studio.html", import.meta.url), "utf8");
+const publicHeaderPartial = await readFile(new URL("../partials/public-header.html", import.meta.url), "utf8");
 const sharedPartials = [
   await readFile(new URL("../partials/header.html", import.meta.url), "utf8"),
   await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8"),
@@ -77,7 +82,7 @@ const sharedPartials = [
 ].join("\n");
 
 assert(kalkuramaSource.repository === "cemfirat/kalkurama", "Product source repository must stay explicit.");
-assert(kalkuramaSource.commit === "c4de7766c689484d5fc612d167d08078d9ed2607", "Unexpected Kalkurama source baseline.");
+assert(kalkuramaSource.commit === "27c717fbdbc23866297ff32cd57ef181290340f3", "Unexpected Kalkurama source baseline.");
 assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy baseline must be a full SHA.");
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must match productive UIkit 3.25.25.");
 assert(packageJson.scripts?.dev === "vite --mode kalkurama", "Kalkurama must be the default dev theme.");
@@ -97,6 +102,20 @@ for (const [page, pageId] of allPages) {
   assert(html[page].includes('rel="icon" href="/src/themes/kalkurama/images/favicon.svg"'), page + " must use the Kalkurama theme SVG favicon.");
   assert(html[page].includes('rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico"'), page + " must mirror the productive ICO favicon metadata.");
 }
+
+const publicHtml = {};
+for (const [page, pageId] of publicPages) {
+  publicHtml[page] = await readFile(new URL("../" + page, import.meta.url), "utf8");
+  assert(publicHtml[page].includes('<body data-page="' + pageId + '"'), page + " must expose its public page id.");
+  assert(publicHtml[page].includes("<!-- @include partials/public-header.html -->"), page + " must use the public header.");
+  assert(!publicHtml[page].includes("<!-- @include partials/sidebar.html -->"), page + " must not expose authenticated sidebar UI.");
+  assert(!publicHtml[page].includes("<!-- @include partials/mobile-sidebar.html -->"), page + " must not expose authenticated mobile sidebar UI.");
+  assert(publicHtml[page].includes('<script type="module" src="/src/app.js"></script>'), page + " must load behavior-only app.js.");
+  assert(publicHtml[page].includes('class="kalkurama-shell"') && !publicHtml[page].includes('class="kalkurama-shell kalkurama-shell--app"'), page + " must mirror the unauthenticated shell.");
+  assert(publicHtml[page].includes('rel="icon" href="/src/themes/kalkurama/images/favicon.svg"'), page + " must use the theme SVG favicon.");
+  assert(publicHtml[page].includes('rel="alternate icon" href="/src/themes/kalkurama/images/favicon.ico"'), page + " must use the ICO favicon.");
+}
+assert(publicHeaderPartial.includes('class="kalkurama-brand"') && publicHeaderPartial.includes("logo.svg"), "Public header must expose only the Kalkurama brand shell.");
 
 assert(html["index.html"].includes('data-project="website-relaunch"'), "Daily landing must expose the selected Website Relaunch project.");
 assert(html["project.html"].includes('data-project="brand-refresh"'), "Project page must expose the selected Brand Refresh project.");
@@ -178,6 +197,7 @@ assert(html["invoice.html"].includes("data-invoice-outstanding"), "Invoice detai
 assert(html["invoice.html"].includes("data-invoice-payments"), "Invoice detail must mirror productive payment history.");
 assert(html["invoice.html"].includes("data-invoice-email"), "Invoice detail must mirror productive email form.");
 assert(html["invoice.html"].includes("data-invoice-credit-note-form"), "Invoice detail must mirror productive credit-note action.");
+assert(html["invoice.html"].includes("data-document-share-create"), "Invoice detail must mirror the no-active-share Create link state.");
 assert(html["invoice.html"].includes(">Rabatt<"), "Product invoice mirror must expose the productive discount snapshot column.");
 assert(html["invoice.html"].includes("−72,50 EUR"), "Issued invoice mirror must show a persisted discount amount without draft edit controls.");
 assert(!html["invoice.html"].includes("Edit discount") && !html["invoice.html"].includes("Rabatt bearbeiten"), "Issued invoice mirror must not invent draft-only discount controls.");
@@ -188,9 +208,25 @@ assert(html["estimate.html"].includes("data-estimate-items"), "Estimate detail m
 assert(html["estimate.html"].includes("data-estimate-email"), "Estimate detail must mirror productive email form.");
 assert(html["estimate.html"].includes("data-estimate-planned-ready"), "Accepted Estimate mirror must expose productive planned-work state.");
 assert(html["estimate.html"].includes("data-estimate-actuals"), "Accepted Estimate mirror must expose productive estimate-vs-actual state.");
+assert(html["estimate.html"].includes("data-document-share-url"), "Estimate detail must mirror an active public share URL.");
+assert(html["estimate.html"].includes("data-document-share-revoke"), "Estimate detail must mirror public share revocation.");
 assert(html["estimate.html"].includes("data-estimate-section="), "Product estimate mirror must expose productive ordered sections.");
 assert(html["estimate.html"].includes("data-estimate-section-total="), "Product estimate mirror must expose productive section totals.");
 assert(html["estimate.html"].includes("Section 1") && html["estimate.html"].includes("Section 2"), "Estimate mirror must preserve section order.");
+
+assert(publicHtml["estimate-share.html"].includes("data-document-share-pdf"), "Public Estimate share must expose PDF download.");
+assert(publicHtml["estimate-share.html"].includes("data-document-share-respond"), "Public Estimate share must expose the productive response surface.");
+assert(publicHtml["estimate-share.html"].includes("data-document-share-accept") && publicHtml["estimate-share.html"].includes("data-document-share-reject"), "Public Estimate share must expose accept and reject forms.");
+assert(publicHtml["estimate-share.html"].includes('name="signer_name"') && publicHtml["estimate-share.html"].includes("required"), "Public Estimate response must require a typed signer name.");
+assert(publicHtml["estimate-share.html"].includes("keine kryptografische E-Signatur"), "Public Estimate response must not claim cryptographic signature semantics.");
+assert(publicHtml["estimate-share.html"].includes("window.print()"), "Public Estimate share must expose Print.");
+assert(!publicHtml["estimate-share.html"].includes("E-Rechnung"), "Public Estimate share must not expose unrelated e-invoice actions.");
+
+assert(publicHtml["invoice-share.html"].includes("data-document-share-pdf"), "Public Invoice share must expose PDF download.");
+assert(publicHtml["invoice-share.html"].includes("window.print()"), "Public Invoice share must expose Print.");
+assert(!publicHtml["invoice-share.html"].includes("E-Rechnung") && !publicHtml["invoice-share.html"].includes("e-invoice"), "Public Invoice share must not expose e-invoice XML.");
+assert(!publicHtml["invoice-share.html"].includes("data-document-share-respond"), "Public Invoice share must not invent invoice acceptance.");
+assert(!publicHtml["invoice-share.html"].includes("Back to") && !publicHtml["invoice-share.html"].includes("Zurück zu"), "Public Invoice share must not expose authenticated back-links.");
 
 for (const marker of [
   "uk-card uk-card-default",
@@ -230,7 +266,7 @@ for (const [name, icon] of [["plus", plusIcon], ["cog", cogIcon], ["menu", menuI
   assert(icon.includes("<svg") && icon.includes("currentColor"), "Owned shell icon must be valid currentColor SVG: " + name);
 }
 assert(systemMirror.includes("Exact structural/visual CSS mirror of cemfirat/kalkurama assets/styles/app.css"), "System mirror must record its productive source.");
-assert(systemMirror.includes("Product baseline: c4de7766c689484d5fc612d167d08078d9ed2607"), "System mirror must record the exact productive baseline.");
+assert(systemMirror.includes("Product baseline: 27c717fbdbc23866297ff32cd57ef181290340f3"), "System mirror must record the exact productive baseline.");
 assert(systemMirror.includes("--kalkurama-accent: #ff00ff;"), "System mirror must include the productive Kalkurama accent.");
 assert(systemMirror.includes(".kalkurama-customer-actions"), "System mirror must include the productive customer action surface.");
 assert(systemMirror.includes(".kalkurama-sidebar-toolbar-btn"), "System mirror must include the productive sidebar toolbar.");
@@ -290,7 +326,9 @@ assert(!viteConfig.includes('/__studio/git/pr'), "Kalkurama Studio must not expo
 assert(!viteConfig.includes('pushGitRef(["-u", "origin", "main"'), "Kalkurama Studio must never push directly to main.");
 assert(viteConfig.includes('mode === "pages" ? "/kalkurama-clickdummy/" : "/"'), "Pages base path must be explicit.");
 assert(viteConfig.includes('invoice: "invoice.html"'), "Vite multi-page build must include invoice.html.");
+assert(viteConfig.includes('invoiceShare: "invoice-share.html"'), "Vite multi-page build must include the public Invoice share mirror.");
 assert(viteConfig.includes('estimate: "estimate.html"'), "Vite multi-page build must include estimate.html.");
+assert(viteConfig.includes('estimateShare: "estimate-share.html"'), "Vite multi-page build must include the public Estimate share mirror.");
 assert(viteConfig.includes('workCorrectionFixed: "work-correction-fixed.html"'), "Vite multi-page build must include fixed correction mirror.");
 assert(viteConfig.includes('workCorrectionQuantity: "work-correction-quantity.html"'), "Vite multi-page build must include quantity correction mirror.");
 assert(viteConfig.includes('workCorrectionExpense: "work-correction-expense.html"'), "Vite multi-page build must include expense correction mirror.");
@@ -377,6 +415,10 @@ assert(productSourceGuide.includes("Only Active projects accept new timers and m
 assert(productSourceGuide.includes("#86 — audited corrections for fixed, quantity and expense work"), "Product source guide must document Work correction issue #86.");
 assert(productSourceGuide.includes("complete on `main` via PR #122"), "Product source guide must mark Work corrections productive.");
 assert(productSourceGuide.includes("Customer lifecycle") && productSourceGuide.includes("More → Setup") && productSourceGuide.includes("owned icon assets"), "Product source guide must document current productive shell additions.");
+assert(productSourceGuide.includes("#125–#127 — public document sharing"), "Product source guide must document productive document sharing.");
+assert(productSourceGuide.includes("not** a cryptographic e-signature") || productSourceGuide.includes("not a cryptographic e-signature"), "Product source guide must preserve the non-e-signature boundary.");
+assert(productSourceGuide.includes("public Invoice shares do not expose e-invoice XML"), "Product source guide must preserve public Invoice action boundaries.");
+assert(transferGuide.includes("public document-share pages"), "Transfer guide must classify public share pages.");
 assert(productSourceGuide.includes("selected_for_draft_invoice"), "Product source guide must preserve the draft-reservation correction boundary.");
 assert(productSourceGuide.includes("original and corrected commercial values"), "Product source guide must preserve before/after audit semantics.");
 assert(themesGuide.includes("UIkit Standard") && themesGuide.includes("Kalkurama"), "Theme guide must document hierarchy.");
@@ -395,6 +437,9 @@ assert(transferStatus.includes('"src/themes/"'), "Theme changes must be classifi
 assert(transferStatus.includes('"src/themes/standard-reset.less"'), "Standard reference normalization must remain prototype-only for transfer.");
 for (const page of ["work-correction-fixed.html", "work-correction-quantity.html", "work-correction-expense.html"]) {
   assert(transferStatus.includes('"' + page + '"'), "Productive correction page must be transferable: " + page);
+}
+for (const page of ["estimate-share.html", "invoice-share.html"]) {
+  assert(transferStatus.includes('"' + page + '"'), "Public document-share mirror must be transferable: " + page);
 }
 assert(transferStatus.includes('"invoice.html"'), "Invoice detail must be classified for transfer.");
 assert(transferStatus.includes('"estimate.html"'), "Estimate detail must be classified for transfer.");
