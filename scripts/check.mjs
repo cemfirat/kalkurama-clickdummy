@@ -220,10 +220,12 @@ assert(publicHtml["estimate-share.html"].includes("data-document-share-accept") 
 assert(publicHtml["estimate-share.html"].includes('name="signer_name"') && publicHtml["estimate-share.html"].includes("required"), "Public Estimate response must require a typed signer name.");
 assert(publicHtml["estimate-share.html"].includes("keine kryptografische E-Signatur"), "Public Estimate response must not claim cryptographic signature semantics.");
 assert(publicHtml["estimate-share.html"].includes("window.print()"), "Public Estimate share must expose Print.");
+assert(publicHtml["estimate-share.html"].includes("@page { size: A4; margin: 15mm; }"), "Public Estimate share must mirror the productive A4 print setup.");
 assert(!publicHtml["estimate-share.html"].includes("E-Rechnung"), "Public Estimate share must not expose unrelated e-invoice actions.");
 
 assert(publicHtml["invoice-share.html"].includes("data-document-share-pdf"), "Public Invoice share must expose PDF download.");
 assert(publicHtml["invoice-share.html"].includes("window.print()"), "Public Invoice share must expose Print.");
+assert(publicHtml["invoice-share.html"].includes("@page { size: A4; margin: 15mm; }"), "Public Invoice share must mirror the productive A4 print setup.");
 assert(!publicHtml["invoice-share.html"].includes("E-Rechnung") && !publicHtml["invoice-share.html"].includes("e-invoice"), "Public Invoice share must not expose e-invoice XML.");
 assert(!publicHtml["invoice-share.html"].includes("data-document-share-respond"), "Public Invoice share must not invent invoice acceptance.");
 assert(!publicHtml["invoice-share.html"].includes("Back to") && !publicHtml["invoice-share.html"].includes("Zurück zu"), "Public Invoice share must not expose authenticated back-links.");
