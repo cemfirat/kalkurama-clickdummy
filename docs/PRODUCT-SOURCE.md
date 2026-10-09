@@ -6,7 +6,7 @@ The productive source of truth is:
 
 Inspected baseline:
 
-`ed273d6c38464a000751cd8ed0ca54e8266dfc27`
+`3c0c2eb77ef8164770586f5b34c78db6f4127762`
 
 ## Authority order
 
@@ -74,8 +74,13 @@ assets.
 - `templates/customer/show.html.twig`
 - `templates/project/show.html.twig`
 - `templates/estimate/index.html.twig`
+- `templates/estimate/show.html.twig`
+- `templates/estimate/_item_rows.html.twig`
 - `templates/invoice/index.html.twig`
+- `templates/invoice/show.html.twig`
+- `templates/work/index.html.twig`
 - `templates/payment/index.html.twig`
+- `templates/shell/_icon.html.twig`
 - `assets/styles/app.css`
 - `importmap.php`
 
@@ -191,77 +196,45 @@ independent invoice-first data-entry architecture.
 
 ### #84 — explicit Estimate sections
 
-Issue #84 is **Class A — documented v1 baseline** and defines optional ordered
-sections for Estimate drafts and issued snapshots.
+Issue #84 is **Class A — implemented productive v1 baseline** and is present on current Kalkurama `main` (PR #119).
+
+The productive implementation provides optional ordered sections with title/description, optional ungrouped items, draft management and immutable issued/revision presentation.
 
 Clickdummy consequence:
 
-- sections group Estimate Items without becoming a free-form document designer;
-- section title/description and order stay explicit;
+- `estimate.html` groups items with the productive `data-estimate-section` / `data-estimate-section-item` structure;
+- section title, description, order and section totals are visible on the product-facing Estimate mirror;
 - items may remain ungrouped because sections are optional;
-- issued/revised presentation must preserve section labels and ordering;
-- commercial calculations remain item-based and exact.
-
-The clickdummy therefore prototypes explicit ordered sections using normal UIkit
-controls and visible item tables rather than inventing drag-and-drop or arbitrary
-layout semantics.
-
-
+- commercial calculations remain item-based and exact;
+- Styleguide examples now document a shipped product pattern rather than a future-only concept.
 
 ### #85 — explicit Invoice line discounts
 
-Issue #85 is **Class A — documented v1 baseline** and closes the commercial
-snapshot gap between Estimate Items and Invoice Lines.
+Issue #85 is **Class A — implemented productive v1 baseline** and is present on current Kalkurama `main` (PR #121).
 
-The productive baseline currently snapshots quantity, unit price, net, tax and
-gross on Invoice Lines but does not yet persist an explicit discount snapshot.
+Invoice Lines persist explicit pre-discount amount, discount rate/amount, post-discount net, tax and gross snapshots. Draft lines may change the discount before issue; issued lines remain immutable and EN 16931 CII carries a line allowance when applicable.
 
 Clickdummy consequence:
 
-- draft Invoice Lines expose discount rate explicitly;
-- pre-discount amount and discount amount remain visible beside net/tax/gross;
-- source Work traceability stays visible for imported lines;
-- issuing must freeze the discount snapshot together with all other line values;
-- HTML, PDF, e-invoice and full credit-note presentation must remain consistent;
-- calculations remain exact and integer-backed in the productive domain.
-
-The clickdummy models this as a commercial line field, not as a visual-only
-adjustment or promotional coupon system.
-
-
+- `invoice.html` exposes the productive Discount column and immutable discount amount/rate snapshot on issued lines;
+- source quantity/unit price and post-discount tax/gross stay visibly consistent;
+- the static issued example does not show draft-only editing controls, matching productive state semantics;
+- Styleguide discount examples document the shipped snapshot model rather than an unimplemented proposal.
 
 ### #86 — audited corrections for fixed, quantity and expense work
 
-Issue #86 is **Class A — documented v1 baseline** and addresses the remaining
-manual-correction gap for non-time Work entries.
+Issue #86 is **Class A — implemented productive v1 baseline** and is present on current Kalkurama `main` (PR #122).
 
-The productive baseline already has audited Time corrections. Fixed, Quantity and
-Expense entries currently have only the safe fallback: mark the incorrect entry
-non-billable/written-off with a required reason and create a replacement.
+Only `unbilled` Fixed, Quantity and Expense entries may be corrected directly. The productive flow requires a reason, preserves currency and commercial identity, and appends a `WorkEntryCorrectionEvent` with actor/time plus before/after values. Selected, invoiced, non-billable and written-off entries remain protected.
 
 Clickdummy consequence:
 
-- direct correction is available only while the Work entry is `unbilled`;
-- Fixed corrections expose work date, description, amount and currency;
-- Quantity corrections expose work date, description, quantity, unit price and
-  currency;
-- Expense corrections expose work date, description, amount and currency;
-- Work type, Work ID, Customer/Project context and Planned-Work linkage stay
-  identity/history context rather than becoming silently replaceable;
-- every correction requires a reason and exposes actor/time audit semantics;
-- original and corrected commercial values remain visibly traceable;
-- `selected_for_draft_invoice`, `invoiced`, `non_billable` and
-  `written_off` entries cannot be directly corrected;
-- correction does not automatically mutate or repair invoices, credit notes or
-  external accounting state.
+- `work.html` exposes Correct actions for the three productive non-time work types;
+- recent non-time correction history is represented through `data-work-correction-history`;
+- original and corrected values, actor and reason remain visible;
+- correction does not mutate issued documents or bypass billing-state rules;
+- Styleguide correction examples now document the shipped audit pattern.
 
-Because #86 is still a documented stable-v1 gap rather than current productive UI,
-those non-time correction concepts live only in the Styleguide/prototype layer.
-They are not exposed as product pages until productive Kalkurama implements them.
-
-The same mirror rule applies to other documented future gaps such as #84 Estimate
-sections and #85 Invoice line discounts: Styleguide examples may explore them, but
-the product-facing clickdummy pages mirror the current productive implementation.
 
 ## Scope guard
 
