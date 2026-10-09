@@ -69,6 +69,11 @@ const themeEntries = await readdir(new URL("../src/themes/", import.meta.url));
 const customerEditModal = await readFile(new URL("../partials/customer-edit-modal.html", import.meta.url), "utf8");
 const projectEditModal = await readFile(new URL("../partials/project-edit-modal.html", import.meta.url), "utf8");
 const workCorrectionAudit = await readFile(new URL("../partials/work-correction-audit.html", import.meta.url), "utf8");
+const accordionExample = await readFile(new URL("../partials/styleguide/accordion.html", import.meta.url), "utf8");
+const tabsSwitcherExample = await readFile(new URL("../partials/styleguide/tabs-switcher.html", import.meta.url), "utf8");
+const dropdownExample = await readFile(new URL("../partials/styleguide/dropdown.html", import.meta.url), "utf8");
+const offcanvasExample = await readFile(new URL("../partials/styleguide/offcanvas.html", import.meta.url), "utf8");
+const iconsTooltipExample = await readFile(new URL("../partials/styleguide/icons-tooltip.html", import.meta.url), "utf8");
 const sidebarPartial = await readFile(new URL("../partials/sidebar.html", import.meta.url), "utf8");
 const sidebarInnerPartial = await readFile(new URL("../partials/sidebar-inner.html", import.meta.url), "utf8");
 const studioPartial = await readFile(new URL("../partials/studio.html", import.meta.url), "utf8");
@@ -355,7 +360,12 @@ for (const example of [
   "feedback.html",
   "kalkurama.html",
   "estimate-sections.html",
-  "invoice-discount.html"
+  "invoice-discount.html",
+  "accordion.html",
+  "tabs-switcher.html",
+  "dropdown.html",
+  "offcanvas.html",
+  "icons-tooltip.html"
 ]) {
   assert(styleguideExampleFiles.includes(example), "Missing Styleguide example: " + example);
 }
@@ -371,6 +381,11 @@ for (const section of [
   'id="navigation"',
   'id="status"',
   'id="feedback"',
+  'id="accordion"',
+  'id="tabs-switcher"',
+  'id="dropdown"',
+  'id="offcanvas"',
+  'id="icons-tooltip"',
   'id="kalkurama-project-work"',
   'id="kalkurama-estimate-sections"',
   'id="kalkurama-invoice-discounts"',
@@ -384,6 +399,15 @@ assert(html["styleguide.html"].includes("@include-code partials/work-correction-
 assert(html["styleguide.html"].includes("Estimate Sections"), "Styleguide must document Estimate Sections.");
 assert(html["styleguide.html"].includes("Invoice Line Discounts"), "Styleguide must document Invoice Line Discounts.");
 assert(html["styleguide.html"].includes("Audited Work Corrections"), "Styleguide must document audited Work corrections.");
+for (const example of ["accordion", "tabs-switcher", "dropdown", "offcanvas", "icons-tooltip"]) {
+  assert(html["styleguide.html"].includes("@include partials/styleguide/" + example + ".html"), "Styleguide Preview must use shared source: " + example);
+  assert(html["styleguide.html"].includes("@include-code partials/styleguide/" + example + ".html"), "Styleguide Markup must use the same shared source: " + example);
+}
+assert(accordionExample.includes("data-uk-accordion"), "Accordion example must use native UIkit Accordion.");
+assert(tabsSwitcherExample.includes("data-uk-tab") && tabsSwitcherExample.includes("uk-switcher"), "Tabs example must use native UIkit Tab + Switcher.");
+assert(dropdownExample.includes("data-uk-dropdown") && dropdownExample.includes("data-uk-drop"), "Dropdown example must cover native UIkit Dropdown + Drop.");
+assert(offcanvasExample.includes("data-uk-offcanvas") && offcanvasExample.includes("uk-offcanvas-bar"), "Offcanvas example must use native UIkit Offcanvas.");
+assert(iconsTooltipExample.includes("data-uk-icon") && iconsTooltipExample.includes("data-uk-close") && iconsTooltipExample.includes("data-uk-tooltip"), "Utility example must cover UIkit Icon, Close and Tooltip.");
 assert(html["styleguide.html"].includes("styleguide-example-tabs"), "Styleguide must use consistent Preview/Markup tabs.");
 assert(html["styleguide.html"].includes("data-studio-open"), "Styleguide must expose local Kalkurama Studio entry points.");
 assert(html["styleguide.html"].includes("@include partials/studio.html"), "Styleguide must include Kalkurama Studio.");
@@ -434,6 +458,8 @@ assert(styleguideGuide.includes("Product emphasis"), "Styleguide guide must expl
 assert(styleguideGuide.includes("Kalkurama product patterns"), "Styleguide guide must document the v1 product-pattern split.");
 assert(styleguideGuide.includes("partials/work-correction-audit.html"), "Styleguide guide must document reuse of the real Work correction audit partial.");
 assert(styleguideGuide.includes("UIkit-first rule"), "Styleguide guide must preserve the UIkit-first rule.");
+assert(styleguideGuide.includes("Accordion") && styleguideGuide.includes("Tabs & Switcher") && styleguideGuide.includes("Dropdown & Drop"), "Styleguide guide must document the expanded interaction reference.");
+assert(styleguideGuide.includes("Icon, Close & Tooltip") && styleguideGuide.includes("owned icon assets"), "Styleguide guide must preserve generic-vs-owned icon boundaries.");
 assert(themeStudioGuide.includes("No PR before green branch CI"), "Kalkurama Studio guide must preserve CI rule.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve CI rule.");
 assert(transferGuide.includes("Product → clickdummy baseline re-anchor"), "Transfer guide must distinguish product-driven re-anchoring.");
