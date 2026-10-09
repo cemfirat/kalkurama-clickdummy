@@ -157,10 +157,24 @@ function listStudioFiles() {
 
 function listStudioAssetFiles() {
   const imagesDirectory = resolve(rootDirectory, "src/themes/kalkurama/images");
-  return readdirSync(imagesDirectory, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && /\.(?:svg|png|webp|jpe?g|ico)$/i.test(entry.name))
-    .map((entry) => "src/themes/kalkurama/images/" + entry.name)
-    .sort();
+
+  function walk(directory, relativeDirectory = "") {
+    const files = [];
+
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const relativePath = relativeDirectory ? relativeDirectory + "/" + entry.name : entry.name;
+
+      if (entry.isDirectory()) {
+        files.push(...walk(resolve(directory, entry.name), relativePath));
+      } else if (entry.isFile() && /\.(?:svg|png|webp|jpe?g|ico)$/i.test(entry.name)) {
+        files.push("src/themes/kalkurama/images/" + relativePath);
+      }
+    }
+
+    return files;
+  }
+
+  return walk(imagesDirectory).sort();
 }
 
 function listStudioGitFiles() {
