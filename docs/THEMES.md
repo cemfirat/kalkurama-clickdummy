@@ -53,6 +53,8 @@ src/
 
 `kalkurama/brand.less` re-applies the exact productive identity after that Standard-only normalization. `kalkurama/variables.less` and UIkit hooks remain the normal editable theme customization layer.
 
+`kalkurama/sidebar.less` contains the clickdummy sidebar design proposal (300px width, white page background, green sidebar accents, spacing and navigation headings). It is loaded only by the Kalkurama theme, outside the unchanged productive mirror, and has not been promoted to the productive application.
+
 `kalkurama/images/` is the canonical clickdummy location for Kalkurama-owned theme assets such as logo and favicon.
 
 Customer themes inherit Kalkurama only when real customer branding is needed.
