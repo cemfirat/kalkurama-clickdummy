@@ -1,14 +1,12 @@
-<header class="kalkurama-header">
-  <div class="kalkurama-header-inner">
+<header class="kalkurama-header uk-navbar-container" uk-navbar>
+  <div class="kalkurama-header-inner uk-navbar-left">
     <a class="kalkurama-brand" href="./index.html" aria-label="Kalkurama">
       <img src="/src/themes/kalkurama/images/logo.svg" width="156" height="20" alt="Kalkurama">
     </a>
 
-    <button class="kalkurama-shell-sidebar-toggle uk-hidden@m"
-            type="button"
-            uk-toggle="target: #kalkurama-shell-offcanvas"
-            aria-label="Kundenansicht öffnen"
-            data-shell-sidebar-toggle><span class="kalkurama-icon kalkurama-icon--menu" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.75" stroke-linecap="round" d="M4 6h12M4 10h12M4 14h12"/></svg></span></button>
+    <button class="kalkurama-shell-sidebar-toggle uk-hidden@m" type="button" uk-toggle="target: #kalkurama-shell-offcanvas" aria-label="Kundenansicht öffnen" data-shell-sidebar-toggle><span class="kalkurama-icon kalkurama-icon--menu" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" focusable="false">
+          <path stroke="currentColor" stroke-width="1.75" stroke-linecap="round" d="M4 6h12M4 10h12M4 14h12" />
+        </svg></span></button>
 
     <nav class="kalkurama-topnav" aria-label="Sekundäre Navigation" data-shell-topnav>
       <a href="./overview.html" data-nav-page="overview">Übersicht</a>
@@ -39,11 +37,15 @@
         </div>
       </div>
     </nav>
-
-    <div class="kalkurama-header-user">
-      <span class="uk-text-meta uk-visible@s">Demo Workspace</span>
-      <a href="./settings.html">Cem Firat</a>
-      <button class="uk-button uk-button-text" type="button">Abmelden</button>
+  </div>
+  <div class="kalkurama-header-user uk-navbar-right">
+    <a href="./settings.html"><img class="uk-border-circle" width="40" height="40" src="images/avatar.jpg" alt="Avatar"></a>
+    <div class="uk-navbar-dropdown">
+      <ul class="uk-nav uk-navbar-dropdown-nav">
+        <li>Cem Firat</li>
+        <li><span class="uk-text-meta uk-visible@s">Demo Workspace</span></li>
+        <li><button class="uk-button uk-button-text" type="button">Abmelden</button></li>
+      </ul>
     </div>
   </div>
 </header>
